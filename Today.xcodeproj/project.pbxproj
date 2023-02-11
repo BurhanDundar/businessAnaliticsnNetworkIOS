@@ -17,6 +17,7 @@
 		AAD059C428ECC017004F4962 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD059C328ECC017004F4962 /* User.swift */; };
 		DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3111C4299649D20058A3A9 /* UserViewController.swift */; };
 		DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3111C7299652990058A3A9 /* UserViewController+Row.swift */; };
+		DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3111CC2996AC810058A3A9 /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		AAD059C328ECC017004F4962 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		DB3111C4299649D20058A3A9 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		DB3111C7299652990058A3A9 /* UserViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserViewController+Row.swift"; sourceTree = "<group>"; };
+		DB3111CC2996AC810058A3A9 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 			children = (
 				AAD059C228ECBFAA004F4962 /* Models */,
 				AAD0598728EC8D10004F4962 /* AppDelegate.swift */,
+				DB3111CC2996AC810058A3A9 /* Extension.swift */,
 				AAD0598928EC8D10004F4962 /* SceneDelegate.swift */,
 				DB3111C9299653FE0058A3A9 /* ListViewController */,
 				AAD0598D28EC8D10004F4962 /* Main.storyboard */,
@@ -189,6 +192,7 @@
 			files = (
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
 				DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */,
+				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
 				DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,
 				AAD0598A28EC8D10004F4962 /* SceneDelegate.swift in Sources */,
