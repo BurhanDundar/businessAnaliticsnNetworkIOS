@@ -23,12 +23,12 @@ class UserViewController: UIViewController {
     var nameLabel: UILabel! // bunlar UITextView mi yapılmalı bunlara bak
     var titleLabel: UILabel!
     var connectionCount: UILabel!
+    var location: UILabel!
+    var button: UIButton!
     
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
-        
-        
         
         // Image
         // imageView.loadImage(for: user.image)
@@ -85,6 +85,20 @@ class UserViewController: UIViewController {
             connectionCount.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
         
+        //Location
+        location = UILabel()
+        location.translatesAutoresizingMaskIntoConstraints = false
+        location.textAlignment = .center
+        location.numberOfLines = 0
+        location.text = user.location
+        
+        view.addSubview(location)
+        
+        NSLayoutConstraint.activate([
+            location.topAnchor.constraint(equalTo: connectionCount.bottomAnchor, constant: 10),
+            location.widthAnchor.constraint(equalTo: view.widthAnchor)
+        ])
+        
         // Title
         titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -95,9 +109,24 @@ class UserViewController: UIViewController {
         view.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: connectionCount.bottomAnchor,constant: 10),
+            titleLabel.topAnchor.constraint(equalTo: location.bottomAnchor,constant: 10),
             titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
                 ])
+        button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Skills", for: .normal)
+        //button.backgroundColor = .green
+        button.setTitleColor(.red, for: .normal)
+        button.setTitleColor(.blue, for: .highlighted)
+        button.addTarget(self, action: #selector(skillsNavigation), for: .touchUpInside)
+        
+        view.addSubview(button)
+        
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 40),
+            button.widthAnchor.constraint(equalToConstant: 150)
+        ])
 
     }
     
@@ -114,6 +143,12 @@ class UserViewController: UIViewController {
         }
         navigationItem.title = NSLocalizedString("User", comment: "User view controller title")
     }
+    
+    @objc func skillsNavigation(){
+        print("merhaba")
+    }
+    
+    
 }
 
 

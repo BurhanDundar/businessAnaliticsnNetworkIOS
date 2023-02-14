@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct Skill {
+    var title: String
+}

@@ -98,6 +98,8 @@ class UserListViewController: UICollectionViewController {
         dataSource.apply(snapshot)
         collectionView.dataSource = dataSource
     }
+    
+    
 }
 
 extension UserListViewController: UISearchBarDelegate {
@@ -110,5 +112,11 @@ extension UserListViewController: UISearchBarDelegate {
             filteredUsers = users.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
             updateSnapshot(for: filteredUsers)
         }
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        isSearching = false
+        updateSnapshot(for: User.sampleData)
+        
     }
 }
