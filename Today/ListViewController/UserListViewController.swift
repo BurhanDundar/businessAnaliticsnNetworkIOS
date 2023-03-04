@@ -7,8 +7,8 @@
 import UIKit
 
 class UserListViewController: UICollectionViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, String>
-         typealias Snapshot = NSDiffableDataSourceSnapshot<Int, String>
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
+         typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
 
     
         var users: [User] = User.sampleData
@@ -21,6 +21,9 @@ class UserListViewController: UICollectionViewController {
 
          override func viewDidLoad() {
              
+             navigationItem.title = "Members"
+             let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
+             navigationItem.rightBarButtonItem = filterBarButton
              //view = UIView()
              //view.backgroundColor = .white
              
@@ -31,7 +34,7 @@ class UserListViewController: UICollectionViewController {
              
              lazy var searchController: UISearchController = {
                  let searchController = UISearchController(searchResultsController: nil)
-                 searchController.dimsBackgroundDuringPresentation = false
+                 // searchController.dimsBackgroundDuringPresentation = false
                  searchController.hidesNavigationBarDuringPresentation = false
                  searchController.searchBar.delegate = self
                  return searchController
@@ -43,19 +46,26 @@ class UserListViewController: UICollectionViewController {
 
              let listLayout = listLayout()
              collectionView.collectionViewLayout = listLayout
-
+             
              let cellRegistration = UICollectionView.CellRegistration {
-                 (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: String) in
-                 let user = User.sampleData[indexPath.item]
+                 (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
+                 let user = self.users[indexPath.item]
                  var contentConfiguration = cell.defaultContentConfiguration()
                  contentConfiguration.text = user.full_name
                  contentConfiguration.secondaryText = user.title
-                 cell.accessories = [.disclosureIndicator(displayed: .always)]
+                 
+                 let systemImageName = user.isBookmarked ? "bookmark.fill" :  "bookmark"
+                 
+                 let customAccessory = UICellAccessory.CustomViewConfiguration(
+                   customView: UIImageView(image: UIImage(systemName: systemImageName)),
+                   placement: .trailing(displayed: .always))
+                 
+                 cell.accessories = [.customView(configuration: customAccessory),.disclosureIndicator(displayed: .always)]
                  cell.contentConfiguration = contentConfiguration
              }
 
              dataSource = DataSource(collectionView: collectionView) {
-                 (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: String) in
+                 (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: User.ID) in
                  return collectionView.dequeueConfiguredReusableCell(
                      using: cellRegistration, for: indexPath, item: itemIdentifier)
              }
@@ -76,9 +86,14 @@ class UserListViewController: UICollectionViewController {
         return users[index]
     }
     
+    internal func updateUser(_ user: User) {
+           let index = users.indexOfUser(withId: user.id)
+           users[index] = user
+       }
+    
     func pushDetailViewForUser(withId id:User.ID){
         let user = user(withId: id)
-        let viewController = UserViewController(user: user)
+        let viewController = UserViewController(user: user, parent: self)
         navigationController?.pushViewController(viewController, animated: true)
      }
 
@@ -94,7 +109,7 @@ class UserListViewController: UICollectionViewController {
     func updateSnapshot(for users: [User]){
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(users.map { $0.full_name })
+        snapshot.appendItems(users.map { $0.id })
         dataSource.apply(snapshot)
         collectionView.dataSource = dataSource
     }
@@ -117,6 +132,22 @@ extension UserListViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         updateSnapshot(for: User.sampleData)
+    }
+    
+    @objc private func filterMembers(){
+        print("filter members")
+    }
+    
+    @objc private func bookmark(){
+        print("bookmark is tapped")
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        print("Murat Osman Ünalır users: ",users[0].isBookmarked)
+        print("Murat Osman Ünalır User.sampleData: ",User.sampleData[0].isBookmarked)
         
+        collectionView.reloadData()
     }
 }

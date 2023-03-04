@@ -7,11 +7,14 @@
 
 import UIKit
 
-class UserViewController: UIViewController {
+class UserViewController: UIViewController,UIScrollViewDelegate {
+    
+    let parentView: UserListViewController
     
     var user: User
-    init(user: User) {
+    init(user: User, parent: UserListViewController) {
         self.user = user
+        self.parentView = parent
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -19,41 +22,49 @@ class UserViewController: UIViewController {
         fatalError("Always initialize UserViewController using init(reminder:)")
     }
     
-    var imageView: UIImageView!
+    internal func inheritedUserUpdate(_ user: User){
+        self.parentView.updateUser(user)
+    }
+    
     var nameLabel: UILabel! // bunlar UITextView mi yapılmalı bunlara bak
     var titleLabel: UILabel!
     var connectionCount: UILabel!
     var location: UILabel!
     var button: UIButton!
+    var systemImageName: String!
+    
+    lazy var fetchedImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.contentMode = .scaleAspectFill
+        iv.backgroundColor = .orange
+        iv.layer.borderWidth = 1
+        iv.layer.borderColor = UIColor.blue.cgColor
+        iv.layer.cornerRadius = 24 // iv.frame.height / 2
+        iv.layer.masksToBounds = false
+        iv.clipsToBounds = true
+        return iv
+    }()
     
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
         
-        // Image
-        // imageView.loadImage(for: user.image)
-        imageView = UIImageView(image: UIImage(named: "murat.png")!)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        // border radius
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.blue.cgColor
-        imageView.layer.masksToBounds = false
-        imageView.layer.cornerRadius = imageView.frame.height / 2
-        imageView.clipsToBounds = true
-        // shadow
-        //imageView.layer.shadowColor = UIColor.black.cgColor
-        //imageView.layer.shadowOpacity = 1
-        //imageView.layer.shadowOffset = CGSize.zero
-        //imageView.layer.shadowRadius = 10
-        //imageView.layer.shadowPath = UIBezierPath(roundedRect: imageView.bounds, cornerRadius: 10).cgPath
+        systemImageName = user.isBookmarked ? "bookmark.fill" :  "bookmark"
         
+        let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
+        navigationItem.rightBarButtonItem = bookmarkBarButton
         
-        view.addSubview(imageView)
+        view.addSubview(fetchedImageView)
         
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20)
+            fetchedImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            fetchedImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100),
+            fetchedImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
+            fetchedImageView.heightAnchor.constraint(equalToConstant: 200)
         ])
+        
+        loadFetchedImage(for: user.image)
     
         // Name
         nameLabel = UILabel()
@@ -65,7 +76,7 @@ class UserViewController: UIViewController {
         view.addSubview(nameLabel)
         
         NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor,constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: fetchedImageView.bottomAnchor,constant: 20),
             nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
                 ])
         
@@ -148,7 +159,35 @@ class UserViewController: UIViewController {
         print("merhaba")
     }
     
+    private func loadFetchedImage(for url: String){
+        fetchedImageView.loadImage(url)
+    }
     
+    @objc private func bookmarkMember(){
+        self.user.isBookmarked.toggle()
+        systemImageName = user.isBookmarked ? "bookmark.fill" :  "bookmark"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
+            
+        self.inheritedUserUpdate(user)
+    }
+}
+
+extension UIImageView {
+    func loadImage(_ url: String){
+        DispatchQueue.global(qos: .background).async {
+            DispatchQueue.main.async {
+                guard let url = URL(string: url) else {
+                    return
+                }
+                
+                guard let data = try? Data(contentsOf: url) else {
+                    return
+                }
+                
+                self.image = UIImage(data: data)
+            }
+        }
+    }
 }
 
 

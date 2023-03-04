@@ -12,6 +12,7 @@ struct User: Identifiable{
     var about: String
     var connection_count: String
     var location: String
+    var isBookmarked: Bool = false
     var skills: [Skill] = []
 }
 
