@@ -18,7 +18,7 @@ class UserListViewController: UICollectionViewController {
     
         // search bar
         var searchController: UISearchController!
-
+    
          override func viewDidLoad() {
              
              navigationItem.title = "Members"

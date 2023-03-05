@@ -19,6 +19,8 @@
 		DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3111C4299649D20058A3A9 /* UserViewController.swift */; };
 		DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3111C7299652990058A3A9 /* UserViewController+Row.swift */; };
 		DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3111CC2996AC810058A3A9 /* Extension.swift */; };
+		DBCECF9D29B37311009373FE /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCECF9C29B37311009373FE /* TabBarController.swift */; };
+		DBCECF9F29B37399009373FE /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCECF9E29B37399009373FE /* BookmarkViewController.swift */; };
 		DBE888D029B2B68700E5B6F9 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */; };
 		DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +42,8 @@
 		DB3111C4299649D20058A3A9 /* UserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		DB3111C7299652990058A3A9 /* UserViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserViewController+Row.swift"; sourceTree = "<group>"; };
 		DB3111CC2996AC810058A3A9 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		DBCECF9C29B37311009373FE /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		DBCECF9E29B37399009373FE /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+Action.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +86,8 @@
 				DB3111CC2996AC810058A3A9 /* Extension.swift */,
 				AAD0598928EC8D10004F4962 /* SceneDelegate.swift */,
 				DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */,
+				DBCECF9C29B37311009373FE /* TabBarController.swift */,
+				DBCECF9E29B37399009373FE /* BookmarkViewController.swift */,
 				DB3111C6299649D90058A3A9 /* DetailViewController */,
 				DB3111C9299653FE0058A3A9 /* ListViewController */,
 				AAD0598D28EC8D10004F4962 /* Main.storyboard */,
@@ -201,7 +207,9 @@
 			files = (
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
 				DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */,
+				DBCECF9D29B37311009373FE /* TabBarController.swift in Sources */,
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
+				DBCECF9F29B37399009373FE /* BookmarkViewController.swift in Sources */,
 				DBE888D029B2B68700E5B6F9 /* FilterViewController.swift in Sources */,
 				DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */,
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
