@@ -12,6 +12,8 @@ struct User: Identifiable{
     var about: String
     var connection_count: String
     var location: String
+    var isBookmarked: Bool = false
+    var skills: [Skill] = []
 }
 
 extension [User] {
@@ -31,7 +33,13 @@ extension User{
             image: "https://media.licdn.com/dms/image/C4D03AQFBJms9OsMrCg/profile-displayphoto-shrink_400_400/0/1636138737205?e=1681344000&v=beta&t=o8IBOg-QnfGZmv50p5pK0FIo86yOeMr-if4I_BqbTB0",
             about: "25 years of experience in teaching data management.https://avesis.ege.edu.tr/murat.osman.unalir/",
             connection_count: "500+",
-            location: "İzmir, Türkiye"),
+            location: "İzmir, Türkiye",
+             skills: [
+                 Skill(title: "Yüzmek"),
+                 Skill(title: "Koşmak"),
+                 Skill(title: "Database Design")
+                 ]
+            ),
         User(
             full_name: "Emine Sezer",
             title: "Yrd. Doç. Dr., Ege Üniversitesi",
