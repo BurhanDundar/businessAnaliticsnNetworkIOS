@@ -31,14 +31,30 @@ extension UserListViewController {
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
         // index -> 0: all, 1: bookmarked
         if(sender.selectedSegmentIndex == 0){
+            
             self.listStyleSelectedIndex = 0
-            updateSnapshot(for: User.sampleData)
+            if(self.dynamicSearchText == ""){
+                self.filteredUsers = []
+                updateSnapshot(for: self.users)
+            } else {
+                let searchBarFilterUsers = self.users.filter({ $0.full_name.lowercased().contains(self.dynamicSearchText.lowercased()) })
+                self.filteredUsers = searchBarFilterUsers
+                updateSnapshot(for: searchBarFilterUsers)
+            }
             collectionView.reloadData()
+            
         } else if(sender.selectedSegmentIndex == 1){
             self.listStyleSelectedIndex = 1
-            var bookmarkedUsers = isSearching ? self.filteredUsers.filter({ $0.isBookmarked }) : users.filter({ $0.isBookmarked })
-           self.filteredUsers = bookmarkedUsers
-            updateSnapshot(for: bookmarkedUsers)
+            if(self.dynamicSearchText == ""){
+                let bookmarkedUsers = self.users.filter({ $0.isBookmarked })
+                self.filteredUsers = bookmarkedUsers
+                updateSnapshot(for: self.filteredUsers)
+            } else {
+                var filteredBookmarkUsers = self.users.filter({ $0.isBookmarked })
+                filteredBookmarkUsers = filteredBookmarkUsers.filter({ $0.full_name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
+                self.filteredUsers = filteredBookmarkUsers
+                updateSnapshot(for: self.filteredUsers)
+            }
             collectionView.reloadData()
         }
         

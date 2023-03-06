@@ -24,6 +24,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     
     internal func inheritedUserUpdate(_ user: User){
         self.parentView.updateUser(user)
+        self.parentView.collectionView.reloadData()
     }
     
     var nameLabel: UILabel! // bunlar UITextView mi yapılmalı bunlara bak

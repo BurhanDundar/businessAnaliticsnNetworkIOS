@@ -17,6 +17,7 @@ class UserListViewController: UICollectionViewController {
         var dataSource: DataSource!
         var isSearching: Bool = false
         var listStyleSelectedIndex: Int = 0
+        var dynamicSearchText: String = ""
     
         // search bar
         var searchController: UISearchController!
@@ -51,9 +52,8 @@ class UserListViewController: UICollectionViewController {
                  if(self.listStyleSelectedIndex == 1) {
                      user = self.filteredUsers[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
-                     user = self.users[indexPath.item] //self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
+                     user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
                  }
-                 
                  
                  var contentConfiguration = cell.defaultContentConfiguration()
                  contentConfiguration.text = user.full_name
@@ -126,7 +126,7 @@ class UserListViewController: UICollectionViewController {
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+        self.dynamicSearchText = searchText
         if searchText.isEmpty {
             isSearching = false
             if(listStyleSelectedIndex == 1){
@@ -134,6 +134,7 @@ extension UserListViewController: UISearchBarDelegate {
                 self.filteredUsers = bookmarkedFilteredValues
                 updateSnapshot(for: bookmarkedFilteredValues)
             } else {
+                self.filteredUsers = []
                 updateSnapshot(for: self.users)
             }
         } else {
@@ -142,7 +143,6 @@ extension UserListViewController: UISearchBarDelegate {
                 var bookmarkedFilteredValues = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
                 bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
                 self.filteredUsers = bookmarkedFilteredValues
-                print("self.filteredUsers -> ", self.filteredUsers)
                 updateSnapshot(for: bookmarkedFilteredValues)
             } else if(listStyleSelectedIndex == 0) {
                 let allFilteredUsers = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
@@ -159,6 +159,7 @@ extension UserListViewController: UISearchBarDelegate {
             self.filteredUsers = bookmarkedFilteredValues
             updateSnapshot(for: bookmarkedFilteredValues)
         } else {
+            self.filteredUsers = []
             updateSnapshot(for: User.sampleData)
         }
     }
@@ -170,9 +171,4 @@ extension UserListViewController: UISearchBarDelegate {
     @objc private func bookmark(){
         print("bookmark is tapped")
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        collectionView.reloadData()
-//    }
 }
