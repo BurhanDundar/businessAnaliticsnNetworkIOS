@@ -46,6 +46,7 @@
 		DBCECF9E29B37399009373FE /* BookmarkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkViewController.swift; sourceTree = "<group>"; };
 		DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+Action.swift"; sourceTree = "<group>"; };
+		DBF3340829B658270028CC73 /* todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = todo.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +95,7 @@
 				AAD0599228EC8D12004F4962 /* LaunchScreen.storyboard */,
 				AAD0599028EC8D12004F4962 /* Assets.xcassets */,
 				AAD0599528EC8D12004F4962 /* Info.plist */,
+				DBF3340829B658270028CC73 /* todo.md */,
 			);
 			path = Today;
 			sourceTree = "<group>";

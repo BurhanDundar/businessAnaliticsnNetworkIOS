@@ -8,29 +8,27 @@ import UIKit
 
 class UserListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
-         typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
 
+    
     
         var users: [User] = User.sampleData
         var filteredUsers: [User] = []
         var dataSource: DataSource!
         var isSearching: Bool = false
+        var listStyleSelectedIndex: Int = 0
+        var dynamicSearchText: String = ""
     
         // search bar
         var searchController: UISearchController!
+    
+        let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
     
          override func viewDidLoad() {
              
              navigationItem.title = "Members"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
-             //view = UIView()
-             //view.backgroundColor = .white
-             
-             //searchController = UISearchController()
-             //title = "search"
-             //searchController.searchResultsUpdater = self
-             //navigationItem.searchController = searchController
              
              lazy var searchController: UISearchController = {
                  let searchController = UISearchController(searchResultsController: nil)
@@ -49,7 +47,14 @@ class UserListViewController: UICollectionViewController {
              
              let cellRegistration = UICollectionView.CellRegistration {
                  (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
-                 let user = self.users[indexPath.item]
+                 var user: User!
+                 print(indexPath.item)
+                 if(self.listStyleSelectedIndex == 1) {
+                     user = self.filteredUsers[indexPath.item]
+                 } else if(self.listStyleSelectedIndex == 0) {
+                     user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
+                 }
+                 
                  var contentConfiguration = cell.defaultContentConfiguration()
                  contentConfiguration.text = user.full_name
                  contentConfiguration.secondaryText = user.title
@@ -69,6 +74,12 @@ class UserListViewController: UICollectionViewController {
                  return collectionView.dequeueConfiguredReusableCell(
                      using: cellRegistration, for: indexPath, item: itemIdentifier)
              }
+             
+             listStyleSegmentedControl.selectedSegmentIndex = listStyleSelectedIndex
+             listStyleSegmentedControl.addTarget(
+                self, action: #selector(didChangeListStyle(_:)), for: .valueChanged)
+             
+             navigationItem.titleView = listStyleSegmentedControl
              
              updateSnapshot(for: User.sampleData)
          }
@@ -104,34 +115,53 @@ class UserListViewController: UICollectionViewController {
          return UICollectionViewCompositionalLayout.list(using: listConfiguration)
      }
     
-    
-    
-    func updateSnapshot(for users: [User]){
+    func updateSnapshot(for pUsers: [User]){
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(users.map { $0.id })
+        snapshot.appendItems(pUsers.map { $0.id })
         dataSource.apply(snapshot)
         collectionView.dataSource = dataSource
     }
-    
-    
 }
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.dynamicSearchText = searchText
         if searchText.isEmpty {
             isSearching = false
-            updateSnapshot(for: User.sampleData)
+            if(listStyleSelectedIndex == 1){
+                let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
+                self.filteredUsers = bookmarkedFilteredValues
+                updateSnapshot(for: bookmarkedFilteredValues)
+            } else {
+                self.filteredUsers = []
+                updateSnapshot(for: self.users)
+            }
         } else {
             isSearching = true
-            filteredUsers = users.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
-            updateSnapshot(for: filteredUsers)
+            if(listStyleSelectedIndex == 1) {
+                var bookmarkedFilteredValues = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
+                self.filteredUsers = bookmarkedFilteredValues
+                updateSnapshot(for: bookmarkedFilteredValues)
+            } else if(listStyleSelectedIndex == 0) {
+                let allFilteredUsers = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                self.filteredUsers = allFilteredUsers
+                updateSnapshot(for: allFilteredUsers)
+            }
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
-        updateSnapshot(for: User.sampleData)
+        if(listStyleSelectedIndex == 1){
+            let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
+            self.filteredUsers = bookmarkedFilteredValues
+            updateSnapshot(for: bookmarkedFilteredValues)
+        } else {
+            self.filteredUsers = []
+            updateSnapshot(for: User.sampleData)
+        }
     }
     
     @objc private func filterMembers(){
@@ -140,14 +170,5 @@ extension UserListViewController: UISearchBarDelegate {
     
     @objc private func bookmark(){
         print("bookmark is tapped")
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        print("Murat Osman Ünalır users: ",users[0].isBookmarked)
-        print("Murat Osman Ünalır User.sampleData: ",User.sampleData[0].isBookmarked)
-        
-        collectionView.reloadData()
     }
 }
