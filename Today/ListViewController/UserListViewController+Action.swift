@@ -29,7 +29,6 @@ extension UserListViewController {
     }
     
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
-        print("isSearching: ", isSearching)
         // index -> 0: all, 1: bookmarked
         if(sender.selectedSegmentIndex == 0){
             self.listStyleSelectedIndex = 0

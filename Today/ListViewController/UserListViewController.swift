@@ -46,7 +46,15 @@ class UserListViewController: UICollectionViewController {
              
              let cellRegistration = UICollectionView.CellRegistration {
                  (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
-                 let user = self.users[indexPath.item]
+                 var user: User!
+                 print(indexPath.item)
+                 if(self.listStyleSelectedIndex == 1) {
+                     user = self.filteredUsers[indexPath.item]
+                 } else if(self.listStyleSelectedIndex == 0) {
+                     user = self.users[indexPath.item] //self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
+                 }
+                 
+                 
                  var contentConfiguration = cell.defaultContentConfiguration()
                  contentConfiguration.text = user.full_name
                  contentConfiguration.secondaryText = user.title
@@ -107,10 +115,10 @@ class UserListViewController: UICollectionViewController {
          return UICollectionViewCompositionalLayout.list(using: listConfiguration)
      }
     
-    func updateSnapshot(for users: [User]){
+    func updateSnapshot(for pUsers: [User]){
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(users.map { $0.id })
+        snapshot.appendItems(pUsers.map { $0.id })
         dataSource.apply(snapshot)
         collectionView.dataSource = dataSource
     }
@@ -118,6 +126,7 @@ class UserListViewController: UICollectionViewController {
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
         if searchText.isEmpty {
             isSearching = false
             if(listStyleSelectedIndex == 1){
@@ -130,15 +139,13 @@ extension UserListViewController: UISearchBarDelegate {
         } else {
             isSearching = true
             if(listStyleSelectedIndex == 1) {
-                
-                
-                
-                var bookmarkedFilteredValues = self.users.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                var bookmarkedFilteredValues = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
                 bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
                 self.filteredUsers = bookmarkedFilteredValues
+                print("self.filteredUsers -> ", self.filteredUsers)
                 updateSnapshot(for: bookmarkedFilteredValues)
-            } else {
-                var allFilteredUsers = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+            } else if(listStyleSelectedIndex == 0) {
+                let allFilteredUsers = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
                 self.filteredUsers = allFilteredUsers
                 updateSnapshot(for: allFilteredUsers)
             }
