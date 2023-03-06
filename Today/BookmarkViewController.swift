@@ -10,8 +10,6 @@ import UIKit
 class BookmarkViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view = UIView(frame: view.bounds)
-        
     }
 }
+
