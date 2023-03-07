@@ -42,7 +42,7 @@ extension UserListViewController {
                 updateSnapshot(for: searchBarFilterUsers)
             }
             collectionView.reloadData()
-            
+            	
         } else if(sender.selectedSegmentIndex == 1){
             self.listStyleSelectedIndex = 1
             if(self.dynamicSearchText == ""){
