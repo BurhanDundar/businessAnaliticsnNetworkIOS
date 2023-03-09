@@ -140,8 +140,8 @@ extension UserListViewController: UISearchBarDelegate {
         } else {
             isSearching = true
             if(listStyleSelectedIndex == 1) {
-                var bookmarkedFilteredValues = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
-                bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
+                var bookmarkedFilteredValues = self.filteredUsers.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
                 self.filteredUsers = bookmarkedFilteredValues
                 updateSnapshot(for: bookmarkedFilteredValues)
             } else if(listStyleSelectedIndex == 0) {
