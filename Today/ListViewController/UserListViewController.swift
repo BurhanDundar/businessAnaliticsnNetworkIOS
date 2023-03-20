@@ -48,11 +48,11 @@ class UserListViewController: UICollectionViewController {
              let cellRegistration = UICollectionView.CellRegistration {
                  (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
                  var user: User!
-                 print(indexPath.item)
                  if(self.listStyleSelectedIndex == 1) {
                      user = self.filteredUsers[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
-                     user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
+                     // ?
+                     user = self.filteredUsers.count > 0 ?  self.filteredUsers[indexPath.item] : self.users[indexPath.item]
                  }
                  
                  var contentConfiguration = cell.defaultContentConfiguration()
@@ -129,6 +129,7 @@ extension UserListViewController: UISearchBarDelegate {
         self.dynamicSearchText = searchText
         if searchText.isEmpty {
             isSearching = false
+            self.dynamicSearchText = ""
             if(listStyleSelectedIndex == 1){
                 let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
                 self.filteredUsers = bookmarkedFilteredValues
@@ -154,6 +155,7 @@ extension UserListViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
+        self.dynamicSearchText = ""
         if(listStyleSelectedIndex == 1){
             let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
             self.filteredUsers = bookmarkedFilteredValues

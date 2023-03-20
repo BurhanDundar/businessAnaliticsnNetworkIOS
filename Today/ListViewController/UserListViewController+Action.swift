@@ -31,7 +31,7 @@ extension UserListViewController {
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
         // index -> 0: all, 1: bookmarked
         if(sender.selectedSegmentIndex == 0){
-            
+            print("selfusers",self.users.count)
             self.listStyleSelectedIndex = 0
             if(self.dynamicSearchText == ""){
                 self.filteredUsers = []
