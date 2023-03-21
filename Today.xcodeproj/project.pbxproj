@@ -24,6 +24,9 @@
 		DBE888D029B2B68700E5B6F9 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */; };
 		DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */; };
 		E94E1FE429C8B40100C58B18 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE329C8B40100C58B18 /* Login.swift */; };
+		E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */; };
+		E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE729CA011100C58B18 /* CustomButton.swift */; };
+		E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +52,9 @@
 		DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+Action.swift"; sourceTree = "<group>"; };
 		DBF3340829B658270028CC73 /* todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = todo.md; sourceTree = "<group>"; };
 		E94E1FE329C8B40100C58B18 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		E94E1FE729CA011100C58B18 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +98,9 @@
 				DBCECF9C29B37311009373FE /* TabBarController.swift */,
 				DBCECF9E29B37399009373FE /* BookmarkViewController.swift */,
 				E94E1FE329C8B40100C58B18 /* Login.swift */,
+				E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */,
+				E94E1FE729CA011100C58B18 /* CustomButton.swift */,
+				E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */,
 				DB3111C6299649D90058A3A9 /* DetailViewController */,
 				DB3111C9299653FE0058A3A9 /* ListViewController */,
 				AAD0598D28EC8D10004F4962 /* Main.storyboard */,
@@ -210,10 +219,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */,
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
 				DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */,
 				E94E1FE429C8B40100C58B18 /* Login.swift in Sources */,
 				DBCECF9D29B37311009373FE /* TabBarController.swift in Sources */,
+				E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */,
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
 				DBCECF9F29B37399009373FE /* BookmarkViewController.swift in Sources */,
 				DBE888D029B2B68700E5B6F9 /* FilterViewController.swift in Sources */,
@@ -223,6 +234,7 @@
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,
 				AAD0598A28EC8D10004F4962 /* SceneDelegate.swift in Sources */,
 				AAD059C428ECC017004F4962 /* User.swift in Sources */,
+				E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
