@@ -23,11 +23,12 @@ class Login: UIViewController {
         super.viewDidLoad()
         self.setupUI()
         
+        registerBtn.addTarget(self, action: #selector(goToRegisterPage), for: .touchUpInside)
     }
     
     private func setupUI(){
         self.view.backgroundColor = .systemBackground
-        
+
         self.view.addSubview(authHeader)
         self.view.addSubview(email)
         self.view.addSubview(password)
@@ -76,6 +77,10 @@ class Login: UIViewController {
             self.forgotPassBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85)
             
         ])
+    }
+    
+    @objc private func goToRegisterPage(){
+        navigationController?.pushViewController(Register(), animated: true)
     }
     
 }

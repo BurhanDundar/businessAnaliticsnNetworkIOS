@@ -27,6 +27,8 @@
 		E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */; };
 		E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE729CA011100C58B18 /* CustomButton.swift */; };
 		E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */; };
+		E94E1FEC29CB3EC400C58B18 /* Register.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FEB29CB3EC400C58B18 /* Register.swift */; };
+		E94E1FF429CB4D8F00C58B18 /* WebViewerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FF329CB4D1300C58B18 /* WebViewerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +57,8 @@
 		E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		E94E1FE729CA011100C58B18 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHeaderView.swift; sourceTree = "<group>"; };
+		E94E1FEB29CB3EC400C58B18 /* Register.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Register.swift; sourceTree = "<group>"; };
+		E94E1FF329CB4D1300C58B18 /* WebViewerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewerController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,19 +94,14 @@
 		AAD0598628EC8D10004F4962 /* Today */ = {
 			isa = PBXGroup;
 			children = (
-				AAD059C228ECBFAA004F4962 /* Models */,
+				E94E1FEF29CB4C7500C58B18 /* Controller */,
+				AAD059C228ECBFAA004F4962 /* Model */,
+				E94E1FF129CB4CC200C58B18 /* View */,
 				AAD0598728EC8D10004F4962 /* AppDelegate.swift */,
 				DB3111CC2996AC810058A3A9 /* Extension.swift */,
 				AAD0598928EC8D10004F4962 /* SceneDelegate.swift */,
-				DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */,
 				DBCECF9C29B37311009373FE /* TabBarController.swift */,
-				DBCECF9E29B37399009373FE /* BookmarkViewController.swift */,
-				E94E1FE329C8B40100C58B18 /* Login.swift */,
-				E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */,
-				E94E1FE729CA011100C58B18 /* CustomButton.swift */,
-				E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */,
-				DB3111C6299649D90058A3A9 /* DetailViewController */,
-				DB3111C9299653FE0058A3A9 /* ListViewController */,
+				E94E1FF329CB4D1300C58B18 /* WebViewerController.swift */,
 				AAD0598D28EC8D10004F4962 /* Main.storyboard */,
 				AAD0599228EC8D12004F4962 /* LaunchScreen.storyboard */,
 				AAD0599028EC8D12004F4962 /* Assets.xcassets */,
@@ -120,13 +119,13 @@
 			path = Configuration;
 			sourceTree = "<group>";
 		};
-		AAD059C228ECBFAA004F4962 /* Models */ = {
+		AAD059C228ECBFAA004F4962 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				AAD059C328ECC017004F4962 /* User.swift */,
 				DB27A820299BCB91004219B3 /* Skill.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		DB3111C6299649D90058A3A9 /* DetailViewController */ = {
@@ -145,6 +144,29 @@
 				DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */,
 			);
 			path = ListViewController;
+			sourceTree = "<group>";
+		};
+		E94E1FEF29CB4C7500C58B18 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				DB3111C9299653FE0058A3A9 /* ListViewController */,
+				DB3111C6299649D90058A3A9 /* DetailViewController */,
+				E94E1FEB29CB3EC400C58B18 /* Register.swift */,
+				E94E1FE329C8B40100C58B18 /* Login.swift */,
+				DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */,
+				DBCECF9E29B37399009373FE /* BookmarkViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		E94E1FF129CB4CC200C58B18 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E94E1FE729CA011100C58B18 /* CustomButton.swift */,
+				E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */,
+				E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */,
+				E94E1FEC29CB3EC400C58B18 /* Register.swift in Sources */,
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
 				DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */,
 				E94E1FE429C8B40100C58B18 /* Login.swift in Sources */,
@@ -234,6 +257,7 @@
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,
 				AAD0598A28EC8D10004F4962 /* SceneDelegate.swift in Sources */,
 				AAD059C428ECC017004F4962 /* User.swift in Sources */,
+				E94E1FF429CB4D8F00C58B18 /* WebViewerController.swift in Sources */,
 				E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
