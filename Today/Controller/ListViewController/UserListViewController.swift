@@ -87,7 +87,7 @@ class UserListViewController: UICollectionViewController {
     override func collectionView(
         _ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        let id = isSearching ? filteredUsers[indexPath.item].id : users[indexPath.item].id
+        let id = filteredUsers.count > 0 ? filteredUsers[indexPath.item].id : users[indexPath.item].id
         pushDetailViewForUser(withId: id)
         return false
     }
@@ -133,7 +133,7 @@ extension UserListViewController: UISearchBarDelegate {
             if(listStyleSelectedIndex == 1){
                 let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
                 self.filteredUsers = bookmarkedFilteredValues
-                updateSnapshot(for: bookmarkedFilteredValues)
+                updateSnapshot(for: self.filteredUsers)
             } else {
                 self.filteredUsers = []
                 updateSnapshot(for: self.users)
