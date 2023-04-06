@@ -1,4 +1,3 @@
 #  Yapılacaklar
-1. Send Commit everyday
-2.  Proje icerigine gore tez raporu hazırlanacak
-3. Login sistemi kurulacak
+1. Kod duzenlenecek (detailpage button component olacak)
+2. UIScrollView gereken sayfalara entegre edilecek

@@ -16,7 +16,7 @@ extension UserListViewController {
         viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done, target: self, action: #selector(didDoneAdd(_:)))
         let navigationController = UINavigationController(rootViewController: viewController)
-        present(viewController, animated: true)
+        present(navigationController, animated: true)
         
     }
     

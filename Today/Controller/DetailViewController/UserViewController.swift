@@ -31,8 +31,12 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     var titleLabel: UILabel!
     var connectionCount: UILabel!
     var location: UILabel!
-    var button: UIButton!
+    var skillsButton: UIButton!
     var systemImageName: String!
+    var educationsButton: UIButton!
+    var experiencesButton: UIButton!
+    var languagesButton: UIButton!
+    
     
     lazy var fetchedImageView: UIImageView = {
         let iv = UIImageView()
@@ -124,22 +128,65 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             titleLabel.topAnchor.constraint(equalTo: location.bottomAnchor,constant: 10),
             titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
                 ])
-        button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Skills", for: .normal)
-        //button.backgroundColor = .green
-        button.setTitleColor(.red, for: .normal)
-        button.setTitleColor(.blue, for: .highlighted)
-        button.addTarget(self, action: #selector(skillsNavigation), for: .touchUpInside)
+        skillsButton = UIButton()
+        skillsButton.translatesAutoresizingMaskIntoConstraints = false
+        skillsButton.setTitle("Skills", for: .normal)
+        skillsButton.setTitleColor(.blue, for: .normal)
+        skillsButton.setTitleColor(.blue, for: .highlighted)
+        skillsButton.addTarget(self, action: #selector(skillsNavigation), for: .touchUpInside)
         
-        view.addSubview(button)
+        view.addSubview(skillsButton)
         
         NSLayoutConstraint.activate([
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 40),
-            button.widthAnchor.constraint(equalToConstant: 150)
+            skillsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            skillsButton.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,constant: 10),
+            skillsButton.widthAnchor.constraint(equalToConstant: 150)
+        ])
+        
+        educationsButton = UIButton()
+        educationsButton.translatesAutoresizingMaskIntoConstraints = false
+        educationsButton.setTitle("Educations", for: .normal)
+        educationsButton.setTitleColor(.blue, for: .normal)
+        educationsButton.setTitleColor(.blue, for: .highlighted)
+        educationsButton.addTarget(self, action: #selector(educationsNavigation), for: .touchUpInside)
+        
+        view.addSubview(educationsButton)
+        
+        NSLayoutConstraint.activate([
+            educationsButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            educationsButton.topAnchor.constraint(equalTo: skillsButton.bottomAnchor,constant: 10),
+            educationsButton.widthAnchor.constraint(equalToConstant: 150)
+        ])
+        
+        experiencesButton = UIButton()
+        experiencesButton.translatesAutoresizingMaskIntoConstraints = false
+        experiencesButton.setTitle("Experiences", for: .normal)
+        experiencesButton.setTitleColor(.blue, for: .normal)
+        experiencesButton.setTitleColor(.blue, for: .highlighted)
+        experiencesButton.addTarget(self, action: #selector(experiencesNavigation), for: .touchUpInside)
+        
+        view.addSubview(experiencesButton)
+        
+        NSLayoutConstraint.activate([
+            experiencesButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            experiencesButton.topAnchor.constraint(equalTo: educationsButton.bottomAnchor,constant: 10),
+            experiencesButton.widthAnchor.constraint(equalToConstant: 150)
         ])
 
+        languagesButton = UIButton()
+        languagesButton.translatesAutoresizingMaskIntoConstraints = false
+        languagesButton.setTitle("Languages", for: .normal)
+        languagesButton.setTitleColor(.blue, for: .normal)
+        languagesButton.setTitleColor(.blue, for: .highlighted)
+        languagesButton.addTarget(self, action: #selector(languagesNavigation), for: .touchUpInside)
+        
+        view.addSubview(languagesButton)
+        
+        NSLayoutConstraint.activate([
+            languagesButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            languagesButton.topAnchor.constraint(equalTo: experiencesButton.bottomAnchor,constant: 10),
+            languagesButton.widthAnchor.constraint(equalToConstant: 150)
+        ])
     }
     
     override func viewDidLoad() {
@@ -157,9 +204,20 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     }
     
     @objc func skillsNavigation(){
-        print("merhaba")
+        navigationController?.pushViewController(SkillsViewController(), animated: true)
     }
     
+    @objc func educationsNavigation(){
+        navigationController?.pushViewController(EducationsViewController(), animated: true)
+    }
+    
+    @objc func experiencesNavigation(){
+        navigationController?.pushViewController(ExperiencesViewController(), animated: true)
+    }
+    
+    @objc func languagesNavigation(){
+        navigationController?.pushViewController(LanguagesViewController(), animated: true)
+    }
     private func loadFetchedImage(for url: String){
         fetchedImageView.loadImage(url)
     }

@@ -147,6 +147,22 @@
             </objects>
             <point key="canvasLocation" x="-335.1145038167939" y="-1195.0704225352113"/>
         </scene>
+        <!--Skills View Controller-->
+        <scene sceneID="aoh-BO-eul">
+            <objects>
+                <viewController id="kUO-cv-tOn" customClass="SkillsViewController" customModule="Today" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="J9w-Ch-bdh">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="O9M-pp-NbD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zHA-SS-uPd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hAT-sv-hSL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1417.5572519083969" y="128.87323943661971"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
