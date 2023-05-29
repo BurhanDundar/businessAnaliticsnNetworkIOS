@@ -7,6 +7,11 @@
 
 import UIKit
 
+struct LoginResponseModel: Codable {
+    var status: String
+    var msg: String
+}
+
 class Login: UIViewController {
     var text: UILabel!
     
@@ -14,15 +19,19 @@ class Login: UIViewController {
     private let password = CustomTextField(fieldType: .password)
     
     private let signInBtn = CustomButton(title: "Sign In", hasBackground: true, fontSize: .med)
+    private var signInResponse: LoginResponseModel = LoginResponseModel(status: "", msg: "")
+    
     private let registerBtn = CustomButton(title: "Create Account" , fontSize: .small)
     private let forgotPassBtn = CustomButton(title: "Forgot Password", fontSize: .small)
     
     private let authHeader = AuthHeaderView(title: "Sign In", subTitle: "Sign in to your account")
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
         
+        signInBtn.addTarget(self, action: #selector(goToMainPage), for: .touchUpInside)
         registerBtn.addTarget(self, action: #selector(goToRegisterPage), for: .touchUpInside)
     }
     
@@ -80,8 +89,65 @@ class Login: UIViewController {
     }
     
     @objc private func goToRegisterPage(){
-        navigationController?.pushViewController(Register(), animated: true)
+        print("go to register")
+        self.navigationController?.pushViewController(Register(), animated: true)
     }
+    
+    @objc private func goToMainPage(){
+        let vc = TabBarController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func loginRequest(){
+            let stringURL = "http://192.168.1.7:3001/auth/login"
+            
+            let params = [
+                "email": self.email.text, //"dundarburhann@gmail.com",
+                "password": self.password.text //"123456"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let loginRes = try decoder.decode(LoginResponseModel.self, from: data)
+                    DispatchQueue.main.async {
+                        self.signInResponse = loginRes
+                    }
+                    print(loginRes)
+                    
+                    if self.signInResponse.status == "ok" {
+                        print("Giriş başarılı")
+                        /*DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "LoginToSystem", sender: self)
+                        }*/
+                        
+                    } else {
+                        print("Giriş başarısız")
+                    }
+                    
+                } catch {
+                    print("Hatalı Giriş")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
     
 }
 

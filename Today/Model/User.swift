@@ -50,3 +50,30 @@ extension User{
     ]
 }
 #endif
+
+/*
+ func getUsers(completion: @escaping ([User]?)->Void){
+     
+     let stringURL = "http://localhost:3001/user"
+     
+     guard let url = URL(string: stringURL) else { return }
+     
+     let session = URLSession.shared.dataTask(with: url) { data, response, error in
+         
+         if let error = error {
+             print("there was an error: \(error.localizedDescription)")
+         }
+         
+         guard let data = data else { return }
+         
+         do {
+             let decoder = JSONDecoder()
+             let response = try decoder.decode([User].self, from: data)
+             completion(response)
+         } catch {
+             print("Error Occured!")
+         }
+     }
+     session.resume()
+ }
+ */
