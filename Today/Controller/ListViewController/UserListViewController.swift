@@ -9,8 +9,6 @@ import UIKit
 class UserListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
-
-    
     
         var users: [User] = User.sampleData
         var filteredUsers: [User] = []
@@ -25,7 +23,6 @@ class UserListViewController: UICollectionViewController {
         let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
     
          override func viewDidLoad() {
-             
              navigationItem.title = "Members"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
@@ -81,7 +78,10 @@ class UserListViewController: UICollectionViewController {
              
              navigationItem.titleView = listStyleSegmentedControl
              
+                          
              updateSnapshot(for: User.sampleData)
+             
+             self.getUsers()
          }
     
     override func collectionView(
@@ -122,6 +122,35 @@ class UserListViewController: UICollectionViewController {
         dataSource.apply(snapshot)
         collectionView.dataSource = dataSource
     }
+    
+    private func getUsers(){
+        
+       let stringURL = "http://192.168.0.102:3001/user"
+        
+        guard let url = URL(string: stringURL) else { return }
+        let session = URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("there was an error: \(error.localizedDescription)")
+            }
+            
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                let users = try decoder.decode([User].self, from: data)
+                print(users)
+                DispatchQueue.main.async {
+                    self.users = users
+                    self.collectionView.reloadData()
+                    self.updateSnapshot(for: self.users)
+                }
+            } catch {
+                print("Error Occured!")
+            }
+            
+        }
+        session.resume()
+    }
 }
 
 extension UserListViewController: UISearchBarDelegate {
@@ -141,7 +170,7 @@ extension UserListViewController: UISearchBarDelegate {
         } else {
             isSearching = true
             if(listStyleSelectedIndex == 1) {
-                var bookmarkedFilteredValues = self.filteredUsers.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                let bookmarkedFilteredValues = self.filteredUsers.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
                 // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
                 self.filteredUsers = bookmarkedFilteredValues
                 updateSnapshot(for: bookmarkedFilteredValues)
@@ -173,4 +202,5 @@ extension UserListViewController: UISearchBarDelegate {
     @objc private func bookmark(){
         print("bookmark is tapped")
     }
+    
 }

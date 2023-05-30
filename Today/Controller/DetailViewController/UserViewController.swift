@@ -65,7 +65,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             fetchedImageView.heightAnchor.constraint(equalToConstant: 200)
         ])
         
-        loadFetchedImage(for: user.image)
+        loadFetchedImage(for: user.image ?? "")
     
         // Name
         nameLabel = UILabel()

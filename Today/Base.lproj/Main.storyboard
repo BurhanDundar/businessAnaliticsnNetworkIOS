@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MsM-E0-1bJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Orz-Pj-nbB">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -21,7 +21,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="6wq-yr-aAh" kind="relationship" relationship="viewControllers" id="tZu-2i-QU2"/>
+                        <segue destination="FXI-K4-rTy" kind="relationship" relationship="viewControllers" id="tZu-2i-QU2"/>
                         <segue destination="NTc-EQ-NkE" kind="relationship" relationship="viewControllers" id="oIS-ai-C1y"/>
                     </connections>
                 </tabBarController>
@@ -44,9 +44,9 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhw-dU-Cgn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1182" y="247"/>
+            <point key="canvasLocation" x="-1663" y="304"/>
         </scene>
-        <!--Item-->
+        <!--User List View Controller-->
         <scene sceneID="x9N-uN-YeI">
             <objects>
                 <collectionViewController id="6wq-yr-aAh" customClass="UserListViewController" customModule="Today" customModuleProvider="target" sceneMemberID="viewController">
@@ -75,12 +75,11 @@
                             <outlet property="delegate" destination="6wq-yr-aAh" id="S9O-Og-C7j"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Item" image="house" catalog="system" id="CGV-K4-XjM"/>
                     <navigationItem key="navigationItem" id="Yw0-Un-4Qr"/>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9v-sQ-hAq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="689.3129770992366" y="-499.29577464788736"/>
+            <point key="canvasLocation" x="1570.2290076335878" y="-444.36619718309862"/>
         </scene>
         <!--Login-->
         <scene sceneID="1jb-7X-eid">
@@ -94,7 +93,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="PGn-z1-IUT"/>
                     <connections>
-                        <segue destination="Orz-Pj-nbB" kind="show" identifier="loginToSystem" id="koR-ra-qEd"/>
+                        <segue destination="Orz-Pj-nbB" kind="show" identifier="LoginToTabBar" id="koR-ra-qEd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X0z-tv-maB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -153,32 +152,29 @@
             </objects>
             <point key="canvasLocation" x="-1408" y="-1195"/>
         </scene>
-        <!--Item-->
-        <scene sceneID="hK3-Ia-Dz3">
+        <!--Home-->
+        <scene sceneID="MLZ-j9-Q4c">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="smj-Yh-6vq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CeI-D3-dG0" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" image="house" catalog="system" id="SYU-Bu-4CM"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FXI-K4-rTy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="CGV-K4-XjM"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gfX-cX-cjh">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mfS-3i-rRx">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="6wq-yr-aAh" kind="relationship" relationship="rootViewController" id="nCo-rq-axM"/>
+                        <segue destination="6wq-yr-aAh" kind="relationship" relationship="rootViewController" id="Fpp-ut-rP6"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nQ6-nt-YkW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-225" y="-103"/>
+            <point key="canvasLocation" x="643.51145038167931" y="-444.36619718309862"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="tZu-2i-QU2"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="bookmark.fill" catalog="system" width="110" height="128"/>
-        <image name="house" catalog="system" width="128" height="104"/>
+        <image name="house.fill" catalog="system" width="128" height="104"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

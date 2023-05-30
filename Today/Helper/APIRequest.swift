@@ -55,7 +55,9 @@ struct APIRequest {
 }
 
 /*
- func getData(from stringURL: String){
+ func getData(){
+ 
+    let stringURL = "http://192.168.2.62:3001/user"
      
      guard let url = URL(string: stringURL) else { return }
      let session = URLSession.shared.dataTask(with: url) { data, response, error in
