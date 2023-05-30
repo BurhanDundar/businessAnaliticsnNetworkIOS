@@ -31,7 +31,7 @@ class Login: UIViewController {
         super.viewDidLoad()
         self.setupUI()
         
-        signInBtn.addTarget(self, action: #selector(goToMainPage), for: .touchUpInside)
+        signInBtn.addTarget(self, action: #selector(loginRequest), for: .touchUpInside)
         registerBtn.addTarget(self, action: #selector(goToRegisterPage), for: .touchUpInside)
     }
     
@@ -89,17 +89,19 @@ class Login: UIViewController {
     }
     
     @objc private func goToRegisterPage(){
-        print("go to register")
-        self.navigationController?.pushViewController(Register(), animated: true)
+        /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Register")
+        self.present(vc, animated: true)*/
+        
+        navigationController?.pushViewController(Register(), animated: true)
     }
     
     @objc private func goToMainPage(){
-        let vc = TabBarController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        performSegue(withIdentifier: "loginToSystem", sender: nil)
     }
     
     @objc private func loginRequest(){
-            let stringURL = "http://192.168.1.7:3001/auth/login"
+            let stringURL = "http://192.168.2.60:3001/auth/login"
             
             let params = [
                 "email": self.email.text, //"dundarburhann@gmail.com",
@@ -131,10 +133,9 @@ class Login: UIViewController {
                     
                     if self.signInResponse.status == "ok" {
                         print("Giriş başarılı")
-                        /*DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: "LoginToSystem", sender: self)
-                        }*/
-                        
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: "loginToSystem", sender: self)
+                        }
                     } else {
                         print("Giriş başarısız")
                     }
