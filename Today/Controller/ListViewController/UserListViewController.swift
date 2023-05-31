@@ -23,6 +23,7 @@ class UserListViewController: UICollectionViewController {
         let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
     
          override func viewDidLoad() {
+             self.getUsers()
              navigationItem.title = "Members"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
@@ -80,14 +81,12 @@ class UserListViewController: UICollectionViewController {
              
                           
              updateSnapshot(for: User.sampleData)
-             
-             self.getUsers()
          }
     
     override func collectionView(
         _ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        let id = isSearching ? filteredUsers[indexPath.item].id : users[indexPath.item].id
+        let id = filteredUsers.count > 0 ? filteredUsers[indexPath.item].id : users[indexPath.item].id // isSearching?
         pushDetailViewForUser(withId: id)
         return false
     }
@@ -98,8 +97,8 @@ class UserListViewController: UICollectionViewController {
     }
     
     internal func updateUser(_ user: User) {
-           let index = users.indexOfUser(withId: user.id)
-           users[index] = user
+            let index = self.users.indexOfUser(withId: user.id)
+            self.users[index] = user
        }
     
     func pushDetailViewForUser(withId id:User.ID){
@@ -125,7 +124,7 @@ class UserListViewController: UICollectionViewController {
     
     private func getUsers(){
         
-       let stringURL = "http://192.168.0.102:3001/user"
+       let stringURL = "http://10.22.154.156:3001/user"
         
         guard let url = URL(string: stringURL) else { return }
         let session = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -138,9 +137,10 @@ class UserListViewController: UICollectionViewController {
             do {
                 let decoder = JSONDecoder()
                 let users = try decoder.decode([User].self, from: data)
-                print(users)
                 DispatchQueue.main.async {
                     self.users = users
+                    User.sampleData = self.users
+                    self.filteredUsers = []
                     self.collectionView.reloadData()
                     self.updateSnapshot(for: self.users)
                 }

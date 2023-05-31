@@ -27,7 +27,8 @@ extension [User] {
 
 #if DEBUG
 extension User{
-    static var sampleData = [
+    static var sampleData: [User] = [User]()
+    /*[
         User(full_name: "Murat Osman Ünalır",
             title: "Prof.Dr. at Department of Computer Engineering, Ege University",
             image: "https://media.licdn.com/dms/image/C4D03AQFBJms9OsMrCg/profile-displayphoto-shrink_400_400/0/1636138737205?e=1681344000&v=beta&t=o8IBOg-QnfGZmv50p5pK0FIo86yOeMr-if4I_BqbTB0",
@@ -42,7 +43,7 @@ extension User{
             about: "",
             connection_count: "500+",
             location: "İzmir, Türkiye")
-    ]
+    ]*/
 }
 #endif
 

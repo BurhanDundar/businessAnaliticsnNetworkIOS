@@ -7,6 +7,8 @@
 
 import Foundation
 
-struct Skill {
+struct Skill:Codable {
+    var _id: String? // aslında buna ihtiyaç yok
     var title: String
+    var user_id: String
 }

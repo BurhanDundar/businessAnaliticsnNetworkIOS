@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22262B1C2A27423700B7DBCF /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1B2A27423700B7DBCF /* Experience.swift */; };
+		22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1E2A27481600B7DBCF /* SubExperience.swift */; };
+		22262B212A27491300B7DBCF /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B202A27491300B7DBCF /* Education.swift */; };
+		22262B232A27491F00B7DBCF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B222A27491F00B7DBCF /* Course.swift */; };
+		22262B252A276D4200B7DBCF /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B242A276D4200B7DBCF /* Language.swift */; };
 		22758A882A20EC000028DD17 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22758A872A20EC000028DD17 /* APIRequest.swift */; };
 		AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD0598728EC8D10004F4962 /* AppDelegate.swift */; };
 		AAD0598A28EC8D10004F4962 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD0598928EC8D10004F4962 /* SceneDelegate.swift */; };
@@ -33,6 +38,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22262B1B2A27423700B7DBCF /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
+		22262B1E2A27481600B7DBCF /* SubExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubExperience.swift; sourceTree = "<group>"; };
+		22262B202A27491300B7DBCF /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
+		22262B222A27491F00B7DBCF /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		22262B242A276D4200B7DBCF /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		22758A872A20EC000028DD17 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		AAD0598428EC8D10004F4962 /* Today.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Today.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAD0598728EC8D10004F4962 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +144,11 @@
 			children = (
 				AAD059C328ECC017004F4962 /* User.swift */,
 				DB27A820299BCB91004219B3 /* Skill.swift */,
+				22262B1B2A27423700B7DBCF /* Experience.swift */,
+				22262B1E2A27481600B7DBCF /* SubExperience.swift */,
+				22262B202A27491300B7DBCF /* Education.swift */,
+				22262B222A27491F00B7DBCF /* Course.swift */,
+				22262B242A276D4200B7DBCF /* Language.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -267,8 +282,13 @@
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,
+				22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */,
+				22262B212A27491300B7DBCF /* Education.swift in Sources */,
+				22262B1C2A27423700B7DBCF /* Experience.swift in Sources */,
+				22262B232A27491F00B7DBCF /* Course.swift in Sources */,
 				AAD0598A28EC8D10004F4962 /* SceneDelegate.swift in Sources */,
 				AAD059C428ECC017004F4962 /* User.swift in Sources */,
+				22262B252A276D4200B7DBCF /* Language.swift in Sources */,
 				E94E1FF429CB4D8F00C58B18 /* WebViewerController.swift in Sources */,
 				E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */,
 			);

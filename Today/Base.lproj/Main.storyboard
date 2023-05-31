@@ -29,7 +29,7 @@
             </objects>
             <point key="canvasLocation" x="-1663" y="-444"/>
         </scene>
-        <!--Bookmarks-->
+        <!--Companies-->
         <scene sceneID="TVM-bm-AQ3">
             <objects>
                 <viewController id="NTc-EQ-NkE" customClass="BookmarkViewController" customModule="Today" customModuleProvider="target" sceneMemberID="viewController">
@@ -39,7 +39,7 @@
                         <viewLayoutGuide key="safeArea" id="tRz-lV-u58"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Bookmarks" image="bookmark.fill" catalog="system" id="u0F-vJ-CD8"/>
+                    <tabBarItem key="tabBarItem" title="Companies" image="building.2.fill" catalog="system" id="u0F-vJ-CD8"/>
                     <navigationItem key="navigationItem" id="8r7-De-wPb"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zhw-dU-Cgn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -152,11 +152,11 @@
             </objects>
             <point key="canvasLocation" x="-1408" y="-1195"/>
         </scene>
-        <!--Home-->
+        <!--Users-->
         <scene sceneID="MLZ-j9-Q4c">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="FXI-K4-rTy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="house.fill" catalog="system" id="CGV-K4-XjM"/>
+                    <tabBarItem key="tabBarItem" title="Users" image="person.and.person.fill" catalog="system" id="CGV-K4-XjM"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mfS-3i-rRx">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
@@ -173,8 +173,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bookmark.fill" catalog="system" width="110" height="128"/>
-        <image name="house.fill" catalog="system" width="128" height="104"/>
+        <image name="building.2.fill" catalog="system" width="128" height="108"/>
+        <image name="person.and.person.fill" catalog="system" width="128" height="81"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
