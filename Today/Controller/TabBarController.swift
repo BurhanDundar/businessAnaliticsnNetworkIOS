@@ -11,8 +11,8 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let homeViewController = UserListViewController()
-        let bookmarkViewController = BookmarkViewController()
+        let homeViewController = UserListViewController(comesFrom: "Login")
+        let bookmarkViewController = CompanyListViewController()
         
         homeViewController.title = "home"
         bookmarkViewController.title = "bookmarks"

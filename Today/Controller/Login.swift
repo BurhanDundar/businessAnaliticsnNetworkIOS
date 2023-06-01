@@ -101,7 +101,7 @@ class Login: UIViewController {
     }
     
     @objc private func loginRequest(){
-            let stringURL = "http://10.22.154.156:3001/auth/login"
+            let stringURL = "http://192.168.0.102:3001/auth/login"
             
             let params = [
                 "email": self.email.text, //"dundarburhann@gmail.com",

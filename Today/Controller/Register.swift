@@ -171,7 +171,7 @@ class Register: UIViewController{
     }
     
     @objc private func registerRequest(){
-            let stringURL = "http://10.22.154.156:3001/auth/signup"
+            let stringURL = "http://192.168.0.102:3001/auth/signup"
             
             let params = [
                 "name": self.name.text,

@@ -180,7 +180,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     }
     
     private func getUserSkills(){
-            let stringURL = "http://10.22.154.156:3001/skill/getUserSkills"
+            let stringURL = "http://192.168.0.102:3001/skill/getUserSkills"
             
             let params = [
                 "user_id": self.user.id
@@ -229,7 +229,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             session.resume()
         }
     private func getUserExperiences(){
-            let stringURL = "http://10.22.154.156:3001/experience/getUserExperiences"
+            let stringURL = "http://192.168.0.102:3001/experience/getUserExperiences"
             
             let params = [
                 "user_id": self.user.id
@@ -278,7 +278,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             session.resume()
         }
     private func getUserEducations(){
-            let stringURL = "http://10.22.154.156:3001/education/getUserEducations"
+            let stringURL = "http://192.168.0.102:3001/education/getUserEducations"
             
             let params = [
                 "user_id": self.user.id
@@ -328,7 +328,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         }
     
     private func getUserCourses(){
-            let stringURL = "http://10.22.154.156:3001/course/getUserCourses"
+            let stringURL = "http://192.168.0.102:3001/course/getUserCourses"
             
             let params = [
                 "user_id": self.user.id
@@ -378,7 +378,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         }
     
     private func getUserLanguages(){
-            let stringURL = "http://10.22.154.156:3001/skill/getUserLanguages"
+            let stringURL = "http://192.168.0.102:3001/skill/getUserLanguages"
             
             let params = [
                 "user_id": self.user.id

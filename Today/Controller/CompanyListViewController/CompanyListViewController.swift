@@ -1,17 +1,18 @@
-/*
- See LICENSE folder for this sample’s licensing information.
- */
-
-// filtre sisteminden pek emin değilim
+//
+//  CompanyListViewController.swift
+//  Today
+//
+//  Created by Yapı Kredi Teknoloji A.Ş. on 31.05.2023.
+//
 
 import UIKit
 
-class UserListViewController: UICollectionViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
+class CompanyListViewController: UICollectionViewController {
+    typealias DataSource = UICollectionViewDiffableDataSource<Int, Company.ID>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Company.ID>
     
-        var users: [User] = User.sampleData
-        var filteredUsers: [User] = []
+        var companies: [Company] = Company.sampleData
+        var filteredCompanies: [Company] = []
         var dataSource: DataSource!
         var isSearching: Bool = false
         var listStyleSelectedIndex: Int = 0
@@ -22,9 +23,22 @@ class UserListViewController: UICollectionViewController {
     
         let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
     
+    
+        lazy var fetchedImageView: UIImageView = {
+            let iv = UIImageView()
+            iv.translatesAutoresizingMaskIntoConstraints = false
+            iv.layer.masksToBounds = false
+            iv.contentMode = .scaleAspectFill
+            iv.backgroundColor = .orange
+            iv.layer.borderWidth = 1
+            iv.layer.borderColor = UIColor.blue.cgColor
+            iv.layer.cornerRadius = iv.frame.size.height/2
+            iv.clipsToBounds = true
+            return iv
+        }()
          override func viewDidLoad() {
-             self.getUsers()
-             navigationItem.title = "Members"
+             self.getCompanies()
+             navigationItem.title = "Companies"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
              
@@ -44,20 +58,23 @@ class UserListViewController: UICollectionViewController {
              collectionView.collectionViewLayout = listLayout
              
              let cellRegistration = UICollectionView.CellRegistration {
-                 (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
-                 var user: User!
+                 (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: Company.ID) in
+                 var company: Company!
                  if(self.listStyleSelectedIndex == 1) {
-                     user = self.filteredUsers[indexPath.item]
+                     company = self.filteredCompanies[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
                      // ?
-                     user = self.filteredUsers.count > 0 ?  self.filteredUsers[indexPath.item] : self.users[indexPath.item]
+                     company = self.filteredCompanies.count > 0 ?  self.filteredCompanies[indexPath.item] : self.companies[indexPath.item]
                  }
                  
                  var contentConfiguration = cell.defaultContentConfiguration()
-                 contentConfiguration.text = user.full_name
-                 contentConfiguration.secondaryText = user.title
+                 contentConfiguration.text = company.name
+                 contentConfiguration.secondaryText = company.type
                  
-                 let systemImageName = user.isBookmarked ? "bookmark.fill" :  "bookmark"
+                 contentConfiguration.image = UIImage(systemName: "building.fill")
+                 
+                 
+                 let systemImageName = company.isBookmarked ? "bookmark.fill" :  "bookmark"
                  
                  let customAccessory = UICellAccessory.CustomViewConfiguration(
                    customView: UIImageView(image: UIImage(systemName: systemImageName)),
@@ -68,7 +85,7 @@ class UserListViewController: UICollectionViewController {
              }
 
              dataSource = DataSource(collectionView: collectionView) {
-                 (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: User.ID) in
+                 (collectionView: UICollectionView, indexPath: IndexPath, itemIdentifier: Company.ID) in
                  return collectionView.dequeueConfiguredReusableCell(
                      using: cellRegistration, for: indexPath, item: itemIdentifier)
              }
@@ -80,31 +97,44 @@ class UserListViewController: UICollectionViewController {
              navigationItem.titleView = listStyleSegmentedControl
              
                           
-             updateSnapshot(for: User.sampleData)
+             updateSnapshot(for: Company.sampleData)
          }
     
     override func collectionView(
         _ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        let id = filteredUsers.count > 0 ? filteredUsers[indexPath.item].id : users[indexPath.item].id // isSearching?
-        pushDetailViewForUser(withId: id)
+        let id = filteredCompanies.count > 0 ? filteredCompanies[indexPath.item].id : companies[indexPath.item].id // isSearching?
+        pushDetailViewForCompany(withId: id)
         return false
     }
     
-    func user(withId id: User.ID) -> User {
-        let index = users.indexOfUser(withId: id)
-        return users[index]
+    func company(withId id: Company.ID) -> Company {
+        let index = companies.indexOfCompany(withId: id)
+        return companies[index]
     }
     
-    internal func updateUser(_ user: User) {
-            let index = self.users.indexOfUser(withId: user.id)
-            self.users[index] = user
+    internal func updateCompany(_ company: Company) {
+            let index = self.companies.indexOfCompany(withId: company.id)
+            self.companies[index] = company
        }
     
-    func pushDetailViewForUser(withId id:User.ID){
-        let user = user(withId: id)
-        let viewController = UserViewController(user: user, parent: self)
-        navigationController?.pushViewController(viewController, animated: true)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if (segue.identifier == "ShowCompanyUsers") {
+          let userListVC = segue.destination as! UserListViewController
+          let object = sender as! [String: String?]
+           userListVC.companyIdForCompanyUsers = object["companyIdForCompanyUsers"] as? String
+       }
+    }
+    
+    func pushDetailViewForCompany(withId id:Company.ID){
+        /*let company = company(withId: id)
+        let viewController = CompanyViewController(company: company) // company: company, parent: self
+        navigationController?.pushViewController(viewController, animated: true)*/
+        
+        DispatchQueue.main.async {
+            let sender: [String: String?] = [ "companyIdForCompanyUsers": id ]
+            self.performSegue(withIdentifier: "ShowCompanyUsers", sender: sender)
+        }
      }
 
      private func listLayout() -> UICollectionViewCompositionalLayout {
@@ -114,17 +144,20 @@ class UserListViewController: UICollectionViewController {
          return UICollectionViewCompositionalLayout.list(using: listConfiguration)
      }
     
-    func updateSnapshot(for pUsers: [User]){
+    func updateSnapshot(for pCompanies: [Company]){
         var snapshot = Snapshot()
         snapshot.appendSections([0])
-        snapshot.appendItems(pUsers.map { $0.id })
+        snapshot.appendItems(pCompanies.map { $0.id })
         dataSource.apply(snapshot)
         collectionView.dataSource = dataSource
     }
     
-    private func getUsers(){
-        
-       let stringURL = "http://10.22.154.156:3001/user"
+    private func loadFetchedImage(for url: String){
+        fetchedImageView.loadImage(url)
+    }
+    
+    private func getCompanies(){
+       let stringURL = "http://192.168.0.102:3001/company"
         
         guard let url = URL(string: stringURL) else { return }
         let session = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -136,13 +169,14 @@ class UserListViewController: UICollectionViewController {
             
             do {
                 let decoder = JSONDecoder()
-                let users = try decoder.decode([User].self, from: data)
+                let companies = try decoder.decode([Company].self, from: data)
                 DispatchQueue.main.async {
-                    self.users = users
-                    User.sampleData = self.users
-                    self.filteredUsers = []
+                    self.companies = companies
+                    print(self.companies)
+                    Company.sampleData = self.companies
+                    self.filteredCompanies = []
                     self.collectionView.reloadData()
-                    self.updateSnapshot(for: self.users)
+                    self.updateSnapshot(for: self.companies)
                 }
             } catch {
                 print("Error Occured!")
@@ -151,47 +185,48 @@ class UserListViewController: UICollectionViewController {
         }
         session.resume()
     }
+    
 }
 
-extension UserListViewController: UISearchBarDelegate {
+extension CompanyListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.dynamicSearchText = searchText
         if searchText.isEmpty {
             isSearching = false
             self.dynamicSearchText = ""
             if(listStyleSelectedIndex == 1){
-                let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
-                self.filteredUsers = bookmarkedFilteredValues
+                let bookmarkedFilteredValues = self.companies.filter({ $0.isBookmarked })
+                self.filteredCompanies = bookmarkedFilteredValues
                 updateSnapshot(for: bookmarkedFilteredValues)
             } else {
-                self.filteredUsers = []
-                updateSnapshot(for: self.users)
+                self.filteredCompanies = []
+                updateSnapshot(for: self.companies)
             }
         } else {
             isSearching = true
             if(listStyleSelectedIndex == 1) {
-                let bookmarkedFilteredValues = self.filteredUsers.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                let bookmarkedFilteredValues = self.filteredCompanies.filter({ $0.name.lowercased().contains(searchText.lowercased()) })
                 // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
-                self.filteredUsers = bookmarkedFilteredValues
+                self.filteredCompanies = bookmarkedFilteredValues
                 updateSnapshot(for: bookmarkedFilteredValues)
             } else if(listStyleSelectedIndex == 0) {
-                let allFilteredUsers = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
-                self.filteredUsers = allFilteredUsers
-                updateSnapshot(for: allFilteredUsers)
+                let allFilteredCompanies = Company.sampleData.filter({ $0.name.lowercased().contains(searchText.lowercased()) })
+                self.filteredCompanies = allFilteredCompanies
+                updateSnapshot(for: allFilteredCompanies)
             }
         }
     }
     
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func companySearchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         self.dynamicSearchText = ""
         if(listStyleSelectedIndex == 1){
-            let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
-            self.filteredUsers = bookmarkedFilteredValues
+            let bookmarkedFilteredValues = self.companies.filter({ $0.isBookmarked })
+            self.filteredCompanies = bookmarkedFilteredValues
             updateSnapshot(for: bookmarkedFilteredValues)
         } else {
-            self.filteredUsers = []
-            updateSnapshot(for: User.sampleData)
+            self.filteredCompanies = []
+            updateSnapshot(for: Company.sampleData)
         }
     }
     
