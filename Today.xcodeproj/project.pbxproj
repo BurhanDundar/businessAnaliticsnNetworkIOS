@@ -24,6 +24,7 @@
 		DBCECF9F29B37399009373FE /* BookmarkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBCECF9E29B37399009373FE /* BookmarkViewController.swift */; };
 		DBE888D029B2B68700E5B6F9 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */; };
 		DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */; };
+		E94CDFCB2A262BA400919165 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94CDFCA2A262BA400919165 /* ProfileViewController.swift */; };
 		E94E1FE429C8B40100C58B18 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE329C8B40100C58B18 /* Login.swift */; };
 		E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */; };
 		E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE729CA011100C58B18 /* CustomButton.swift */; };
@@ -55,6 +56,7 @@
 		DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		DBE888D229B2B7E900E5B6F9 /* UserListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserListViewController+Action.swift"; sourceTree = "<group>"; };
 		DBF3340829B658270028CC73 /* todo.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = todo.md; sourceTree = "<group>"; };
+		E94CDFCA2A262BA400919165 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E94E1FE329C8B40100C58B18 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		E94E1FE729CA011100C58B18 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 				DBE888CF29B2B68700E5B6F9 /* FilterViewController.swift */,
 				DBCECF9E29B37399009373FE /* BookmarkViewController.swift */,
 				DBCECF9C29B37311009373FE /* TabBarController.swift */,
+				E94CDFCA2A262BA400919165 /* ProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 			files = (
 				E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */,
 				E94E1FEC29CB3EC400C58B18 /* Register.swift in Sources */,
+				E94CDFCB2A262BA400919165 /* ProfileViewController.swift in Sources */,
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
 				DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */,
 				E94E1FE429C8B40100C58B18 /* Login.swift in Sources */,
