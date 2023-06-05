@@ -69,8 +69,14 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         self.getUserCourses()
         self.getUserLanguages()
         
+        skillsBtn.addTarget(self, action: #selector(showUserSkills), for: .touchUpInside)
+        experiencesBtn.addTarget(self, action: #selector(showUserExperiences), for: .touchUpInside)
+        educationsBtn.addTarget(self, action: #selector(showUserEducations), for: .touchUpInside)
+        coursesBtn.addTarget(self, action: #selector(showUserCourses), for: .touchUpInside)
+        languagesBtn.addTarget(self, action: #selector(showUserLanguages), for: .touchUpInside)
+        
         view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         systemImageName = user.isBookmarked ? "bookmark.fill" :  "bookmark"
         
@@ -180,8 +186,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     }
     
     private func getUserSkills(){
-            let stringURL = "http://192.168.0.102:3001/skill/getUserSkills"
-            
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/skill/getUserSkills"
+                    
             let params = [
                 "user_id": self.user.id
             ]
@@ -216,6 +223,11 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                                 self.skillsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
+                            /*let defaults = UserDefaults.standard
+                            defaults.set(self.skills, forKey: "userSkills")*/
+                            
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.userSkills = self.skills
                         }
                         
                     }
@@ -229,7 +241,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             session.resume()
         }
     private func getUserExperiences(){
-            let stringURL = "http://192.168.0.102:3001/experience/getUserExperiences"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/experience/getUserExperiences"
+        
             
             let params = [
                 "user_id": self.user.id
@@ -265,8 +279,13 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                                 self.experiencesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
-
+                            
                         }
+                        //let defaults = UserDefaults.standard
+                        //defaults.set(self.experiences, forKey: "userExperiences")
+                        /*if let encoded = try? JSONEncoder().encode([Experience]) {
+                            UserDefaults.standard.set(encoded, forKey: "userExperiences")
+                        }*/
                     }
                     
                 } catch {
@@ -278,8 +297,8 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             session.resume()
         }
     private func getUserEducations(){
-            let stringURL = "http://192.168.0.102:3001/education/getUserEducations"
-            
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/education/getUserEducations"
             let params = [
                 "user_id": self.user.id
             ]
@@ -314,7 +333,11 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                                 self.educationsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
-
+                            /*let defaults = UserDefaults.standard
+                            defaults.set(self.educations, forKey: "userEducations")*/
+                            
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.userEducations = self.educations
                         }
                     }
                     
@@ -328,7 +351,8 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         }
     
     private func getUserCourses(){
-            let stringURL = "http://192.168.0.102:3001/course/getUserCourses"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/course/getUserCourses"
             
             let params = [
                 "user_id": self.user.id
@@ -364,7 +388,11 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                                 self.coursesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
-
+                            /*let defaults = UserDefaults.standard
+                            defaults.set(self.courses, forKey: "userCourses")*/
+                            
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.userCourses = self.courses
                         }
                     }
                     
@@ -378,8 +406,10 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         }
     
     private func getUserLanguages(){
-            let stringURL = "http://192.168.0.102:3001/skill/getUserLanguages"
-            
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/language/getUserLanguages"
+
+        
             let params = [
                 "user_id": self.user.id
             ]
@@ -414,6 +444,11 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                                 self.languagesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
+                            /*let defaults = UserDefaults.standard
+                            defaults.set(self.languages, forKey: "userLanguages")*/
+                            
+                            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                            appDelegate.userLanguages = self.languages
 
                         }
                     }
@@ -426,6 +461,26 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             session.resume()
         }
     
+    @objc private func showUserSkills(_ Sender: Any){
+        let skillsVC = SkillListViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(skillsVC, animated: true)
+    }
+    @objc private func showUserExperiences(_ Sender: Any){
+        let experiencesVC = ExperienceListViewController(experiences: self.experiences)
+        navigationController?.pushViewController(experiencesVC, animated: true)
+    }
+    @objc private func showUserEducations(_ Sender: Any){
+        let educationsVC = EducationListViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(educationsVC, animated: true)
+    }
+    @objc private func showUserCourses(_ Sender: Any){
+        let coursesVC = CourseListViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(coursesVC, animated: true)
+    }
+    @objc private func showUserLanguages(_ Sender: Any){
+        let languagesVC = LanguageListViewController(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(languagesVC, animated: true)
+    }
     
     
     

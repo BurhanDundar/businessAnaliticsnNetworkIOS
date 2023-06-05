@@ -10,6 +10,10 @@ import UIKit
 struct LoginResponseModel: Codable {
     var status: String
     var msg: String
+    var _id: String
+    var name: String
+    var surname: String
+    var username: String
 }
 
 class Login: UIViewController {
@@ -19,7 +23,7 @@ class Login: UIViewController {
     private let password = CustomTextField(fieldType: .password)
     
     private let signInBtn = CustomButton(title: "Sign In", hasBackground: true, fontSize: .med)
-    private var signInResponse: LoginResponseModel = LoginResponseModel(status: "", msg: "")
+    private var signInResponse: LoginResponseModel = LoginResponseModel(status: "", msg: "", _id: "", name: "", surname: "", username: "")
     
     private let registerBtn = CustomButton(title: "Create Account" , fontSize: .small)
     private let forgotPassBtn = CustomButton(title: "Forgot Password", fontSize: .small)
@@ -97,15 +101,16 @@ class Login: UIViewController {
     }
     
     @objc private func goToMainPage(){
-        performSegue(withIdentifier: "loginToSystem", sender: nil)
+        performSegue(withIdentifier: "LoginToTabBar", sender: nil)
     }
     
     @objc private func loginRequest(){
-            let stringURL = "http://192.168.0.102:3001/auth/login"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/auth/login"
             
             let params = [
-                "email": self.email.text, //"dundarburhann@gmail.com",
-                "password": self.password.text //"123456"
+                "email": "dundarburhann@gmail.com", // self.email.text
+                "password": "123456" // self.password.text
             ]
         
             guard let url = URL(string: stringURL) else { return }
@@ -129,12 +134,20 @@ class Login: UIViewController {
                     DispatchQueue.main.async {
                         self.signInResponse = loginRes
                     }
-                    print(loginRes)
                     
                     if self.signInResponse.status == "ok" {
                         print("Giriş başarılı")
+                        
+                        
+                        
+                        let defaults = UserDefaults.standard
+                        defaults.set(loginRes._id, forKey: "memberId")
+                        defaults.set(loginRes.name, forKey: "memberName")
+                        defaults.set(loginRes.surname, forKey: "memberSurname")
+                        defaults.set(loginRes.username, forKey: "memberUsername")
+                        
                         DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: "loginToSystem", sender: self)
+                            self.performSegue(withIdentifier: "LoginToTabBar", sender: self)
                         }
                     } else {
                         print("Giriş başarısız")

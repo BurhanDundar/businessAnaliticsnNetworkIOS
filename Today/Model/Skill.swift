@@ -7,8 +7,24 @@
 
 import Foundation
 
-struct Skill:Codable {
-    var _id: String? // aslında buna ihtiyaç yok
+struct Skill: Identifiable,Codable {
+    var _id: String? = UUID().uuidString
+    var id: String? { _id }
     var title: String
-    var user_id: String
+    var user_id: String?
 }
+
+extension [Skill] {
+    func indexOfSkill(withId id: Skill.ID) -> Self.Index {
+        guard let index = firstIndex(where: { $0.id == id }) else {
+            fatalError()
+        }
+        return index
+    }
+}
+
+#if DEBUG
+extension Skill{
+    static var sampleData: [Skill] = [Skill]() //[Skill]()
+}
+#endif

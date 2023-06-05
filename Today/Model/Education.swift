@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Education: Codable {
-    var _id: String?
+struct Education: Identifiable, Codable {
+    var _id: String? = UUID().uuidString
+    var id: String? { _id }
     var company_id: String
     var user_id: String
     var department: String?
@@ -16,3 +17,18 @@ struct Education: Codable {
     var startDate: String?
     var endDate: String?
 }
+
+extension [Education] {
+    func indexOfEducation(withId id: Education.ID) -> Self.Index {
+        guard let index = firstIndex(where: { $0.id == id }) else {
+            fatalError()
+        }
+        return index
+    }
+}
+
+#if DEBUG
+extension Education{
+    static var sampleData: [Education] = [Education]()
+}
+#endif

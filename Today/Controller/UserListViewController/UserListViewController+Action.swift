@@ -16,7 +16,7 @@ extension UserListViewController {
         viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done, target: self, action: #selector(didDoneAdd(_:)))
         let navigationController = UINavigationController(rootViewController: viewController)
-        present(viewController, animated: true)
+        present(navigationController, animated: true)
         
     }
     
@@ -31,7 +31,6 @@ extension UserListViewController {
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
         // index -> 0: all, 1: bookmarked
         if(sender.selectedSegmentIndex == 0){
-            print("selfusers",self.users.count)
             self.listStyleSelectedIndex = 0
             if(self.dynamicSearchText == ""){
                 self.filteredUsers = []

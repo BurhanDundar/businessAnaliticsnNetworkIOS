@@ -8,18 +8,24 @@ import UIKit
 
 class UserListViewController: UICollectionViewController {
         
-    typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
-    typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
+        typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
+        typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
     
-    //Declare variables to receive datas.
-        var companyIdForCompanyUsers: String? = nil
+        var company_id: String?
     
+        
         var users: [User] = User.sampleData
         var filteredUsers: [User] = []
         var dataSource: DataSource!
         var isSearching: Bool = false
         var listStyleSelectedIndex: Int = 0
         var dynamicSearchText: String = ""
+    
+        var memberId: String = ""
+        var memberName: String = ""
+        var memberSurname: String = ""
+        var memberUsername: String = ""
+        
     
         // search bar
         var searchController: UISearchController!
@@ -28,16 +34,41 @@ class UserListViewController: UICollectionViewController {
     
          override func viewDidLoad() {
              
-             print(companyIdForCompanyUsers ?? "")
+             //print(companyIdForCompanyUsers ?? "")
+             //let defaults = UserDefaults.standard
+             //defaults.set(25, forKey: "Age")
+             /*
+             if let data = UserDefaults.standard.data(forKey: "Member") {
+                 do {
+                     // Create JSON Decoder
+                     let decoder = JSONDecoder()
+
+                     // Decode Note
+                     let member = try decoder.decode(Member.self, from: data)
+                     print(member)
+
+                 } catch {
+                     print("Unable to Decode Note (\(error))")
+                 }
+             }*/
              
-             view.backgroundColor = .white
+             //let appDelegate = UIApplication.shared.delegate as! AppDelegate
+             //appDelegate.userName = "Burhan"
+             //appDelegate.userid = "1241hd9bısdbf12893"
              
-             if self.companyIdForCompanyUsers != nil {
-                 print("ben company list sayfasından geliyorum")
-                 User.sampleData = [User]()
-                 //updateSnapshot(for: User.sampleData)
-                 //collectionView.reloadData()
+             let defaults = UserDefaults.standard
+             self.memberId = defaults.string(forKey: "memberId") ?? ""
+             self.memberName = defaults.string(forKey: "memberName") ?? ""
+             self.memberSurname = defaults.string(forKey: "memberSurname") ?? ""
+             self.memberUsername = defaults.string(forKey: "memberUsername") ?? ""
+                          
+             view.backgroundColor = .systemBackground //.white
+             
+             if self.company_id != nil {
+                 User.sampleData = []
+                 self.getCompanyUsers()
              } else {
+                 User.sampleData = []
                  self.getUsers()
              }
              
@@ -68,7 +99,7 @@ class UserListViewController: UICollectionViewController {
                      user = self.filteredUsers[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
                      // ?
-                     user = self.filteredUsers.count > 0 ?  self.filteredUsers[indexPath.item] : self.users[indexPath.item]
+                     user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
                  }
                  
                  var contentConfiguration = cell.defaultContentConfiguration()
@@ -141,8 +172,8 @@ class UserListViewController: UICollectionViewController {
     }
     
     private func getUsers(){
-        
-       let stringURL = "http://192.168.0.102:3001/user"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/user"
         
         guard let url = URL(string: stringURL) else { return }
         let session = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -169,6 +200,48 @@ class UserListViewController: UICollectionViewController {
         }
         session.resume()
     }
+    
+    private func getCompanyUsers(){
+        
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/user/getCompanyUsersAsUserObj"
+            let params = [
+                "company_id": self.company_id,
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let companyUsers = try decoder.decode([User].self, from: data)
+                    DispatchQueue.main.async {
+                        self.users = companyUsers
+                        User.sampleData = self.users
+                        self.filteredUsers = []
+                        self.collectionView.reloadData()
+                        self.updateSnapshot(for: self.users)
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
 }
 
 extension UserListViewController: UISearchBarDelegate {

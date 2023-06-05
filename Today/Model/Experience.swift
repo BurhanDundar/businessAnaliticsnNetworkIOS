@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct Experience: Codable {
-    var _id: String? // aslında buna ihtiyaç yok
+struct Experience: Identifiable,Codable {
+    var _id: String? = UUID().uuidString
+    var id: String? { _id }
     var user_id: String
     var name: String?
     var company_id: String
@@ -17,3 +18,18 @@ struct Experience: Codable {
     var location: String?
     var subExperiences: [SubExperience]?
 }
+
+extension [Experience] {
+    func indexOfExperience(withId id: Experience.ID) -> Self.Index {
+        guard let index = firstIndex(where: { $0.id == id }) else {
+            fatalError()
+        }
+        return index
+    }
+}
+
+#if DEBUG
+extension Experience{
+    static var sampleData: [Experience] = [] //[Skill]()
+}
+#endif

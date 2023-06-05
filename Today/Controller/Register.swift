@@ -171,8 +171,9 @@ class Register: UIViewController{
     }
     
     @objc private func registerRequest(){
-            let stringURL = "http://192.168.0.102:3001/auth/signup"
-            
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/auth/signup"
+                    
             let params = [
                 "name": self.name.text,
                 "surname": self.surname.text,

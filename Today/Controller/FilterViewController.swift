@@ -15,7 +15,7 @@ class FilterViewController: UIViewController {
         super.viewDidLoad()
         
         view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground //.white
         
         text = UILabel()
         text.translatesAutoresizingMaskIntoConstraints = false

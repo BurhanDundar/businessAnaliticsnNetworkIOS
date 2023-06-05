@@ -119,10 +119,10 @@ class CompanyListViewController: UICollectionViewController {
        }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       if (segue.identifier == "ShowCompanyUsers") {
-          let userListVC = segue.destination as! UserListViewController
-          let object = sender as! [String: String?]
-           userListVC.companyIdForCompanyUsers = object["companyIdForCompanyUsers"] as? String
+       if (segue.identifier == "showCompanyDetail") {
+          let companyVC = segue.destination as! CompanyViewController
+          let object = sender as! [String: Company?]
+           companyVC.company = object["company"] as! Company
        }
     }
     
@@ -130,10 +130,10 @@ class CompanyListViewController: UICollectionViewController {
         /*let company = company(withId: id)
         let viewController = CompanyViewController(company: company) // company: company, parent: self
         navigationController?.pushViewController(viewController, animated: true)*/
-        
+        let company = company(withId: id)
         DispatchQueue.main.async {
-            let sender: [String: String?] = [ "companyIdForCompanyUsers": id ]
-            self.performSegue(withIdentifier: "ShowCompanyUsers", sender: sender)
+            let sender: [String: Company?] = [ "company": company ]
+            self.performSegue(withIdentifier: "showCompanyDetail", sender: sender)
         }
      }
 
@@ -157,7 +157,8 @@ class CompanyListViewController: UICollectionViewController {
     }
     
     private func getCompanies(){
-       let stringURL = "http://192.168.0.102:3001/company"
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/company" //"http://192.168.0.102:3001/company"
         
         guard let url = URL(string: stringURL) else { return }
         let session = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -172,7 +173,6 @@ class CompanyListViewController: UICollectionViewController {
                 let companies = try decoder.decode([Company].self, from: data)
                 DispatchQueue.main.async {
                     self.companies = companies
-                    print(self.companies)
                     Company.sampleData = self.companies
                     self.filteredCompanies = []
                     self.collectionView.reloadData()
