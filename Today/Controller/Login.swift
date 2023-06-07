@@ -11,8 +11,7 @@ struct LoginResponseModel: Codable {
     var status: String
     var msg: String
     var _id: String
-    var name: String
-    var surname: String
+    var fullname: String
     var username: String
 }
 
@@ -23,7 +22,7 @@ class Login: UIViewController {
     private let password = CustomTextField(fieldType: .password)
     
     private let signInBtn = CustomButton(title: "Sign In", hasBackground: true, fontSize: .med)
-    private var signInResponse: LoginResponseModel = LoginResponseModel(status: "", msg: "", _id: "", name: "", surname: "", username: "")
+    private var signInResponse: LoginResponseModel = LoginResponseModel(status: "", msg: "", _id: "", fullname: "", username: "")
     
     private let registerBtn = CustomButton(title: "Create Account" , fontSize: .small)
     private let forgotPassBtn = CustomButton(title: "Forgot Password", fontSize: .small)
@@ -142,8 +141,7 @@ class Login: UIViewController {
                         
                         let defaults = UserDefaults.standard
                         defaults.set(loginRes._id, forKey: "memberId")
-                        defaults.set(loginRes.name, forKey: "memberName")
-                        defaults.set(loginRes.surname, forKey: "memberSurname")
+                        defaults.set(loginRes.fullname, forKey: "memberFullName")
                         defaults.set(loginRes.username, forKey: "memberUsername")
                         
                         DispatchQueue.main.async {

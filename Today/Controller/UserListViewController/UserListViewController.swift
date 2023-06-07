@@ -22,8 +22,7 @@ class UserListViewController: UICollectionViewController {
         var dynamicSearchText: String = ""
     
         var memberId: String = ""
-        var memberName: String = ""
-        var memberSurname: String = ""
+        var memberFullName: String = ""
         var memberUsername: String = ""
         
     
@@ -58,9 +57,7 @@ class UserListViewController: UICollectionViewController {
              
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
-             self.memberName = defaults.string(forKey: "memberName") ?? ""
-             self.memberSurname = defaults.string(forKey: "memberSurname") ?? ""
-             self.memberUsername = defaults.string(forKey: "memberUsername") ?? ""
+             self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
                           
              view.backgroundColor = .systemBackground //.white
              

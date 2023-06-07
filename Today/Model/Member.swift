@@ -10,9 +10,11 @@ import Foundation
 struct Member: Identifiable, Codable {
     var _id: String? = UUID().uuidString
     var id: String? { _id }
-    var name: String?
-    var surname: String?
-    var username: String?
+    var fullname: String
+    var username: String
+    var password: String?
+    var email: String
+    var isBookmarked: Bool = false
 }
 
 extension [Member] {

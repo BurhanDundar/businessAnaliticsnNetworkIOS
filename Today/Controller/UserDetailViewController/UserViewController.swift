@@ -80,7 +80,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         
         systemImageName = user.isBookmarked ? "bookmark.fill" :  "bookmark"
         
-        let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
+        let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
         navigationItem.rightBarButtonItem = bookmarkBarButton
         
         view.addSubview(fetchedImageView)
@@ -177,10 +177,10 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         fetchedImageView.loadImage(url)
     }
     
-    @objc private func bookmarkMember(){
+    @objc private func bookmarkUser(){
         self.user.isBookmarked.toggle()
         systemImageName = self.user.isBookmarked ? "bookmark.fill" : "bookmark"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
             
         self.inheritedUserUpdate(user)
     }
