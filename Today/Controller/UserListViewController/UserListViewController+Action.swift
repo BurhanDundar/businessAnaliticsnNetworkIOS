@@ -10,7 +10,7 @@ import UIKit
 extension UserListViewController {
     
     @objc func didPressFilterButton (_ sender: UIBarButtonItem){
-        let viewController = FilterViewController()
+        let viewController = UserFilterViewController()
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel, target: self, action: #selector(didCancelAdd(_:)))
         viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
