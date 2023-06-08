@@ -138,6 +138,21 @@
             </objects>
             <point key="canvasLocation" x="2496.9465648854962" y="-444.36619718309862"/>
         </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="exd-mX-o6g">
+            <objects>
+                <viewController id="qxm-AW-3p9" customClass="ProfileViewController" customModule="Today" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="G6D-Te-OAR">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="1q5-Yz-9oa"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XNy-qM-FPt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3423" y="-489"/>
+        </scene>
         <!--Company View Controller-->
         <scene sceneID="0gS-dy-1Iu">
             <objects>

@@ -20,7 +20,15 @@ extension UserListViewController {
         present(navigationController, animated: true)
         
     }
-    
+    @objc func didPressProfileButton (_ sender: UIBarButtonItem){
+        let viewController = ProfileViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
+        let backBarButtonItem = UIBarButtonItem(title: "Users", style: .plain, target: nil, action: nil)
+                navigationItem.backBarButtonItem = backBarButtonItem
+        
+        
+    }
     @objc func didDoneAdd(_ sender: UIBarButtonItem){
         dismiss(animated: true)
     }

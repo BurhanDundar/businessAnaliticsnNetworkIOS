@@ -44,6 +44,8 @@
 		E929244D2A30A43800049820 /* MemberViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = E929244C2A30A43800049820 /* MemberViewController+Row.swift */; };
 		E92924512A30A48400049820 /* MemberListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924502A30A48400049820 /* MemberListViewController+Action.swift */; };
 		E92924532A30D9F000049820 /* MemberFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924522A30D9F000049820 /* MemberFilterViewController.swift */; };
+		E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924542A31F2C900049820 /* ProfileViewController.swift */; };
+		E92924572A31FDF100049820 /* CompanyViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924562A31FDF100049820 /* CompanyViewController+Row.swift */; };
 		E94E1FE429C8B40100C58B18 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE329C8B40100C58B18 /* Login.swift */; };
 		E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */; };
 		E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE729CA011100C58B18 /* CustomButton.swift */; };
@@ -95,6 +97,8 @@
 		E929244C2A30A43800049820 /* MemberViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberViewController+Row.swift"; sourceTree = "<group>"; };
 		E92924502A30A48400049820 /* MemberListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberListViewController+Action.swift"; sourceTree = "<group>"; };
 		E92924522A30D9F000049820 /* MemberFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberFilterViewController.swift; sourceTree = "<group>"; };
+		E92924542A31F2C900049820 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		E92924562A31FDF100049820 /* CompanyViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanyViewController+Row.swift"; sourceTree = "<group>"; };
 		E94E1FE329C8B40100C58B18 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		E94E1FE729CA011100C58B18 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -127,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				DBCECF9E29B37399009373FE /* CompanyViewController.swift */,
+				E92924562A31FDF100049820 /* CompanyViewController+Row.swift */,
 			);
 			path = CompanyDetailViewController;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 				22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */,
 				2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */,
 				E92924522A30D9F000049820 /* MemberFilterViewController.swift */,
+				E92924542A31F2C900049820 /* ProfileViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -353,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E92924572A31FDF100049820 /* CompanyViewController+Row.swift in Sources */,
 				E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */,
 				E94E1FEC29CB3EC400C58B18 /* Register.swift in Sources */,
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
@@ -375,6 +382,7 @@
 				DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */,
 				E929244B2A30A42300049820 /* MemberViewController.swift in Sources */,
 				E92924472A30A3E700049820 /* MemberListViewController.swift in Sources */,
+				E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */,
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,

@@ -87,6 +87,10 @@ class UserListViewController: UICollectionViewController {
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
              
+             let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
+             navigationItem.leftBarButtonItem = profileBarButton
+
+             
              DispatchQueue.main.async {
                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
                  self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
@@ -370,6 +374,10 @@ extension UserListViewController: UISearchBarDelegate {
         User.sampleData = []
         self.filteredUsers = []
         self.getUsers()
-        navigationItem.leftBarButtonItem = .none
+        let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
+        navigationItem.leftBarButtonItem = profileBarButton
+
+        
+        
     }
 }

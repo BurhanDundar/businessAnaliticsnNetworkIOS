@@ -42,6 +42,9 @@ class CompanyListViewController: UICollectionViewController {
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
              
+             let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
+             navigationItem.leftBarButtonItem = profileBarButton
+
              lazy var searchController: UISearchController = {
                  let searchController = UISearchController(searchResultsController: nil)
                  // searchController.dimsBackgroundDuringPresentation = false
@@ -112,11 +115,11 @@ class CompanyListViewController: UICollectionViewController {
         let index = companies.indexOfCompany(withId: id)
         return companies[index]
     }
-    
     internal func updateCompany(_ company: Company) {
             let index = self.companies.indexOfCompany(withId: company.id)
             self.companies[index] = company
        }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if (segue.identifier == "showCompanyDetail") {
@@ -124,8 +127,17 @@ class CompanyListViewController: UICollectionViewController {
           let object = sender as! [String: Company?]
            companyVC.company = object["company"] as! Company
        }
+        
     }
-    
+    @objc func didPressProfileButton (_ sender: UIBarButtonItem){
+        let viewController = ProfileViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
+        let backBarButtonItem = UIBarButtonItem(title: "Companies", style: .plain, target: nil, action: nil)
+                navigationItem.backBarButtonItem = backBarButtonItem
+        
+        
+    }
     func pushDetailViewForCompany(withId id:Company.ID){
         /*let company = company(withId: id)
         let viewController = CompanyViewController(company: company) // company: company, parent: self
