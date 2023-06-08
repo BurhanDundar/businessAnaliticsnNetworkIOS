@@ -13,6 +13,7 @@ struct User: Identifiable,Codable{
     var about: String?
     var connection_count: String?
     var location: String?
+    var profileLink: String?
     var isBookmarked: Bool = false
 }
 

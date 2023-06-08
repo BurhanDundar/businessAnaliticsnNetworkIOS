@@ -7,7 +7,7 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    let APIURL: String = "http://192.168.2.19:3001"
+    let APIURL: String = "http://192.168.0.100:3001"
     //var userid = String()
     //var userName = String()
     var userSkills = [Skill]()
@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var userEducations = [Education]()
     var userCourses = [Course]()
     var userLanguages = [Language]()
+    
+    var UserSpecialFilterUsers = [User]()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navBarAppearance = UINavigationBarAppearance()

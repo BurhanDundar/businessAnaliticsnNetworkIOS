@@ -94,39 +94,43 @@ class UserFilterViewController: UIViewController {
     @objc private func getFilteredUsers(_ sender: Any){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/user/getFilteredUsers"
-        
+
             let params = [
                 "skills": self.skillTxtField.text,
                 "experiences": self.experienceTxtField.text,
                 "languages": self.languageTxtField.text
             ]
-        
+
             guard let url = URL(string: stringURL) else { return }
-            
+
             var request = URLRequest(url: url)
             request.httpMethod = "POST"
             request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-            
+
             let session = URLSession.shared.dataTask(with: request) { data, response, error in
-            
+
                 guard let data = data else { return }
-                
+
                 if let error = error {
                     print("there was an error: \(error.localizedDescription)")
                 }
-                
+
                 do {
                     let decoder = JSONDecoder()
                     let filteredUsers = try decoder.decode([User].self, from: data)
-                    print(filteredUsers)
+                    DispatchQueue.main.async {
+                        appDelegate.UserSpecialFilterUsers = filteredUsers
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 } catch {
                     print("Hata oluştu")
                 }
-                
+
             }
-            
+
             session.resume()
+            
         }
 }
 

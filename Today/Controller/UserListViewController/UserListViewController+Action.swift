@@ -16,6 +16,7 @@ extension UserListViewController {
         viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .done, target: self, action: #selector(didDoneAdd(_:)))
         let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
         
     }
@@ -38,7 +39,7 @@ extension UserListViewController {
             } else {
                 let searchBarFilterUsers = self.users.filter({ $0.full_name.lowercased().contains(self.dynamicSearchText.lowercased()) })
                 self.filteredUsers = searchBarFilterUsers
-                updateSnapshot(for: searchBarFilterUsers)
+                updateSnapshot(for: self.filteredUsers)
             }
             collectionView.reloadData()
             	

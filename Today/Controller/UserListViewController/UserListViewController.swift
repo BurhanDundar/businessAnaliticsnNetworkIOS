@@ -12,7 +12,7 @@ class UserListViewController: UICollectionViewController {
         typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
     
         var company_id: String?
-    
+        var specialFilterUsers: [User] = [User]()
         
         var users: [User] = User.sampleData
         var filteredUsers: [User] = []
@@ -55,24 +55,53 @@ class UserListViewController: UICollectionViewController {
              //appDelegate.userName = "Burhan"
              //appDelegate.userid = "1241hd9bısdbf12893"
              
+//             DispatchQueue.main.async {
+//                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//                 self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
+//
+//                 print(self.specialFilterUsers.count)
+//
+//                 if self.company_id != nil {
+//                     print("************************************")
+//                     User.sampleData = []
+//                     self.getCompanyUsers()
+//                 } else if self.specialFilterUsers.count > 0 {
+//                     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+//                     User.sampleData = []
+//                     self.loadFilteredUsers()
+//                 } else {
+//                     print("???????????????????????????????????????")
+//                     User.sampleData = []
+//                     self.getUsers()
+//                 }
+//             }
+             
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
              self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
                           
              view.backgroundColor = .systemBackground //.white
              
-             if self.company_id != nil {
-                 User.sampleData = []
-                 self.getCompanyUsers()
-             } else {
-                 User.sampleData = []
-                 self.getUsers()
-             }
-             
              //self.getUsers()
              navigationItem.title = "Members"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
+             
+             DispatchQueue.main.async {
+                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                 self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
+                             
+                 if self.company_id != nil {
+                     User.sampleData = []
+                     self.getCompanyUsers()
+                 } else if self.specialFilterUsers.count > 0 {
+                     User.sampleData = []
+                     self.loadFilteredUsers()
+                 } else {
+                     User.sampleData = []
+                     self.getUsers()
+                 }
+             }
              
              lazy var searchController: UISearchController = {
                  let searchController = UISearchController(searchResultsController: nil)
@@ -95,7 +124,6 @@ class UserListViewController: UICollectionViewController {
                  if(self.listStyleSelectedIndex == 1) {
                      user = self.filteredUsers[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
-                     // ?
                      user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
                  }
                  
@@ -126,7 +154,7 @@ class UserListViewController: UICollectionViewController {
              navigationItem.titleView = listStyleSegmentedControl
              
                           
-             updateSnapshot(for: User.sampleData)
+             updateSnapshot(for: self.users)
          }
     
     override func collectionView(
@@ -145,6 +173,7 @@ class UserListViewController: UICollectionViewController {
     internal func updateUser(_ user: User) {
             let index = self.users.indexOfUser(withId: user.id)
             self.users[index] = user
+            print(self.users)
        }
     
     func pushDetailViewForUser(withId id:User.ID){
@@ -164,7 +193,7 @@ class UserListViewController: UICollectionViewController {
         var snapshot = Snapshot()
         snapshot.appendSections([0])
         snapshot.appendItems(pUsers.map { $0.id })
-        dataSource.apply(snapshot)
+        dataSource.apply(snapshot) // , animatingDifferences: true
         collectionView.dataSource = dataSource
     }
     
@@ -239,6 +268,14 @@ class UserListViewController: UICollectionViewController {
             
             session.resume()
         }
+    
+    func loadFilteredUsers(){
+        self.users = self.specialFilterUsers
+        User.sampleData = self.specialFilterUsers
+        self.filteredUsers = [] //self.specialFilterUsers
+        self.collectionView.reloadData()
+        self.updateSnapshot(for: self.specialFilterUsers)
+    }
 }
 
 extension UserListViewController: UISearchBarDelegate {
@@ -291,4 +328,48 @@ extension UserListViewController: UISearchBarDelegate {
         print("bookmark is tapped")
     }
     
+    
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidDisappear(true)
+//
+//        DispatchQueue.main.async {
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
+//
+//            if self.company_id != nil {
+//                User.sampleData = []
+//                self.getCompanyUsers()
+//            } else if self.specialFilterUsers.count > 0 {
+//                User.sampleData = []
+//                self.loadFilteredUsers()
+//            } else {
+//                User.sampleData = []
+//                self.getUsers()
+//            }
+//        }
+//    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
+        if(self.specialFilterUsers.count > 0){
+            User.sampleData = []
+            self.loadFilteredUsers()
+            
+            let clearFilter = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), style: .plain, target: self, action: #selector(clearFilter))
+            navigationItem.leftBarButtonItem = clearFilter
+        }
+    }
+    
+    @objc private func clearFilter(_ sender: Any){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.UserSpecialFilterUsers = []
+        self.specialFilterUsers = []
+        User.sampleData = []
+        self.filteredUsers = []
+        self.getUsers()
+        navigationItem.leftBarButtonItem = .none
+    }
 }
