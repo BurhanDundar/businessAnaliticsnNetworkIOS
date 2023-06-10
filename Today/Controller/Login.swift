@@ -142,7 +142,7 @@ class Login: UIViewController {
                         let defaults = UserDefaults.standard
                         defaults.set(loginRes._id, forKey: "memberId")
                         defaults.set(loginRes.fullname, forKey: "memberFullName")
-                        defaults.set(loginRes.username, forKey: "memberUsername")
+                        defaults.set(loginRes.username, forKey: "memberUserName")
                         
                         DispatchQueue.main.async {
                             self.performSegue(withIdentifier: "LoginToTabBar", sender: self)
