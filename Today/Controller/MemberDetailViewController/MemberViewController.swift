@@ -163,7 +163,11 @@ class MemberViewController: UIViewController,UIScrollViewDelegate {
         self.member.isBookmarked.toggle()
         systemImageName = self.member.isBookmarked ? "bookmark.fill" : "bookmark"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
-            
+        
+        if let memberId = UserDefaults.standard.string(forKey: "memberId") {
+            self.updateMemberFavourite(who: memberId, whom: member.id!, with: "member")
+        }
+        
         self.inheritedMemberUpdate(member)
     }
     

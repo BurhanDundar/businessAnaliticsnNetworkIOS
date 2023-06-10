@@ -17,6 +17,7 @@
 		22262B2B2A27943800B7DBCF /* CompanyListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2A2A27943800B7DBCF /* CompanyListViewController+Action.swift */; };
 		22262B2D2A27947000B7DBCF /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2C2A27947000B7DBCF /* Company.swift */; };
 		22758A882A20EC000028DD17 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22758A872A20EC000028DD17 /* APIRequest.swift */; };
+		22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22973E462A34B1BE00BBFB5F /* Favourite.swift */; };
 		22BF6E192A2A199200D766E2 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E182A2A199200D766E2 /* Member.swift */; };
 		22BF6E1B2A2A9CAE00D766E2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */; };
 		22BF6E1E2A2B1FE100D766E2 /* SkillListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E1D2A2B1FE100D766E2 /* SkillListViewController.swift */; };
@@ -65,6 +66,7 @@
 		22262B2A2A27943800B7DBCF /* CompanyListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanyListViewController+Action.swift"; sourceTree = "<group>"; };
 		22262B2C2A27947000B7DBCF /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		22758A872A20EC000028DD17 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		22973E462A34B1BE00BBFB5F /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 		22BF6E182A2A199200D766E2 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		22BF6E1D2A2B1FE100D766E2 /* SkillListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillListViewController.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				22262B242A276D4200B7DBCF /* Language.swift */,
 				22262B2C2A27947000B7DBCF /* Company.swift */,
 				22BF6E182A2A199200D766E2 /* Member.swift */,
+				22973E462A34B1BE00BBFB5F /* Favourite.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -374,6 +377,7 @@
 				22EF2BDB2A2BE2250078CE12 /* EducationListViewController.swift in Sources */,
 				E92924512A30A48400049820 /* MemberListViewController+Action.swift in Sources */,
 				E92924532A30D9F000049820 /* MemberFilterViewController.swift in Sources */,
+				22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */,
 				22758A882A20EC000028DD17 /* APIRequest.swift in Sources */,
 				E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */,
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,

@@ -31,7 +31,6 @@ extension CompanyListViewController {
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
         // index -> 0: all, 1: bookmarked
         if(sender.selectedSegmentIndex == 0){
-            print("selfcompanies",self.companies.count)
             self.listStyleSelectedIndex = 0
             if(self.dynamicSearchText == ""){
                 self.filteredCompanies = []

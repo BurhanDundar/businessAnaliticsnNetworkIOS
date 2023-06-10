@@ -120,7 +120,6 @@ class MemberFilterViewController: UIViewController {
                 do {
                     let decoder = JSONDecoder()
                     let filteredMembers = try decoder.decode([Member].self, from: data)
-                    print(filteredMembers)
                 } catch {
                     print("Hata oluştu")
                 }

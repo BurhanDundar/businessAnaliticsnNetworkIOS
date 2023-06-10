@@ -181,9 +181,16 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         self.user.isBookmarked.toggle()
         systemImageName = self.user.isBookmarked ? "bookmark.fill" : "bookmark"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
-            
+//        let memberId = UserDefaults.standard.string(forKey: "memberId")
+        
+        if let memberId = UserDefaults.standard.string(forKey: "memberId") {
+            self.updateMemberFavourite(who: memberId, whom: user.id!, with: "user")
+        }
+        
         self.inheritedUserUpdate(user)
     }
+    
+    
     
     private func getUserSkills(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -505,3 +512,47 @@ extension UIImageView {
 }
 
 
+extension UIViewController {
+    func updateMemberFavourite(who following: String, whom followed: String, with fav_type: String){
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/favourite/update"
+                    
+        print("following", following)
+        print("followed", followed)
+        
+            let params = [
+                "user_id": following,
+                "fav_id": followed,
+                "fav_type": fav_type
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let UpdateMemberResponse = try decoder.decode(String.self, from: data)
+                    print(UpdateMemberResponse)
+                } catch {
+                    print("Skill verileri cekilemedi")
+                }
+                
+            }
+            
+            session.resume()
+        
+    }
+}

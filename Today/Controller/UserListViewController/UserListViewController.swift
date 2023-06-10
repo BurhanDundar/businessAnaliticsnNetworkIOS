@@ -24,6 +24,7 @@ class UserListViewController: UICollectionViewController {
         var memberId: String = ""
         var memberFullName: String = ""
         var memberUsername: String = ""
+        var userFavs: [String] = [String]()
         
     
         // search bar
@@ -105,6 +106,7 @@ class UserListViewController: UICollectionViewController {
                      User.sampleData = []
                      self.getUsers()
                  }
+                 self.getMemberFavAsUserIds()
              }
              
              lazy var searchController: UISearchController = {
@@ -135,7 +137,9 @@ class UserListViewController: UICollectionViewController {
                  contentConfiguration.text = user.full_name
                  contentConfiguration.secondaryText = user.title
                  
-                 let systemImageName = user.isBookmarked ? "bookmark.fill" :  "bookmark"
+                 let isUserInBookmarkedArray: Bool = self.userFavs.contains(user.id!) ? true : false
+                 print(user)
+                 let systemImageName = isUserInBookmarkedArray ? "bookmark.fill" :  "bookmark"
                  
                  let customAccessory = UICellAccessory.CustomViewConfiguration(
                    customView: UIImageView(image: UIImage(systemName: systemImageName)),
@@ -177,7 +181,6 @@ class UserListViewController: UICollectionViewController {
     internal func updateUser(_ user: User) {
             let index = self.users.indexOfUser(withId: user.id)
             self.users[index] = user
-            print(self.users)
        }
     
     func pushDetailViewForUser(withId id:User.ID){
@@ -263,6 +266,45 @@ class UserListViewController: UICollectionViewController {
                         self.filteredUsers = []
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: self.users)
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
+    private func getMemberFavAsUserIds(){
+        
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/favourite/getMemberFavAsUserIds"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "user"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let userFavs = try decoder.decode([String].self, from: data)
+                    DispatchQueue.main.async {
+                        self.userFavs = userFavs
                     }
                 } catch {
                     print("Error Occured!")
@@ -365,6 +407,7 @@ extension UserListViewController: UISearchBarDelegate {
             let clearFilter = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), style: .plain, target: self, action: #selector(clearFilter))
             navigationItem.leftBarButtonItem = clearFilter
         }
+        self.getMemberFavAsUserIds()
     }
     
     @objc private func clearFilter(_ sender: Any){
@@ -376,8 +419,5 @@ extension UserListViewController: UISearchBarDelegate {
         self.getUsers()
         let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
         navigationItem.leftBarButtonItem = profileBarButton
-
-        
-        
     }
 }

@@ -39,8 +39,6 @@ class ProfileViewController: UIViewController {
 //    }
     
     override func viewDidLoad(){
-        print(memberFullName)
-        print(memberUserName)
         super.viewDidLoad()
         self.setupUI()
     }

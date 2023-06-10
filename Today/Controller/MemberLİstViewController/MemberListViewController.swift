@@ -183,7 +183,6 @@ class MemberListViewController: UICollectionViewController {
                     let decoder = JSONDecoder()
                     let members = try decoder.decode([Member].self, from: data)
                     DispatchQueue.main.async {
-                        print(members)
                         self.members = members
                         Member.sampleData = self.members
                         self.filteredMembers = []
