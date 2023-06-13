@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     
     var profileImage: UIImageView = UIImageView()
     var fullName: UILabel = UILabel()
@@ -40,13 +40,21 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        let settingsBarButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(openSettings))
+        navigationItem.rightBarButtonItem = settingsBarButton
+        
         self.setupUI()
     }
     
-    
+    @objc func openSettings(_ sender: Any){
+        print("hello")
+    }
     
     func setupUI(){
         // VIEWSETUP
+        
+        
         
         self.view.backgroundColor = .systemBackground
         
@@ -61,17 +69,11 @@ class ProfileViewController: UIViewController {
         self.userName.numberOfLines = 0
         self.userName.sizeToFit()
         
-        // SCROLLVIEW SETUP
-        let scrollView = UIScrollView()
         let stackView = UIStackView()
         
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
-//        stackView.spacing = 10
-//        stackView.distribution = .fillEqually
-//        stackView.distribution = .fill
-        
         
         // FOLLOWING USERS
         self.followingUsersText.text = "following users"
@@ -139,12 +141,35 @@ class ProfileViewController: UIViewController {
         self.followedMembersView.addSubview(followedMembersText)
         self.followedMembersView.addSubview(followedMembersCount)
         
+//        self.followingUsersView.backgroundColor = .red
         
+        self.followingUsersView.isUserInteractionEnabled = true
+        let tapGesture_0 = UITapGestureRecognizer(target: self, action: #selector(getFollowingUsers))
+        tapGesture_0.numberOfTapsRequired = 1
+        tapGesture_0.delegate = self
+        self.followingUsersView.addGestureRecognizer(tapGesture_0)
+        
+        self.followingCompaniesView.isUserInteractionEnabled = true
+        let tapGesture_1 = UITapGestureRecognizer(target: self, action: #selector(getFollowingCompanies))
+        tapGesture_1.numberOfTapsRequired = 1
+        tapGesture_1.delegate = self
+        self.followingCompaniesView.addGestureRecognizer(tapGesture_1)
+        
+        self.followingMembersView.isUserInteractionEnabled = true
+        let tapGesture_2 = UITapGestureRecognizer(target: self, action: #selector(getFollowingMembers))
+        tapGesture_2.numberOfTapsRequired = 1
+        tapGesture_2.delegate = self
+        self.followingMembersView.addGestureRecognizer(tapGesture_2)
+        
+        self.followedMembersView.isUserInteractionEnabled = true
+        let tapGesture_3 = UITapGestureRecognizer(target: self, action: #selector(getFollowedMembers))
+        tapGesture_3.numberOfTapsRequired = 1
+        tapGesture_3.delegate = self
+        self.followedMembersView.addGestureRecognizer(tapGesture_3)
         
         self.profileImage.translatesAutoresizingMaskIntoConstraints = false
         self.fullName.translatesAutoresizingMaskIntoConstraints = false
         self.userName.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
         self.followingUsersText.translatesAutoresizingMaskIntoConstraints = false
@@ -166,8 +191,7 @@ class ProfileViewController: UIViewController {
         self.view.addSubview(self.profileImage)
         self.view.addSubview(self.fullName)
         self.view.addSubview(self.userName)
-        self.view.addSubview(scrollView)
-        scrollView.addSubview(stackView)
+        self.view.addSubview(stackView)
         stackView.addArrangedSubview(self.followingUsersView)
         stackView.addArrangedSubview(self.followingCompaniesView)
         stackView.addArrangedSubview(self.followingMembersView)
@@ -187,17 +211,11 @@ class ProfileViewController: UIViewController {
             self.userName.centerXAnchor.constraint(equalTo: self.fullName.centerXAnchor),
             self.userName.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.75),
             
-            scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
-            scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
-            scrollView.topAnchor.constraint(equalTo: self.userName.bottomAnchor, constant: 40),
-            scrollView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            scrollView.heightAnchor.constraint(equalToConstant: 120),
-            
-            stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10),
+            stackView.topAnchor.constraint(equalTo: self.userName.bottomAnchor, constant: 40),
+            stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            stackView.heightAnchor.constraint(equalToConstant: 100),
             
             // FOLLOWING USERS
             self.followingUsersView.topAnchor.constraint(equalTo: stackView.topAnchor),
@@ -254,11 +272,29 @@ class ProfileViewController: UIViewController {
             self.followedMembersText.topAnchor.constraint(equalTo: self.followedMembersCount.bottomAnchor, constant: 5),
             self.followedMembersText.centerXAnchor.constraint(equalTo: self.followedMembersView.centerXAnchor),
             self.followedMembersText.leadingAnchor.constraint(equalTo: self.followedMembersView.leadingAnchor),
-            
-            
         ])
-        
-        
     }
+    
+    @objc func getFollowingUsers(_ sender: UITapGestureRecognizer){
+        self.performSegue(withIdentifier: "ShowFollowingUsers", sender: self)
+    }
+    
+    @objc func getFollowingCompanies(_ sender: UITapGestureRecognizer){
+        self.performSegue(withIdentifier: "ShowFollowingCompanies", sender: self)
+    }
+    
+    @objc func getFollowingMembers(_ sender: UITapGestureRecognizer){
+        self.performSegue(withIdentifier: "ShowFollowingMembers", sender: self)
+    }
+    
+    @objc func getFollowedMembers(_ sender: UITapGestureRecognizer){
+        self.performSegue(withIdentifier: "ShowFollowedMembers", sender: self)
+    }
+    
+    @objc func didCancelAdd(_ sender: UIBarButtonItem){
+        dismiss(animated: true)
+    }
+    
+    
    
 }

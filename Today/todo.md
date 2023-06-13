@@ -12,3 +12,7 @@
      
 3. Mesajlaşma sistemi yapılacak
 4. Mail sistemi kurulacak
+
+#  Yapılsa iyi olur
+yukarıdan bookmarked segmentationa basıldığında async task ile veriler veritabanından gelmeli. Şimdilik swift içi array ile denedim ama bakıcam buna
+sonra dönücem bu bookmark olayına

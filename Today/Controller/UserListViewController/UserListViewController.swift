@@ -12,6 +12,7 @@ class UserListViewController: UICollectionViewController {
         typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
     
         var company_id: String?
+        var isFollowingUsers: Bool?
         var specialFilterUsers: [User] = [User]()
         
         var users: [User] = User.sampleData
@@ -20,11 +21,13 @@ class UserListViewController: UICollectionViewController {
         var isSearching: Bool = false
         var listStyleSelectedIndex: Int = 0
         var dynamicSearchText: String = ""
+        var isUserInBookmarkedArray: Bool = false
     
         var memberId: String = ""
         var memberFullName: String = ""
         var memberUsername: String = ""
         var userFavs: [String] = [String]()
+        var tempFilteredUsers: [User] = [User]()
         
     
         // search bar
@@ -77,9 +80,11 @@ class UserListViewController: UICollectionViewController {
 //                 }
 //             }
              
+             
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
              self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
+             
                           
              view.backgroundColor = .systemBackground //.white
              
@@ -91,6 +96,7 @@ class UserListViewController: UICollectionViewController {
              let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
              navigationItem.leftBarButtonItem = profileBarButton
 
+             print(self.isFollowingUsers ?? false)
              
              DispatchQueue.main.async {
                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -137,9 +143,9 @@ class UserListViewController: UICollectionViewController {
                  contentConfiguration.text = user.full_name
                  contentConfiguration.secondaryText = user.title
                  
-                 let isUserInBookmarkedArray: Bool = self.userFavs.contains(user.id!) ? true : false
-                 print(user)
-                 let systemImageName = isUserInBookmarkedArray ? "bookmark.fill" :  "bookmark"
+                 self.isUserInBookmarkedArray = self.userFavs.contains(user.id!) ? true : false
+                 self.isUserInBookmarkedArray ? self.tempFilteredUsers.append(user) : nil
+                 let systemImageName = self.isUserInBookmarkedArray ? "bookmark.fill" :  "bookmark"
                  
                  let customAccessory = UICellAccessory.CustomViewConfiguration(
                    customView: UIImageView(image: UIImage(systemName: systemImageName)),
@@ -178,14 +184,15 @@ class UserListViewController: UICollectionViewController {
         return users[index]
     }
     
-    internal func updateUser(_ user: User) {
+    func updateUser(_ user: User) {
             let index = self.users.indexOfUser(withId: user.id)
             self.users[index] = user
        }
     
     func pushDetailViewForUser(withId id:User.ID){
         let user = user(withId: id)
-        let viewController = UserViewController(user: user, parent: self)
+        self.isUserInBookmarkedArray = self.userFavs.contains(user.id!) ? true : false
+        let viewController = UserViewController(user: user, isUserBookmarked: self.isUserInBookmarkedArray)
         navigationController?.pushViewController(viewController, animated: true)
      }
 
@@ -326,45 +333,48 @@ class UserListViewController: UICollectionViewController {
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.dynamicSearchText = searchText
-        if searchText.isEmpty {
-            isSearching = false
-            self.dynamicSearchText = ""
-            if(listStyleSelectedIndex == 1){
-                let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
-                self.filteredUsers = bookmarkedFilteredValues
-                updateSnapshot(for: bookmarkedFilteredValues)
+        DispatchQueue.main.async {
+            self.dynamicSearchText = searchText
+            if searchText.isEmpty {
+                self.isSearching = false
+                self.dynamicSearchText = ""
+                if(self.listStyleSelectedIndex == 1){
+                    //                    self.getBookmarkedUsers()
+                } else {
+                    self.filteredUsers = []
+                    self.updateSnapshot(for: self.users)
+                }
             } else {
-                self.filteredUsers = []
-                updateSnapshot(for: self.users)
-            }
-        } else {
-            isSearching = true
-            if(listStyleSelectedIndex == 1) {
-                let bookmarkedFilteredValues = self.filteredUsers.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
-                // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
-                self.filteredUsers = bookmarkedFilteredValues
-                updateSnapshot(for: bookmarkedFilteredValues)
-            } else if(listStyleSelectedIndex == 0) {
-                let allFilteredUsers = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
-                self.filteredUsers = allFilteredUsers
-                updateSnapshot(for: allFilteredUsers)
+                self.isSearching = true
+                if(self.listStyleSelectedIndex == 1) {
+                    let bookmarkedFilteredValues = self.filteredUsers.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                    // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
+                    self.filteredUsers = bookmarkedFilteredValues
+                    self.updateSnapshot(for: bookmarkedFilteredValues)
+                } else if(self.listStyleSelectedIndex == 0) {
+                    let allFilteredUsers = User.sampleData.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
+                    self.filteredUsers = allFilteredUsers
+                    self.updateSnapshot(for: allFilteredUsers)
+                }
             }
         }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        isSearching = false
-        self.dynamicSearchText = ""
-        if(listStyleSelectedIndex == 1){
-            let bookmarkedFilteredValues = self.users.filter({ $0.isBookmarked })
-            self.filteredUsers = bookmarkedFilteredValues
-            updateSnapshot(for: bookmarkedFilteredValues)
-        } else {
-            self.filteredUsers = []
-            updateSnapshot(for: User.sampleData)
+        DispatchQueue.main.async {
+            self.isSearching = false
+            self.dynamicSearchText = ""
+            if(self.listStyleSelectedIndex == 1){
+                //                self.getBookmarkedUsers()
+            } else {
+                self.filteredUsers = []
+                self.updateSnapshot(for: User.sampleData)
+            }
         }
     }
+    
+    
+    
     
     @objc private func filterMembers(){
         print("filter members")
@@ -376,25 +386,25 @@ extension UserListViewController: UISearchBarDelegate {
     
     
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidDisappear(true)
-//
-//        DispatchQueue.main.async {
-//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//            self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
-//
-//            if self.company_id != nil {
-//                User.sampleData = []
-//                self.getCompanyUsers()
-//            } else if self.specialFilterUsers.count > 0 {
-//                User.sampleData = []
-//                self.loadFilteredUsers()
-//            } else {
-//                User.sampleData = []
-//                self.getUsers()
-//            }
-//        }
-//    }
+    //    override func viewDidAppear(_ animated: Bool) {
+    //        super.viewDidDisappear(true)
+    //
+    //        DispatchQueue.main.async {
+    //            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+    //            self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
+    //
+    //            if self.company_id != nil {
+    //                User.sampleData = []
+    //                self.getCompanyUsers()
+    //            } else if self.specialFilterUsers.count > 0 {
+    //                User.sampleData = []
+    //                self.loadFilteredUsers()
+    //            } else {
+    //                User.sampleData = []
+    //                self.getUsers()
+    //            }
+    //        }
+    //    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -420,4 +430,49 @@ extension UserListViewController: UISearchBarDelegate {
         let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
         navigationItem.leftBarButtonItem = profileBarButton
     }
+    
+    
 }
+    enum GHError: Error {
+        case invalidURL
+        case invalidResponse
+        case invalidData
+    }
+
+    
+    
+    extension UserListViewController {
+        func getBookmarkedUsers() async throws -> [User]{
+            
+            let endpoint = "http://192.168.0.100:3001/favourite/getBookmarkedUsers"
+            let params = [
+                "user_id": "6472520b35c3e07944e5a6d5",
+                "fav_type": "user"
+            ]
+            
+            
+            guard let url = URL(string: endpoint) else {
+                throw GHError.invalidURL
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let (data,response) = try await URLSession.shared.data(for: request)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw GHError.invalidResponse
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let a = try decoder.decode([User].self, from: data)
+                print("*****",a)
+                return a
+            } catch {
+                throw GHError.invalidData
+            }
+        }
+    }

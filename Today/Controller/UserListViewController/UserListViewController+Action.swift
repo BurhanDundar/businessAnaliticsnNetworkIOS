@@ -21,11 +21,14 @@ extension UserListViewController {
         
     }
     @objc func didPressProfileButton (_ sender: UIBarButtonItem){
-        let viewController = ProfileViewController()
+//        let viewController = ProfileViewController()
         
-        navigationController?.pushViewController(viewController, animated: true)
+//        navigationController?.pushViewController(viewController, animated: true)
+        
+        performSegue(withIdentifier: "GoToProfilePage", sender: self)
+        
         let backBarButtonItem = UIBarButtonItem(title: "Users", style: .plain, target: nil, action: nil)
-                navigationItem.backBarButtonItem = backBarButtonItem
+        navigationItem.backBarButtonItem = backBarButtonItem
         
         
     }
@@ -37,34 +40,46 @@ extension UserListViewController {
         dismiss(animated: true)
     }
     
-    @objc func didChangeListStyle(_ sender: UISegmentedControl) {
-        // index -> 0: all, 1: bookmarked
-        if(sender.selectedSegmentIndex == 0){
-            self.listStyleSelectedIndex = 0
-            if(self.dynamicSearchText == ""){
-                self.filteredUsers = []
-                updateSnapshot(for: self.users)
-            } else {
-                let searchBarFilterUsers = self.users.filter({ $0.full_name.lowercased().contains(self.dynamicSearchText.lowercased()) })
-                self.filteredUsers = searchBarFilterUsers
-                updateSnapshot(for: self.filteredUsers)
+    @objc func didChangeListStyle(_ sender: UISegmentedControl) async {
+//            Task {
+//                do {
+//                    try await self.getBookmarkedUsers()
+//                    print("aa")
+//                } catch {
+//                    print("Something went wrong!")
+//                }
+//            }
+//            print("merhaba")
+            // index -> 0: all, 1: bookmarked
+            if(sender.selectedSegmentIndex == 0){
+                self.listStyleSelectedIndex = 0
+                if(self.dynamicSearchText == ""){
+                    self.filteredUsers = []
+                    updateSnapshot(for: self.users)
+                } else {
+                    let searchBarFilterUsers = self.users.filter({ $0.full_name.lowercased().contains(self.dynamicSearchText.lowercased()) })
+                    self.filteredUsers = searchBarFilterUsers
+                    updateSnapshot(for: self.filteredUsers)
+                }
+                collectionView.reloadData()
+                    
+            } else if(sender.selectedSegmentIndex == 1){
+                print(self.tempFilteredUsers)
+                self.listStyleSelectedIndex = 1
+                if(self.dynamicSearchText == ""){
+//                    let bookmarkedUsers = self.users.filter({ $0.isBookmarked })
+//                    self.filteredUsers = bookmarkedUsers
+//                    self.filteredUsers = self.tempFilteredUsers
+                    updateSnapshot(for: self.filteredUsers)
+                } else {
+//                    var filteredBookmarkUsers = self.users.filter({ $0.isBookmarked })
+                    let filteredBookmarkUsers = self.filteredUsers.filter({ $0.full_name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
+//                    self.filteredUsers = filteredBookmarkUsers
+                    updateSnapshot(for: filteredBookmarkUsers)
+                }
+                collectionView.reloadData()
             }
-            collectionView.reloadData()
-            	
-        } else if(sender.selectedSegmentIndex == 1){
-            self.listStyleSelectedIndex = 1
-            if(self.dynamicSearchText == ""){
-                let bookmarkedUsers = self.users.filter({ $0.isBookmarked })
-                self.filteredUsers = bookmarkedUsers
-                updateSnapshot(for: self.filteredUsers)
-            } else {
-                var filteredBookmarkUsers = self.users.filter({ $0.isBookmarked })
-                filteredBookmarkUsers = filteredBookmarkUsers.filter({ $0.full_name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
-                self.filteredUsers = filteredBookmarkUsers
-                updateSnapshot(for: self.filteredUsers)
+            
             }
-            collectionView.reloadData()
-        }
         
         }
-}

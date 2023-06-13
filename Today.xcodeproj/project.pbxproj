@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B592A389474004E214C /* FollowingCompaniesListViewController.swift */; };
+		220F0B5C2A389904004E214C /* FollowingUsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B5B2A389904004E214C /* FollowingUsersListViewController.swift */; };
+		220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B5D2A389B95004E214C /* FollowingMembersListViewController.swift */; };
+		220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B5F2A38A49C004E214C /* FollowedMembersListViewController.swift */; };
+		220F0B622A390BFE004E214C /* FollowedMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B612A390BFD004E214C /* FollowedMemberViewController.swift */; };
+		220F0B642A390C0C004E214C /* FollowingMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B632A390C0C004E214C /* FollowingMemberViewController.swift */; };
+		220F0B662A390C21004E214C /* FollowingCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B652A390C21004E214C /* FollowingCompanyViewController.swift */; };
+		220F0B682A390C36004E214C /* FollowingUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B672A390C36004E214C /* FollowingUserViewController.swift */; };
 		2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */; };
 		22262B1C2A27423700B7DBCF /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1B2A27423700B7DBCF /* Experience.swift */; };
 		22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1E2A27481600B7DBCF /* SubExperience.swift */; };
@@ -56,6 +64,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		220F0B592A389474004E214C /* FollowingCompaniesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCompaniesListViewController.swift; sourceTree = "<group>"; };
+		220F0B5B2A389904004E214C /* FollowingUsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingUsersListViewController.swift; sourceTree = "<group>"; };
+		220F0B5D2A389B95004E214C /* FollowingMembersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingMembersListViewController.swift; sourceTree = "<group>"; };
+		220F0B5F2A38A49C004E214C /* FollowedMembersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedMembersListViewController.swift; sourceTree = "<group>"; };
+		220F0B612A390BFD004E214C /* FollowedMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowedMemberViewController.swift; sourceTree = "<group>"; };
+		220F0B632A390C0C004E214C /* FollowingMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingMemberViewController.swift; sourceTree = "<group>"; };
+		220F0B652A390C21004E214C /* FollowingCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCompanyViewController.swift; sourceTree = "<group>"; };
+		220F0B672A390C36004E214C /* FollowingUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingUserViewController.swift; sourceTree = "<group>"; };
 		2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFilterViewController.swift; sourceTree = "<group>"; };
 		22262B1B2A27423700B7DBCF /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
 		22262B1E2A27481600B7DBCF /* SubExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubExperience.swift; sourceTree = "<group>"; };
@@ -120,6 +136,53 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		220F0B542A389404004E214C /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B582A389442004E214C /* FollowedMembers */,
+				220F0B572A389437004E214C /* FollowingMembers */,
+				220F0B562A38942D004E214C /* FollowingCompanies */,
+				220F0B552A38940D004E214C /* FollowingUsers */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		220F0B552A38940D004E214C /* FollowingUsers */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B5B2A389904004E214C /* FollowingUsersListViewController.swift */,
+				220F0B672A390C36004E214C /* FollowingUserViewController.swift */,
+			);
+			path = FollowingUsers;
+			sourceTree = "<group>";
+		};
+		220F0B562A38942D004E214C /* FollowingCompanies */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B592A389474004E214C /* FollowingCompaniesListViewController.swift */,
+				220F0B652A390C21004E214C /* FollowingCompanyViewController.swift */,
+			);
+			path = FollowingCompanies;
+			sourceTree = "<group>";
+		};
+		220F0B572A389437004E214C /* FollowingMembers */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B5D2A389B95004E214C /* FollowingMembersListViewController.swift */,
+				220F0B632A390C0C004E214C /* FollowingMemberViewController.swift */,
+			);
+			path = FollowingMembers;
+			sourceTree = "<group>";
+		};
+		220F0B582A389442004E214C /* FollowedMembers */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B5F2A38A49C004E214C /* FollowedMembersListViewController.swift */,
+				220F0B612A390BFD004E214C /* FollowedMemberViewController.swift */,
+			);
+			path = FollowedMembers;
+			sourceTree = "<group>";
+		};
 		22262B262A2793C600B7DBCF /* CompanyListViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +325,7 @@
 		E94E1FEF29CB4C7500C58B18 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				220F0B542A389404004E214C /* Profile */,
 				E92924452A30A3AD00049820 /* MemberDetailViewController */,
 				E92924442A30A39E00049820 /* MemberListViewController */,
 				22BF6E1C2A2B1FAC00D766E2 /* UserAbilityListViewControllers */,
@@ -363,6 +427,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E92924572A31FDF100049820 /* CompanyViewController+Row.swift in Sources */,
+				220F0B622A390BFE004E214C /* FollowedMemberViewController.swift in Sources */,
 				E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */,
 				E94E1FEC29CB3EC400C58B18 /* Register.swift in Sources */,
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
@@ -376,16 +441,23 @@
 				E929244D2A30A43800049820 /* MemberViewController+Row.swift in Sources */,
 				22EF2BDB2A2BE2250078CE12 /* EducationListViewController.swift in Sources */,
 				E92924512A30A48400049820 /* MemberListViewController+Action.swift in Sources */,
+				220F0B662A390C21004E214C /* FollowingCompanyViewController.swift in Sources */,
 				E92924532A30D9F000049820 /* MemberFilterViewController.swift in Sources */,
 				22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */,
 				22758A882A20EC000028DD17 /* APIRequest.swift in Sources */,
 				E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */,
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
+				220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */,
+				220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */,
+				220F0B642A390C0C004E214C /* FollowingMemberViewController.swift in Sources */,
 				DBCECF9F29B37399009373FE /* CompanyViewController.swift in Sources */,
 				DBE888D029B2B68700E5B6F9 /* UserFilterViewController.swift in Sources */,
 				DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */,
+				220F0B5C2A389904004E214C /* FollowingUsersListViewController.swift in Sources */,
 				E929244B2A30A42300049820 /* MemberViewController.swift in Sources */,
 				E92924472A30A3E700049820 /* MemberListViewController.swift in Sources */,
+				220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */,
+				220F0B682A390C36004E214C /* FollowingUserViewController.swift in Sources */,
 				E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */,
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,

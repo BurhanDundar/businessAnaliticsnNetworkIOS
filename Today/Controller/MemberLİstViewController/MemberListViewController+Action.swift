@@ -21,9 +21,10 @@ extension MemberListViewController {
     }
    
     @objc func didPressProfileButton (_ sender: UIBarButtonItem){
-        let viewController = ProfileViewController()
+//        let viewController = ProfileViewController()
         
-        navigationController?.pushViewController(viewController, animated: true)
+//        navigationController?.pushViewController(viewController, animated: true)
+        performSegue(withIdentifier: "GoToProfilePage", sender: self)
         let backBarButtonItem = UIBarButtonItem(title: "Members", style: .plain, target: nil, action: nil)
                 navigationItem.backBarButtonItem = backBarButtonItem
         

@@ -1,25 +1,16 @@
 //
-//  BookmarkViewController.swift
+//  FollowingCompanyViewController.swift
 //  Today
 //
-//  Created by Burhan Dündar on 4.03.2023.
+//  Created by Yapı Kredi Teknoloji A.Ş. on 13.06.2023.
 //
 
 import UIKit
 
-class CompanyViewController: UIViewController {
+class FollowingCompanyViewController: UIViewController {
     
     var tryButton = CustomButton(title: "Burada Çalışanları Gör", hasBackground: true ,fontSize: .med)
-    
     var company: Company?
-    /*init(company: Company) {
-        self.company = company
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("Always initialize UserViewController using init(reminder:)")
-    }*/
     
     lazy var fetchedImageView: UIImageView = {
         let iv = UIImageView()
@@ -36,16 +27,6 @@ class CompanyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let defaults = UserDefaults.standard
-        //let age = defaults.integer(forKey: "Age")
-        
-        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //let  namee = appDelegate.userName as! String
-        //let  idd = appDelegate.userid as! String
-        
-        //print(namee ?? "")
-        //print(idd ?? "")
-        //print(age)
                 
         view.backgroundColor = .systemBackground //.white
         

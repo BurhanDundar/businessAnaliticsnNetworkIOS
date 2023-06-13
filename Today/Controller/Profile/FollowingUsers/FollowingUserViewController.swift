@@ -1,13 +1,13 @@
 //
-//  UserViewController.swift
+//  FollowingUserViewController.swift
 //  Today
 //
-//  Created by Burhan Dündar on 10.02.2023.
+//  Created by Yapı Kredi Teknoloji A.Ş. on 13.06.2023.
 //
 
 import UIKit
 
-class UserViewController: UIViewController,UIScrollViewDelegate {
+class FollowingUserViewController: UIViewController,UIScrollViewDelegate {
     
     var skills: [Skill] = [Skill]()
     var experiences: [Experience] = [Experience]()
@@ -23,17 +23,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     
     var buttonCounter = 0
 
-    var isUserBookmarked: Bool
-    var user: User
-    init(user: User, isUserBookmarked: Bool) {
-        self.user = user
-        self.isUserBookmarked = isUserBookmarked
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("Always initialize UserViewController using init(reminder:)")
-    }
+    var user: User?
     
     var nameLabel: UILabel! // bunlar UITextView mi yapılmalı bunlara bak
     var titleLabel: UILabel!
@@ -73,12 +63,6 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         view = UIView()
         view.backgroundColor = .systemBackground
         
-        
-        systemImageName = self.isUserBookmarked ? "bookmark.fill" :  "bookmark"
-        
-        let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
-        navigationItem.rightBarButtonItem = bookmarkBarButton
-        
         view.addSubview(fetchedImageView)
         
         NSLayoutConstraint.activate([
@@ -88,14 +72,14 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
             fetchedImageView.heightAnchor.constraint(equalToConstant: 200)
         ])
         
-        loadFetchedImage(for: user.image ?? "")
+        loadFetchedImage(for: user?.image ?? "")
     
         // Name
         nameLabel = UILabel()
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.textAlignment = .center
         nameLabel.numberOfLines = 0
-        nameLabel.text = user.full_name
+        nameLabel.text = user?.full_name
         
         view.addSubview(nameLabel)
         
@@ -110,7 +94,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         connectionCount.textAlignment = .center
         connectionCount.textColor = .gray
         connectionCount.numberOfLines = 0
-        connectionCount.text = user.connection_count
+        connectionCount.text = user?.connection_count
         connectionCount.font = UIFont.systemFont(ofSize: 12)
         
         view.addSubview(connectionCount)
@@ -125,7 +109,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         location.translatesAutoresizingMaskIntoConstraints = false
         location.textAlignment = .center
         location.numberOfLines = 0
-        location.text = user.location
+        location.text = user?.location
         
         view.addSubview(location)
         
@@ -139,7 +123,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
-        titleLabel.text = user.title
+        titleLabel.text = user?.title
         
         view.addSubview(titleLabel)
         
@@ -172,25 +156,12 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     private func loadFetchedImage(for url: String){
         fetchedImageView.loadImage(url)
     }
-    
-    @objc private func bookmarkUser(){
-        self.isUserBookmarked.toggle()
-        systemImageName = self.isUserBookmarked ? "bookmark.fill" : "bookmark"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
-        
-        if let memberId = UserDefaults.standard.string(forKey: "memberId") {
-            self.updateMemberFavourite(who: memberId, whom: user.id!, with: "user")
-        }
-    }
-    
-    
-    
     private func getUserSkills(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/skill/getUserSkills"
                     
             let params = [
-                "user_id": self.user.id
+                "user_id": self.user?.id
             ]
         
             guard let url = URL(string: stringURL) else { return }
@@ -246,7 +217,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         
             
             let params = [
-                "user_id": self.user.id
+                "user_id": self.user?.id
             ]
         
             guard let url = URL(string: stringURL) else { return }
@@ -300,7 +271,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/education/getUserEducations"
             let params = [
-                "user_id": self.user.id
+                "user_id": self.user?.id
             ]
         
             guard let url = URL(string: stringURL) else { return }
@@ -355,7 +326,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         let stringURL = "\(appDelegate.APIURL)/course/getUserCourses"
             
             let params = [
-                "user_id": self.user.id
+                "user_id": self.user?.id
             ]
         
             guard let url = URL(string: stringURL) else { return }
@@ -411,7 +382,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
 
         
             let params = [
-                "user_id": self.user.id
+                "user_id": self.user?.id
             ]
         
             guard let url = URL(string: stringURL) else { return }
@@ -484,68 +455,4 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     
     
     
-}
-
-extension UIImageView {
-    func loadImage(_ url: String){
-        DispatchQueue.global(qos: .background).async {
-            DispatchQueue.main.async {
-                guard let url = URL(string: url) else {
-                    return
-                }
-                
-                guard let data = try? Data(contentsOf: url) else {
-                    return
-                }
-                
-                self.image = UIImage(data: data)
-            }
-        }
-    }
-}
-
-
-extension UIViewController {
-    func updateMemberFavourite(who following: String, whom followed: String, with fav_type: String){
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stringURL = "\(appDelegate.APIURL)/favourite/update"
-                    
-        print("following", following)
-        print("followed", followed)
-        
-            let params = [
-                "user_id": following,
-                "fav_id": followed,
-                "fav_type": fav_type
-            ]
-        
-            guard let url = URL(string: stringURL) else { return }
-            
-            var request = URLRequest(url: url)
-            request.httpMethod = "POST"
-            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-            
-            let session = URLSession.shared.dataTask(with: request) { data, response, error in
-            
-                guard let data = data else { return }
-                
-                if let error = error {
-                    print("there was an error: \(error.localizedDescription)")
-                }
-                
-                do {
-                    let decoder = JSONDecoder()
-                    let UpdateMemberResponse = try decoder.decode(String.self, from: data)
-                    print(UpdateMemberResponse)
-                } catch {
-                    print("Skill verileri cekilemedi")
-                }
-                
-            }
-            
-            session.resume()
-        
-    }
 }
