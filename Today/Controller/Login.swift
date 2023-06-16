@@ -36,6 +36,7 @@ class Login: UIViewController {
         
         signInBtn.addTarget(self, action: #selector(loginRequest), for: .touchUpInside)
         registerBtn.addTarget(self, action: #selector(goToRegisterPage), for: .touchUpInside)
+        forgotPassBtn.addTarget(self, action: #selector(goToForgotPasswordPage), for: .touchUpInside)
     }
     
     private func setupUI(){
@@ -92,15 +93,15 @@ class Login: UIViewController {
     }
     
     @objc private func goToRegisterPage(){
-        /*let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Register")
-        self.present(vc, animated: true)*/
-        
         navigationController?.pushViewController(Register(), animated: true)
     }
     
     @objc private func goToMainPage(){
         performSegue(withIdentifier: "LoginToTabBar", sender: nil)
+    }
+    
+    @objc private func goToForgotPasswordPage(){
+        navigationController?.pushViewController(ForgotPasswordViewController(), animated: true)
     }
     
     @objc private func loginRequest(){

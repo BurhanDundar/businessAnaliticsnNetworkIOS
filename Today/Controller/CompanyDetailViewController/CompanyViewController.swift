@@ -26,7 +26,7 @@ class CompanyViewController: UIViewController {
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.layer.masksToBounds = false
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = .orange
+        iv.backgroundColor = .clear
         iv.layer.borderWidth = 1
         iv.layer.borderColor = UIColor.blue.cgColor
         iv.layer.cornerRadius = iv.frame.size.height/2
@@ -97,6 +97,6 @@ class CompanyViewController: UIViewController {
     }
     
     private func loadFetchedImage(for url: String){
-        fetchedImageView.loadImage(url)
+        fetchedImageView.loadImage(url, "company")
     }
 }

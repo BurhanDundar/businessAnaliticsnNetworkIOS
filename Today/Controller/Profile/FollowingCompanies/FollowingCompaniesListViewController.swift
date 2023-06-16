@@ -11,7 +11,7 @@ class FollowingCompaniesListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Company.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Company.ID>
     
-        var companies: [Company] = Company.sampleData
+        var companies: [Company]! // = Company.sampleData
         var filteredCompanies: [Company] = []
         var dataSource: DataSource!
         var isSearching: Bool = false
@@ -25,7 +25,7 @@ class FollowingCompaniesListViewController: UICollectionViewController {
             iv.translatesAutoresizingMaskIntoConstraints = false
             iv.layer.masksToBounds = false
             iv.contentMode = .scaleAspectFill
-            iv.backgroundColor = .orange
+            iv.backgroundColor = .clear
             iv.layer.borderWidth = 1
             iv.layer.borderColor = UIColor.blue.cgColor
             iv.layer.cornerRadius = iv.frame.size.height/2
@@ -33,7 +33,8 @@ class FollowingCompaniesListViewController: UICollectionViewController {
             return iv
         }()
          override func viewDidLoad() {
-             self.getCompanies()
+             super.viewDidLoad()
+             Company.sampleData = self.companies
              navigationItem.title = "Companies"
 
              lazy var searchController: UISearchController = {
@@ -44,7 +45,7 @@ class FollowingCompaniesListViewController: UICollectionViewController {
                  return searchController
              }()
              
-             super.viewDidLoad()
+             
              
              navigationItem.searchController = searchController
 
@@ -125,36 +126,6 @@ class FollowingCompaniesListViewController: UICollectionViewController {
     private func loadFetchedImage(for url: String){
         fetchedImageView.loadImage(url)
     }
-    
-    private func getCompanies(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stringURL = "\(appDelegate.APIURL)/company"
-        guard let url = URL(string: stringURL) else { return }
-        let session = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("there was an error: \(error.localizedDescription)")
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                let decoder = JSONDecoder()
-                let companies = try decoder.decode([Company].self, from: data)
-                DispatchQueue.main.async {
-                    self.companies = companies
-                    Company.sampleData = self.companies
-                    self.filteredCompanies = []
-                    self.collectionView.reloadData()
-                    self.updateSnapshot(for: self.companies)
-                }
-            } catch {
-                print("Error Occured!")
-            }
-            
-        }
-        session.resume()
-    }
-    
 }
 
 extension FollowingCompaniesListViewController: UISearchBarDelegate {
@@ -173,7 +144,7 @@ extension FollowingCompaniesListViewController: UISearchBarDelegate {
         }
     }
     
-    func companySearchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         self.dynamicSearchText = ""
         self.filteredCompanies = []

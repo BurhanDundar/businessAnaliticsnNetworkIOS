@@ -47,7 +47,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.layer.masksToBounds = false
         iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = .orange
+        iv.backgroundColor = .clear
         iv.layer.borderWidth = 1
         iv.layer.borderColor = UIColor.blue.cgColor
         iv.layer.cornerRadius = iv.frame.size.height/2
@@ -487,7 +487,18 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
 }
 
 extension UIImageView {
-    func loadImage(_ url: String){
+    func loadImage(_ url: String, _ type: String = "user"){
+        
+        if(!url.contains("https://media.licdn.com/dms/image")){
+            if(type == "company"){
+                self.image = UIImage(systemName: "building.fill")
+                return
+            } else {
+                self.image = UIImage(systemName: "person.circle")
+                return
+            }
+        }
+        
         DispatchQueue.global(qos: .background).async {
             DispatchQueue.main.async {
                 guard let url = URL(string: url) else {
@@ -510,9 +521,6 @@ extension UIViewController {
         
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/favourite/update"
-                    
-        print("following", following)
-        print("followed", followed)
         
             let params = [
                 "user_id": following,

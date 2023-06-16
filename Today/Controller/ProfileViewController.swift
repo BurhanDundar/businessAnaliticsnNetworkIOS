@@ -29,17 +29,22 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     var followedMembersText = UILabel()
     var followedMembersCount = UILabel()
     
+    let memberId = UserDefaults.standard.string(forKey: "memberId") ?? ""
     let memberFullName = UserDefaults.standard.string(forKey: "memberFullName") ?? ""
     let memberUserName = UserDefaults.standard.string(forKey: "memberUserName") ?? ""
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        navigationController?.setNavigationBarHidden(true, animated: animated)
-//
-//    }
+    var followingUsersArray = [User]()
+    var followingCompaniesArray = [Company]()
+    var followingMembersArray = [Member]()
+    var followedMembersArray = [Member]()
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        self.getFollowingUsers()
+        self.getFollowingCompanies()
+        self.getFollowingMembers()
+        self.getFollowedMembers()
         
         let settingsBarButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(openSettings))
         navigationItem.rightBarButtonItem = settingsBarButton
@@ -48,14 +53,187 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     
     @objc func openSettings(_ sender: Any){
-        print("hello")
+        self.performSegue(withIdentifier: "OpenSettings", sender: self)
     }
+    
+    private func getFollowingUsers(){
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/favourite/getBookmarkedUsers"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "user"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let followingUsers = try decoder.decode([User].self, from: data)
+                    DispatchQueue.main.async {
+                        if(followingUsers.count > 0){
+                            self.followingUsersView.isUserInteractionEnabled = true
+                            self.followingUsersArray = followingUsers
+                        } else {
+                            self.followingUsersView.isUserInteractionEnabled = false
+                        }
+                        self.followingUsersCount.text = "\(followingUsers.count)"
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
+    private func getFollowingCompanies(){
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/favourite/getBookmarkedUsers"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "company"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let followingCompanies = try decoder.decode([Company].self, from: data)
+                    DispatchQueue.main.async {
+                        if(followingCompanies.count > 0){
+                            self.followingCompaniesView.isUserInteractionEnabled = true
+                            self.followingCompaniesArray = followingCompanies
+                        } else {
+                            self.followingCompaniesView.isUserInteractionEnabled = false
+                        }
+                        self.followingCompaniesCount.text = "\(followingCompanies.count)"
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
+    private func getFollowingMembers(){
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/favourite/getBookmarkedUsers"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "member"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let followingMembers = try decoder.decode([Member].self, from: data)
+                    DispatchQueue.main.async {
+                        if(followingMembers.count > 0){
+                            self.followingMembersView.isUserInteractionEnabled = true
+                            self.followingMembersArray = followingMembers
+                        } else {
+                            self.followingMembersView.isUserInteractionEnabled = false
+                        }
+                        self.followingMembersCount.text = "\(followingMembers.count)"
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
+    private func getFollowedMembers(){
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/favourite/getMemberFollowers"
+            let params = [
+                "fav_id": memberId,
+                "fav_type": "member"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let followedMembers = try decoder.decode([Member].self, from: data)
+                    DispatchQueue.main.async {
+                        if(followedMembers.count > 0){
+                            self.followedMembersView.isUserInteractionEnabled = true
+                            self.followedMembersArray = followedMembers
+                        } else {
+                            self.followedMembersView.isUserInteractionEnabled = false
+                        }
+                        self.followedMembersCount.text = "\(followedMembers.count)"
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
     
     func setupUI(){
         // VIEWSETUP
-        
-        
-        
         self.view.backgroundColor = .systemBackground
         
         self.profileImage = UIImageView(image: UIImage(systemName: "person.circle"))
@@ -83,7 +261,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.followingUsersText.textAlignment = .center
         
         
-        self.followingUsersCount.text = "1233"
+        self.followingUsersCount.text = "loading..." // 1233
         self.followingUsersCount.font = .boldSystemFont(ofSize: 15)
         self.followingUsersCount.numberOfLines = 0
         self.followingUsersCount.sizeToFit()
@@ -99,7 +277,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.followingCompaniesText.sizeToFit()
         self.followingCompaniesText.textAlignment = .center
         
-        self.followingCompaniesCount.text = "230"
+        self.followingCompaniesCount.text = "loading..."
         self.followingCompaniesCount.font = .boldSystemFont(ofSize: 15)
         self.followingCompaniesCount.numberOfLines = 0
         self.followingCompaniesCount.sizeToFit()
@@ -115,7 +293,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.followingMembersText.sizeToFit()
         self.followingMembersText.textAlignment = .center
         
-        self.followingMembersCount.text = "123"
+        self.followingMembersCount.text = "loading..."
         self.followingMembersCount.font = .boldSystemFont(ofSize: 15)
         self.followingMembersCount.numberOfLines = 0
         self.followingMembersCount.sizeToFit()
@@ -132,7 +310,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.followedMembersText.sizeToFit()
         self.followedMembersText.textAlignment = .center
         
-        self.followedMembersCount.text = "89"
+        self.followedMembersCount.text = "loading..."
         self.followedMembersCount.font = .boldSystemFont(ofSize: 15)
         self.followedMembersCount.numberOfLines = 0
         self.followedMembersCount.sizeToFit()
@@ -143,26 +321,26 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         
 //        self.followingUsersView.backgroundColor = .red
         
-        self.followingUsersView.isUserInteractionEnabled = true
-        let tapGesture_0 = UITapGestureRecognizer(target: self, action: #selector(getFollowingUsers))
+//        self.followingUsersView.isUserInteractionEnabled = true
+        let tapGesture_0 = UITapGestureRecognizer(target: self, action: #selector(openFollowingUsers))
         tapGesture_0.numberOfTapsRequired = 1
         tapGesture_0.delegate = self
         self.followingUsersView.addGestureRecognizer(tapGesture_0)
         
-        self.followingCompaniesView.isUserInteractionEnabled = true
-        let tapGesture_1 = UITapGestureRecognizer(target: self, action: #selector(getFollowingCompanies))
+//        self.followingCompaniesView.isUserInteractionEnabled = true
+        let tapGesture_1 = UITapGestureRecognizer(target: self, action: #selector(openFollowingCompanies))
         tapGesture_1.numberOfTapsRequired = 1
         tapGesture_1.delegate = self
         self.followingCompaniesView.addGestureRecognizer(tapGesture_1)
         
-        self.followingMembersView.isUserInteractionEnabled = true
-        let tapGesture_2 = UITapGestureRecognizer(target: self, action: #selector(getFollowingMembers))
+//        self.followingMembersView.isUserInteractionEnabled = true
+        let tapGesture_2 = UITapGestureRecognizer(target: self, action: #selector(openFollowingMembers))
         tapGesture_2.numberOfTapsRequired = 1
         tapGesture_2.delegate = self
         self.followingMembersView.addGestureRecognizer(tapGesture_2)
         
-        self.followedMembersView.isUserInteractionEnabled = true
-        let tapGesture_3 = UITapGestureRecognizer(target: self, action: #selector(getFollowedMembers))
+//        self.followedMembersView.isUserInteractionEnabled = true
+        let tapGesture_3 = UITapGestureRecognizer(target: self, action: #selector(openFollowedMembers))
         tapGesture_3.numberOfTapsRequired = 1
         tapGesture_3.delegate = self
         self.followedMembersView.addGestureRecognizer(tapGesture_3)
@@ -275,26 +453,53 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         ])
     }
     
-    @objc func getFollowingUsers(_ sender: UITapGestureRecognizer){
-        self.performSegue(withIdentifier: "ShowFollowingUsers", sender: self)
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if (segue.identifier == "ShowFollowingUsers") {
+          let followingUsersVC = segue.destination as! FollowingUsersListViewController
+          let object = sender as! [String: [User]?]
+           followingUsersVC.users = object["users"] as! [User]
+       } else if(segue.identifier == "ShowFollowingCompanies"){
+           let followingCompaniesVC = segue.destination as! FollowingCompaniesListViewController
+           let object = sender as! [String: [Company]?]
+           followingCompaniesVC.companies = object["companies"] as! [Company]
+       } else if(segue.identifier == "ShowFollowingMembers"){
+           let followingMembersVC = segue.destination as! FollowingMembersListViewController
+           let object = sender as! [String: [Member]?]
+           followingMembersVC.members = object["members"] as! [Member]
+       } else if(segue.identifier == "ShowFollowedMembers"){
+           let followedMembersVC = segue.destination as! FollowedMembersListViewController
+           let object = sender as! [String: [Member]?]
+           followedMembersVC.members = object["members"] as! [Member]
+       }
     }
     
-    @objc func getFollowingCompanies(_ sender: UITapGestureRecognizer){
-        self.performSegue(withIdentifier: "ShowFollowingCompanies", sender: self)
+    @objc func openFollowingUsers(_ sender: UITapGestureRecognizer){
+        let sender: [String: [User]?] = [ "users": self.followingUsersArray ]
+        self.performSegue(withIdentifier: "ShowFollowingUsers", sender: sender)
     }
     
-    @objc func getFollowingMembers(_ sender: UITapGestureRecognizer){
-        self.performSegue(withIdentifier: "ShowFollowingMembers", sender: self)
+    @objc func openFollowingCompanies(_ sender: UITapGestureRecognizer){
+        let sender: [String: [Company]?] = [ "companies": self.followingCompaniesArray ]
+        self.performSegue(withIdentifier: "ShowFollowingCompanies", sender: sender)
     }
     
-    @objc func getFollowedMembers(_ sender: UITapGestureRecognizer){
-        self.performSegue(withIdentifier: "ShowFollowedMembers", sender: self)
+    @objc func openFollowingMembers(_ sender: UITapGestureRecognizer){
+        let sender: [String: [Member]?] = [ "members": self.followingMembersArray ]
+        self.performSegue(withIdentifier: "ShowFollowingMembers", sender: sender)
+    }
+    
+    @objc func openFollowedMembers(_ sender: UITapGestureRecognizer){
+        let sender: [String: [Member]?] = [ "members": self.followedMembersArray ]
+        self.performSegue(withIdentifier: "ShowFollowedMembers", sender: sender)
     }
     
     @objc func didCancelAdd(_ sender: UIBarButtonItem){
         dismiss(animated: true)
     }
     
-    
-   
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.userName.text = UserDefaults.standard.string(forKey: "memberUserName")
+    }
+
 }

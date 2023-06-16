@@ -11,12 +11,11 @@ class FollowingUsersListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
     
-        var users: [User] = User.sampleData
+        var users: [User]! // bu kesin gelecek ama User.sampleDataboş kaldı var users: [User] = User.sampleData ne olacak bak buna
         var filteredUsers: [User] = []
         var dataSource: DataSource!
         var isSearching: Bool = false
         var dynamicSearchText: String = ""
-    
         // search bar
         var searchController: UISearchController!
     
@@ -25,7 +24,7 @@ class FollowingUsersListViewController: UICollectionViewController {
             iv.translatesAutoresizingMaskIntoConstraints = false
             iv.layer.masksToBounds = false
             iv.contentMode = .scaleAspectFill
-            iv.backgroundColor = .orange
+            iv.backgroundColor = .clear
             iv.layer.borderWidth = 1
             iv.layer.borderColor = UIColor.blue.cgColor
             iv.layer.cornerRadius = iv.frame.size.height/2
@@ -33,7 +32,8 @@ class FollowingUsersListViewController: UICollectionViewController {
             return iv
         }()
          override func viewDidLoad() {
-             self.getUsers()
+             User.sampleData = self.users
+             super.viewDidLoad()
              navigationItem.title = "Following Users"
 
              lazy var searchController: UISearchController = {
@@ -42,8 +42,6 @@ class FollowingUsersListViewController: UICollectionViewController {
                  searchController.searchBar.delegate = self
                  return searchController
              }()
-             
-             super.viewDidLoad()
              
              navigationItem.searchController = searchController
 
@@ -125,36 +123,6 @@ class FollowingUsersListViewController: UICollectionViewController {
     private func loadFetchedImage(for url: String){
         fetchedImageView.loadImage(url)
     }
-    
-    private func getUsers(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stringURL = "\(appDelegate.APIURL)/user"
-        
-        guard let url = URL(string: stringURL) else { return }
-        let session = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("there was an error: \(error.localizedDescription)")
-            }
-            guard let data = data else { return }
-            
-            do {
-                let decoder = JSONDecoder()
-                let users = try decoder.decode([User].self, from: data)
-                DispatchQueue.main.async {
-                    self.users = users
-                    User.sampleData = self.users
-                    self.filteredUsers = []
-                    self.collectionView.reloadData()
-                    self.updateSnapshot(for: self.users)
-                }
-            } catch {
-                print("Error Occured!")
-            }
-            
-        }
-        session.resume()
-    }
-    
 }
 
 extension FollowingUsersListViewController: UISearchBarDelegate {
@@ -173,7 +141,7 @@ extension FollowingUsersListViewController: UISearchBarDelegate {
         }
     }
     
-    func userSearchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         self.dynamicSearchText = ""
         self.filteredUsers = []

@@ -13,7 +13,9 @@ class CustomTextField: UITextField {
         case name
         case surname
         case username
+        case fullname
         case email
+        case oldPassword
         case password
         case repassword
         case skills
@@ -44,12 +46,18 @@ class CustomTextField: UITextField {
             self.placeholder = "Surname"
         case .username:
             self.placeholder = "Username"
+        case .fullname:
+            self.placeholder = "Fullname"
         case .email:
             self.placeholder = "Email Address"
             self.keyboardType = .emailAddress
             self.textContentType = .emailAddress
         case .password:
             self.placeholder = "Password"
+            self.textContentType = .oneTimeCode
+            self.isSecureTextEntry = true
+        case .oldPassword:
+            self.placeholder = "Old Password"
             self.textContentType = .oneTimeCode
             self.isSecureTextEntry = true
         case .repassword:

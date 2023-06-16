@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22097A802A3BBB1C0007EC10 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */; };
+		22097A822A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A812A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift */; };
 		220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B592A389474004E214C /* FollowingCompaniesListViewController.swift */; };
 		220F0B5C2A389904004E214C /* FollowingUsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B5B2A389904004E214C /* FollowingUsersListViewController.swift */; };
 		220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B5D2A389B95004E214C /* FollowingMembersListViewController.swift */; };
@@ -15,6 +17,9 @@
 		220F0B642A390C0C004E214C /* FollowingMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B632A390C0C004E214C /* FollowingMemberViewController.swift */; };
 		220F0B662A390C21004E214C /* FollowingCompanyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B652A390C21004E214C /* FollowingCompanyViewController.swift */; };
 		220F0B682A390C36004E214C /* FollowingUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B672A390C36004E214C /* FollowingUserViewController.swift */; };
+		220F0B6C2A3926DB004E214C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B6B2A3926DB004E214C /* SettingsViewController.swift */; };
+		220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */; };
+		220F0B762A39A996004E214C /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */; };
 		2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */; };
 		22262B1C2A27423700B7DBCF /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1B2A27423700B7DBCF /* Experience.swift */; };
 		22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1E2A27481600B7DBCF /* SubExperience.swift */; };
@@ -64,6 +69,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		22097A812A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordandUsernameResponse.swift; sourceTree = "<group>"; };
 		220F0B592A389474004E214C /* FollowingCompaniesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCompaniesListViewController.swift; sourceTree = "<group>"; };
 		220F0B5B2A389904004E214C /* FollowingUsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingUsersListViewController.swift; sourceTree = "<group>"; };
 		220F0B5D2A389B95004E214C /* FollowingMembersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingMembersListViewController.swift; sourceTree = "<group>"; };
@@ -72,6 +79,9 @@
 		220F0B632A390C0C004E214C /* FollowingMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingMemberViewController.swift; sourceTree = "<group>"; };
 		220F0B652A390C21004E214C /* FollowingCompanyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCompanyViewController.swift; sourceTree = "<group>"; };
 		220F0B672A390C36004E214C /* FollowingUserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingUserViewController.swift; sourceTree = "<group>"; };
+		220F0B6B2A3926DB004E214C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameViewController.swift; sourceTree = "<group>"; };
+		220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
 		2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFilterViewController.swift; sourceTree = "<group>"; };
 		22262B1B2A27423700B7DBCF /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
 		22262B1E2A27481600B7DBCF /* SubExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubExperience.swift; sourceTree = "<group>"; };
@@ -183,6 +193,32 @@
 			path = FollowedMembers;
 			sourceTree = "<group>";
 		};
+		220F0B6D2A39A93A004E214C /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B702A39A961004E214C /* UpdateUsername */,
+				220F0B6E2A39A94B004E214C /* UpdatePassword */,
+				220F0B6B2A3926DB004E214C /* SettingsViewController.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		220F0B6E2A39A94B004E214C /* UpdatePassword */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */,
+			);
+			path = UpdatePassword;
+			sourceTree = "<group>";
+		};
+		220F0B702A39A961004E214C /* UpdateUsername */ = {
+			isa = PBXGroup;
+			children = (
+				220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */,
+			);
+			path = UpdateUsername;
+			sourceTree = "<group>";
+		};
 		22262B262A2793C600B7DBCF /* CompanyListViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -281,6 +317,7 @@
 				22262B2C2A27947000B7DBCF /* Company.swift */,
 				22BF6E182A2A199200D766E2 /* Member.swift */,
 				22973E462A34B1BE00BBFB5F /* Favourite.swift */,
+				22097A812A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -325,6 +362,7 @@
 		E94E1FEF29CB4C7500C58B18 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				220F0B6D2A39A93A004E214C /* Settings */,
 				220F0B542A389404004E214C /* Profile */,
 				E92924452A30A3AD00049820 /* MemberDetailViewController */,
 				E92924442A30A39E00049820 /* MemberListViewController */,
@@ -340,6 +378,7 @@
 				2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */,
 				E92924522A30D9F000049820 /* MemberFilterViewController.swift */,
 				E92924542A31F2C900049820 /* ProfileViewController.swift */,
+				22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -428,6 +467,7 @@
 			files = (
 				E92924572A31FDF100049820 /* CompanyViewController+Row.swift in Sources */,
 				220F0B622A390BFE004E214C /* FollowedMemberViewController.swift in Sources */,
+				220F0B762A39A996004E214C /* UpdatePasswordViewController.swift in Sources */,
 				E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */,
 				E94E1FEC29CB3EC400C58B18 /* Register.swift in Sources */,
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
@@ -437,6 +477,7 @@
 				DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */,
 				22BF6E1B2A2A9CAE00D766E2 /* TabBarViewController.swift in Sources */,
 				22BF6E192A2A199200D766E2 /* Member.swift in Sources */,
+				220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */,
 				E94E1FE429C8B40100C58B18 /* Login.swift in Sources */,
 				E929244D2A30A43800049820 /* MemberViewController+Row.swift in Sources */,
 				22EF2BDB2A2BE2250078CE12 /* EducationListViewController.swift in Sources */,
@@ -449,12 +490,14 @@
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
 				220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */,
 				220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */,
+				22097A822A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift in Sources */,
 				220F0B642A390C0C004E214C /* FollowingMemberViewController.swift in Sources */,
 				DBCECF9F29B37399009373FE /* CompanyViewController.swift in Sources */,
 				DBE888D029B2B68700E5B6F9 /* UserFilterViewController.swift in Sources */,
 				DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */,
 				220F0B5C2A389904004E214C /* FollowingUsersListViewController.swift in Sources */,
 				E929244B2A30A42300049820 /* MemberViewController.swift in Sources */,
+				220F0B6C2A3926DB004E214C /* SettingsViewController.swift in Sources */,
 				E92924472A30A3E700049820 /* MemberListViewController.swift in Sources */,
 				220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */,
 				220F0B682A390C36004E214C /* FollowingUserViewController.swift in Sources */,
@@ -473,6 +516,7 @@
 				AAD0598A28EC8D10004F4962 /* SceneDelegate.swift in Sources */,
 				22EF2BDF2A2BE2460078CE12 /* LanguageListViewController.swift in Sources */,
 				AAD059C428ECC017004F4962 /* User.swift in Sources */,
+				22097A802A3BBB1C0007EC10 /* ForgotPasswordViewController.swift in Sources */,
 				22262B252A276D4200B7DBCF /* Language.swift in Sources */,
 				E94E1FF429CB4D8F00C58B18 /* WebViewerController.swift in Sources */,
 				E94E1FE829CA011100C58B18 /* CustomButton.swift in Sources */,

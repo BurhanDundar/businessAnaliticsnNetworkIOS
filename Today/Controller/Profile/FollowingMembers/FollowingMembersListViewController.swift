@@ -11,7 +11,7 @@ class FollowingMembersListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Member.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Member.ID>
     
-        var members: [Member] = Member.sampleData
+        var members: [Member]! //= Member.sampleData
         var filteredMembers: [Member] = []
         var dataSource: DataSource!
         var isSearching: Bool = false
@@ -25,7 +25,7 @@ class FollowingMembersListViewController: UICollectionViewController {
             iv.translatesAutoresizingMaskIntoConstraints = false
             iv.layer.masksToBounds = false
             iv.contentMode = .scaleAspectFill
-            iv.backgroundColor = .orange
+            iv.backgroundColor = .clear
             iv.layer.borderWidth = 1
             iv.layer.borderColor = UIColor.blue.cgColor
             iv.layer.cornerRadius = iv.frame.size.height/2
@@ -33,7 +33,7 @@ class FollowingMembersListViewController: UICollectionViewController {
             return iv
         }()
          override func viewDidLoad() {
-             self.getMembers()
+             Member.sampleData = self.members
              navigationItem.title = "Following Members"
 
              lazy var searchController: UISearchController = {
@@ -124,36 +124,6 @@ class FollowingMembersListViewController: UICollectionViewController {
     private func loadFetchedImage(for url: String){
         fetchedImageView.loadImage(url)
     }
-    
-    private func getMembers(){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stringURL = "\(appDelegate.APIURL)/member"
-        guard let url = URL(string: stringURL) else { return }
-        let session = URLSession.shared.dataTask(with: url) { data, response, error in
-            if let error = error {
-                print("there was an error: \(error.localizedDescription)")
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                let decoder = JSONDecoder()
-                let members = try decoder.decode([Member].self, from: data)
-                DispatchQueue.main.async {
-                    self.members = members
-                    Member.sampleData = self.members
-                    self.filteredMembers = []
-                    self.collectionView.reloadData()
-                    self.updateSnapshot(for: self.members)
-                }
-            } catch {
-                print("Error Occured!")
-            }
-            
-        }
-        session.resume()
-    }
-    
 }
 
 extension FollowingMembersListViewController: UISearchBarDelegate {
@@ -172,7 +142,7 @@ extension FollowingMembersListViewController: UISearchBarDelegate {
         }
     }
     
-    func memberSearchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         self.dynamicSearchText = ""
         self.filteredMembers = []
