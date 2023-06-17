@@ -12,7 +12,7 @@ class ExperienceListViewController: UIViewController {
         var experienceNameTxt = UILabel()
         var experienceEstablishmentTxt = UILabel()
         var stackView = UIStackView()
-        var scrollView = UIScrollView()
+        var scrollView = UIScrollView(frame: UIScreen.main.bounds)
     
         var experiences: [Experience]
         init(experiences: [Experience]) {

@@ -599,7 +599,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         navController.navigationBar.isTranslucent = false
         navController.navigationBar.tintColor = UIColor.black
         navController.navigationBar.barTintColor = UIColor.colorFromHex("#0072B1")
-        navController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen 
+        navController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen
         navController.modalTransitionStyle = .coverVertical
 
         self.present(navController, animated: true, completion: nil)

@@ -62,7 +62,7 @@ class Register: UIViewController{
     }
     
     private func setupUI(){
-        let scrollView = UIScrollView()
+        let scrollView = UIScrollView(frame: UIScreen.main.bounds)
         self.view.addSubview(scrollView)
         
         scrollView.translatesAutoresizingMaskIntoConstraints = false

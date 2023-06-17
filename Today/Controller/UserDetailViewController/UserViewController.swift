@@ -45,6 +45,8 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
     var location: UILabel!
     var button: UIButton!
     var systemImageName: String!
+    var scrollView = UIScrollView()
+    var stackView = UIStackView()
     
     lazy var fetchedImageView: UIImageView = {
         let iv = UIImageView()
@@ -77,14 +79,38 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         
         view = UIView()
         view.backgroundColor = .systemBackground
+    
+//        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 400)
+        scrollView.backgroundColor = .red
+        self.view.addSubview(self.scrollView)
+        
+        
+        self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100).isActive = true
+        self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
+        
+        self.scrollView.addSubview(self.stackView)
+        
+        self.stackView.axis = .vertical
+        self.stackView.alignment = .center
+        self.stackView.spacing = 10
+        
+        self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
+        self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
+        self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor).isActive = true
+        self.stackView.bottomAnchor.constraint(equalTo: self.scrollView.bottomAnchor).isActive = true
+        self.stackView.widthAnchor.constraint(equalTo: self.scrollView.widthAnchor).isActive = true
+        
+        self.scrollView.translatesAutoresizingMaskIntoConstraints = false
+        self.stackView.translatesAutoresizingMaskIntoConstraints = false
         
         
         systemImageName = self.isUserBookmarked ? "bookmark.fill" :  "bookmark"
         
         let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
         navigationItem.rightBarButtonItem = bookmarkBarButton
-        
-        view.addSubview(fetchedImageView)
+        self.stackView.addArrangedSubview(fetchedImageView)
         
         loadFetchedImage(for: user.image ?? "")
     
@@ -115,11 +141,11 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         titleLabel.text = user.title
         
         
-        view.addSubview(nameLabel)
-        view.addSubview(connectionCount)
-        view.addSubview(location)
-        view.addSubview(titleLabel)
-        view.addSubview(self.openUserProfileLinkedInPageBtn)
+        self.stackView.addArrangedSubview(nameLabel)
+        self.stackView.addArrangedSubview(connectionCount)
+        self.stackView.addArrangedSubview(location)
+        self.stackView.addArrangedSubview(titleLabel)
+        self.stackView.addArrangedSubview(openUserProfileLinkedInPageBtn)
         
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         connectionCount.translatesAutoresizingMaskIntoConstraints = false
@@ -128,27 +154,27 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         openUserProfileLinkedInPageBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            self.fetchedImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            self.fetchedImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 60),
-            self.fetchedImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
+            self.fetchedImageView.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
+            self.fetchedImageView.topAnchor.constraint(equalTo: self.stackView.topAnchor, constant: 60),
+            self.fetchedImageView.widthAnchor.constraint(equalTo: self.stackView.widthAnchor, multiplier: 0.6),
             self.fetchedImageView.heightAnchor.constraint(equalToConstant: 200),
             
             self.nameLabel.topAnchor.constraint(equalTo: self.fetchedImageView.bottomAnchor,constant: 20),
-            self.nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor),
+            self.nameLabel.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
             
             self.connectionCount.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor,constant: 10),
-            self.connectionCount.widthAnchor.constraint(equalTo: view.widthAnchor),
+            self.connectionCount.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
             
             self.location.topAnchor.constraint(equalTo: self.connectionCount.bottomAnchor, constant: 10),
-            self.location.widthAnchor.constraint(equalTo: view.widthAnchor),
+            self.location.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
             
             
             self.titleLabel.topAnchor.constraint(equalTo: self.location.bottomAnchor,constant: 10),
-            self.titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor),
+            self.titleLabel.widthAnchor.constraint(equalTo: self.stackView.widthAnchor),
             
             self.openUserProfileLinkedInPageBtn.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 20),
-            self.openUserProfileLinkedInPageBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.openUserProfileLinkedInPageBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
+            self.openUserProfileLinkedInPageBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
+            self.openUserProfileLinkedInPageBtn.widthAnchor.constraint(equalTo: self.stackView.widthAnchor, multiplier: 0.85),
             self.openUserProfileLinkedInPageBtn.heightAnchor.constraint(equalToConstant: 55)
                 ])
         
@@ -261,10 +287,10 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.skills = userSkillsRes
                         if self.skills.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.view.addSubview(self.skillsBtn)
+                            self.stackView.addSubview(self.skillsBtn)
                             self.skillsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.skillsBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                self.skillsBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
                                 self.skillsBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.skillsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
@@ -317,10 +343,10 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.experiences = userExperiencesRes
                         if self.experiences.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.view.addSubview(self.experiencesBtn)
+                            self.stackView.addSubview(self.experiencesBtn)
                             self.experiencesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.experiencesBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                self.experiencesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
                                 self.experiencesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.experiencesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
@@ -371,10 +397,10 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.educations = userEducationsRes
                         if self.educations.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.view.addSubview(self.educationsBtn)
+                            self.stackView.addSubview(self.educationsBtn)
                             self.educationsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.educationsBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                self.educationsBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
                                 self.educationsBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.educationsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
@@ -426,10 +452,10 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.courses = userCoursesRes
                         if self.courses.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.view.addSubview(self.coursesBtn)
+                            self.stackView.addSubview(self.coursesBtn)
                             self.coursesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.coursesBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                self.coursesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
                                 self.coursesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.coursesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
@@ -482,10 +508,10 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.languages = userLanguagesRes
                         if self.languages.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.view.addSubview(self.languagesBtn)
+                            self.stackView.addSubview(self.languagesBtn)
                             self.languagesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.languagesBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+                                self.languagesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
                                 self.languagesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.languagesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
