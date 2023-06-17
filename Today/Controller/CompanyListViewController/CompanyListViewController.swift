@@ -136,8 +136,6 @@ class CompanyListViewController: UICollectionViewController {
         performSegue(withIdentifier: "GoToProfilePage", sender: self)
         let backBarButtonItem = UIBarButtonItem(title: "Companies", style: .plain, target: nil, action: nil)
                 navigationItem.backBarButtonItem = backBarButtonItem
-        
-        
     }
     func pushDetailViewForCompany(withId id:Company.ID){
         /*let company = company(withId: id)

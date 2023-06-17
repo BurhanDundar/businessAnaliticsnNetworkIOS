@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class LinkedInLoginRegisterButton: UIButton {
+class LinkedInButton: UIButton {
     
     var title: String = ""
     var image: UIImage!

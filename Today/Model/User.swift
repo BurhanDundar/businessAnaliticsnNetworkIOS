@@ -12,6 +12,7 @@ struct User: Identifiable,Codable{
     var image: String?
     var about: String?
     var connection_count: String?
+    var memberId: String?
     var location: String?
     var profileLink: String?
 }

@@ -10,9 +10,9 @@ import Foundation
 struct Member: Identifiable, Codable {
     var _id: String? = UUID().uuidString
     var id: String? { _id }
+    var userId: String?
     var fullname: String
     var username: String
-    var userId: String?
     var password: String?
     var email: String
     var isBookmarked: Bool = false

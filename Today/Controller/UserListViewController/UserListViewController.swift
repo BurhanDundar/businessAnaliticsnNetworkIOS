@@ -95,24 +95,24 @@ class UserListViewController: UICollectionViewController {
              
              let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
              navigationItem.leftBarButtonItem = profileBarButton
-
-             print(self.isFollowingUsers ?? false)
              
              DispatchQueue.main.async {
                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
                  self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
                              
-                 if self.company_id != nil {
-                     User.sampleData = []
-                     self.getCompanyUsers()
-                 } else if self.specialFilterUsers.count > 0 {
-                     User.sampleData = []
-                     self.loadFilteredUsers()
-                 } else {
-                     User.sampleData = []
-                     self.getUsers()
+                 if self.filteredUsers.count == 0 {
+                     if self.company_id != nil {
+                         User.sampleData = []
+                         self.getCompanyUsers()
+                     } else if self.specialFilterUsers.count > 0 {
+                         User.sampleData = []
+                         self.loadFilteredUsers()
+                     } else {
+                         User.sampleData = []
+                         self.getUsers()
+                     }
+                     self.getMemberFavAsUserIds()
                  }
-                 self.getMemberFavAsUserIds()
              }
              
              lazy var searchController: UISearchController = {
@@ -134,6 +134,7 @@ class UserListViewController: UICollectionViewController {
                  (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
                  var user: User!
                  if(self.listStyleSelectedIndex == 1) {
+                     self.updateSnapshot(for: self.filteredUsers)
                      user = self.filteredUsers[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
                      user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
@@ -340,6 +341,8 @@ extension UserListViewController: UISearchBarDelegate {
                 self.dynamicSearchText = ""
                 if(self.listStyleSelectedIndex == 1){
                     //                    self.getBookmarkedUsers()
+                    self.filteredUsers = []
+                    self.updateSnapshot(for: self.filteredUsers) // DÖN BURAYAAA
                 } else {
                     self.filteredUsers = []
                     self.updateSnapshot(for: self.users)
@@ -408,16 +411,18 @@ extension UserListViewController: UISearchBarDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
-        if(self.specialFilterUsers.count > 0){
-            User.sampleData = []
-            self.loadFilteredUsers()
-            
-            let clearFilter = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), style: .plain, target: self, action: #selector(clearFilter))
-            navigationItem.leftBarButtonItem = clearFilter
+        if(self.filteredUsers.count == 0){
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
+            if(self.specialFilterUsers.count > 0){
+                User.sampleData = []
+                self.loadFilteredUsers()
+                
+                let clearFilter = UIBarButtonItem(image: UIImage(systemName: "arrow.counterclockwise"), style: .plain, target: self, action: #selector(clearFilter))
+                navigationItem.leftBarButtonItem = clearFilter
+            }
+            self.getMemberFavAsUserIds()
         }
-        self.getMemberFavAsUserIds()
     }
     
     @objc private func clearFilter(_ sender: Any){
@@ -468,9 +473,8 @@ extension UserListViewController: UISearchBarDelegate {
             
             do {
                 let decoder = JSONDecoder()
-                let a = try decoder.decode([User].self, from: data)
-                print("*****",a)
-                return a
+                let response = try decoder.decode([User].self, from: data)
+                return response
             } catch {
                 throw GHError.invalidData
             }

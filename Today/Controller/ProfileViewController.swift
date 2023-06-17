@@ -43,7 +43,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     
     var connectWithLinkedInTitle = UILabel()
     var connectWithLinkedInTextField = CustomTextField(fieldType: .linkedinProfileLink)
-    var connectWithLinkedInBtn = LinkedInLoginRegisterButton(title: "Connect account with linkedIn", image: UIImage(named: "linkedin_icon")!)
+    var connectWithLinkedInBtn = LinkedInButton(title: "Connect account with linkedIn", image: UIImage(named: "linkedin_icon")!)
     var webView = WKWebView()
     
     var linkedInId = ""
@@ -599,7 +599,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         navController.navigationBar.isTranslucent = false
         navController.navigationBar.tintColor = UIColor.black
         navController.navigationBar.barTintColor = UIColor.colorFromHex("#0072B1")
-        navController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen //overFullScreen
+        navController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen 
         navController.modalTransitionStyle = .coverVertical
 
         self.present(navController, animated: true, completion: nil)

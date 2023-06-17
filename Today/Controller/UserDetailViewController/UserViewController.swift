@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import WebKit
 
-class UserViewController: UIViewController,UIScrollViewDelegate {
+class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegate, WKUIDelegate,WKNavigationDelegate {
     
     var skills: [Skill] = [Skill]()
     var experiences: [Experience] = [Experience]()
@@ -20,6 +21,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
     private let educationsBtn = CustomButton(title: "Educations", hasBackground: true, fontSize: .med)
     private let coursesBtn = CustomButton(title: "Courses", hasBackground: true, fontSize: .med)
     private let languagesBtn = CustomButton(title: "Languages", hasBackground: true, fontSize: .med)
+    
+    var openUserProfileLinkedInPageBtn = LinkedInButton(title: "Open User Linkedin Profile", image: UIImage(named: "linkedin_icon")!)
+    var webView = WKWebView()
     
     var buttonCounter = 0
 
@@ -69,6 +73,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         educationsBtn.addTarget(self, action: #selector(showUserEducations), for: .touchUpInside)
         coursesBtn.addTarget(self, action: #selector(showUserCourses), for: .touchUpInside)
         languagesBtn.addTarget(self, action: #selector(showUserLanguages), for: .touchUpInside)
+        self.openUserProfileLinkedInPageBtn.addTarget(self, action: #selector(setUserLinkedInProfileView), for: .touchUpInside)
         
         view = UIView()
         view.backgroundColor = .systemBackground
@@ -81,71 +86,70 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         
         view.addSubview(fetchedImageView)
         
-        NSLayoutConstraint.activate([
-            fetchedImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            fetchedImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 100),
-            fetchedImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
-            fetchedImageView.heightAnchor.constraint(equalToConstant: 200)
-        ])
-        
         loadFetchedImage(for: user.image ?? "")
     
         // Name
         nameLabel = UILabel()
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.textAlignment = .center
         nameLabel.numberOfLines = 0
         nameLabel.text = user.full_name
         
-        view.addSubview(nameLabel)
-        
-        NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: fetchedImageView.bottomAnchor,constant: 20),
-            nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
-                ])
-        
         // Connection Count
         connectionCount = UILabel()
-        connectionCount.translatesAutoresizingMaskIntoConstraints = false
         connectionCount.textAlignment = .center
         connectionCount.textColor = .gray
         connectionCount.numberOfLines = 0
         connectionCount.text = user.connection_count
         connectionCount.font = UIFont.systemFont(ofSize: 12)
         
-        view.addSubview(connectionCount)
-        
-        NSLayoutConstraint.activate([
-            connectionCount.topAnchor.constraint(equalTo: nameLabel.bottomAnchor,constant: 10),
-            connectionCount.widthAnchor.constraint(equalTo: view.widthAnchor)
-        ])
-        
         //Location
         location = UILabel()
-        location.translatesAutoresizingMaskIntoConstraints = false
         location.textAlignment = .center
         location.numberOfLines = 0
         location.text = user.location
         
-        view.addSubview(location)
-        
-        NSLayoutConstraint.activate([
-            location.topAnchor.constraint(equalTo: connectionCount.bottomAnchor, constant: 10),
-            location.widthAnchor.constraint(equalTo: view.widthAnchor)
-        ])
-        
         // Title
         titleLabel = UILabel()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
         titleLabel.text = user.title
         
+        
+        view.addSubview(nameLabel)
+        view.addSubview(connectionCount)
+        view.addSubview(location)
         view.addSubview(titleLabel)
+        view.addSubview(self.openUserProfileLinkedInPageBtn)
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        connectionCount.translatesAutoresizingMaskIntoConstraints = false
+        location.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        openUserProfileLinkedInPageBtn.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: location.bottomAnchor,constant: 10),
-            titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor)
+            self.fetchedImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            self.fetchedImageView.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 60),
+            self.fetchedImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.6),
+            self.fetchedImageView.heightAnchor.constraint(equalToConstant: 200),
+            
+            self.nameLabel.topAnchor.constraint(equalTo: self.fetchedImageView.bottomAnchor,constant: 20),
+            self.nameLabel.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
+            self.connectionCount.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor,constant: 10),
+            self.connectionCount.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
+            self.location.topAnchor.constraint(equalTo: self.connectionCount.bottomAnchor, constant: 10),
+            self.location.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
+            
+            self.titleLabel.topAnchor.constraint(equalTo: self.location.bottomAnchor,constant: 10),
+            self.titleLabel.widthAnchor.constraint(equalTo: view.widthAnchor),
+            
+            self.openUserProfileLinkedInPageBtn.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 20),
+            self.openUserProfileLinkedInPageBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.openUserProfileLinkedInPageBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
+            self.openUserProfileLinkedInPageBtn.heightAnchor.constraint(equalToConstant: 55)
                 ])
         
 
@@ -155,6 +159,48 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
         super.viewDidLoad()
         
         navigationSetup()
+    }
+    
+    @objc func setUserLinkedInProfileView(){
+        let linkedInVC = UIViewController()
+        webView.navigationDelegate = self
+        
+        linkedInVC.view.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: linkedInVC.view.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: linkedInVC.view.leadingAnchor),
+            webView.bottomAnchor.constraint(equalTo: linkedInVC.view.bottomAnchor),
+            webView.trailingAnchor.constraint(equalTo: linkedInVC.view.trailingAnchor)
+            ])
+        let url = URL(string: self.user.profileLink!) // "https://www.linkedin.com/in/burhan-d%C3%BCndar-9a8787256/"
+        let request = URLRequest(url: url!)
+        webView.load(request)
+        
+        // Create Navigation Controller
+        let navController = UINavigationController(rootViewController: linkedInVC)
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelAction))
+        linkedInVC.navigationItem.leftBarButtonItem = cancelButton
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.refreshAction))
+        linkedInVC.navigationItem.rightBarButtonItem = refreshButton
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navController.navigationBar.titleTextAttributes = textAttributes
+        linkedInVC.navigationItem.title = "linkedin.com"
+        navController.navigationBar.isTranslucent = false
+        navController.navigationBar.tintColor = UIColor.black
+        navController.navigationBar.barTintColor = UIColor.colorFromHex("#0072B1")
+        navController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen //overFullScreen
+        navController.modalTransitionStyle = .coverVertical
+        
+        self.present(navController, animated: true, completion: nil)
+    }
+    
+    @objc func cancelAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func refreshAction() {
+        self.webView.reload()
     }
     
     func navigationSetup(){
@@ -219,7 +265,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                             self.skillsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.skillsBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                                self.skillsBtn.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,constant: CGFloat(topAnc)),
+                                self.skillsBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.skillsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -275,7 +321,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                             self.experiencesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.experiencesBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                                self.experiencesBtn.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,constant: CGFloat(topAnc)),
+                                self.experiencesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.experiencesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -329,7 +375,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                             self.educationsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.educationsBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                                self.educationsBtn.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,constant: CGFloat(topAnc)),
+                                self.educationsBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.educationsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -384,7 +430,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                             self.coursesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.coursesBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                                self.coursesBtn.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,constant: CGFloat(topAnc)),
+                                self.coursesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.coursesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -440,7 +486,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate {
                             self.languagesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.languagesBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-                                self.languagesBtn.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor,constant: CGFloat(topAnc)),
+                                self.languagesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.languagesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1

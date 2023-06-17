@@ -56,7 +56,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nEk-7p-Ez0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </tabBar>
                     <connections>
                         <segue destination="FXI-K4-rTy" kind="relationship" relationship="viewControllers" id="tZu-2i-QU2"/>
@@ -161,7 +161,7 @@
                         <segue destination="3ts-eg-iqB" kind="show" identifier="ShowFollowingUsers" id="Kg8-cf-Uvm"/>
                         <segue destination="ChT-Ew-Z9U" kind="show" identifier="ShowFollowingMembers" id="qnb-JR-h9B"/>
                         <segue destination="esB-KI-ICf" kind="show" identifier="ShowFollowedMembers" id="iOp-ZW-rDO"/>
-                        <segue destination="NEt-z2-IBF" kind="show" identifier="OpenSettings" id="VJa-Ud-lYo"/>
+                        <segue destination="NEt-z2-IBF" kind="show" identifier="OpenSettings" id="y50-Ih-WU0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XNy-qM-FPt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -759,10 +759,10 @@
         <segue reference="qnb-JR-h9B"/>
         <segue reference="iOp-ZW-rDO"/>
         <segue reference="qSX-tA-COr"/>
-        <segue reference="VJa-Ud-lYo"/>
+        <segue reference="y50-Ih-WU0"/>
         <segue reference="Kg8-cf-Uvm"/>
-        <segue reference="ifi-kW-4iK"/>
-        <segue reference="HeT-j6-9m5"/>
+        <segue reference="7GE-bG-g8l"/>
+        <segue reference="Fpp-ut-rP6"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="building.2.fill" catalog="system" width="128" height="108"/>
