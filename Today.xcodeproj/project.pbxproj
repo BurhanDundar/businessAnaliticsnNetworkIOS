@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		22097A802A3BBB1C0007EC10 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */; };
 		22097A822A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A812A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift */; };
+		22097A852A3C6A690007EC10 /* LinkedInEmailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A842A3C6A690007EC10 /* LinkedInEmailModel.swift */; };
+		22097A872A3C6A880007EC10 /* LinkedInProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A862A3C6A880007EC10 /* LinkedInProfileModel.swift */; };
+		22097A892A3C6AB30007EC10 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A882A3C6AB30007EC10 /* Extensions.swift */; };
+		22097A8D2A3C6C820007EC10 /* LinkedInConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A8C2A3C6C820007EC10 /* LinkedInConstants.swift */; };
+		22097A8F2A3C6C9C0007EC10 /* LinkedInLoginRegisterButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22097A8E2A3C6C9C0007EC10 /* LinkedInLoginRegisterButton.swift */; };
 		220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B592A389474004E214C /* FollowingCompaniesListViewController.swift */; };
 		220F0B5C2A389904004E214C /* FollowingUsersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B5B2A389904004E214C /* FollowingUsersListViewController.swift */; };
 		220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B5D2A389B95004E214C /* FollowingMembersListViewController.swift */; };
@@ -71,6 +76,11 @@
 /* Begin PBXFileReference section */
 		22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		22097A812A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordandUsernameResponse.swift; sourceTree = "<group>"; };
+		22097A842A3C6A690007EC10 /* LinkedInEmailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInEmailModel.swift; sourceTree = "<group>"; };
+		22097A862A3C6A880007EC10 /* LinkedInProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInProfileModel.swift; sourceTree = "<group>"; };
+		22097A882A3C6AB30007EC10 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		22097A8C2A3C6C820007EC10 /* LinkedInConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInConstants.swift; sourceTree = "<group>"; };
+		22097A8E2A3C6C9C0007EC10 /* LinkedInLoginRegisterButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkedInLoginRegisterButton.swift; sourceTree = "<group>"; };
 		220F0B592A389474004E214C /* FollowingCompaniesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingCompaniesListViewController.swift; sourceTree = "<group>"; };
 		220F0B5B2A389904004E214C /* FollowingUsersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingUsersListViewController.swift; sourceTree = "<group>"; };
 		220F0B5D2A389B95004E214C /* FollowingMembersListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowingMembersListViewController.swift; sourceTree = "<group>"; };
@@ -241,6 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				22758A872A20EC000028DD17 /* APIRequest.swift */,
+				22097A882A3C6AB30007EC10 /* Extensions.swift */,
+				22097A8C2A3C6C820007EC10 /* LinkedInConstants.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -318,6 +330,8 @@
 				22BF6E182A2A199200D766E2 /* Member.swift */,
 				22973E462A34B1BE00BBFB5F /* Favourite.swift */,
 				22097A812A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift */,
+				22097A842A3C6A690007EC10 /* LinkedInEmailModel.swift */,
+				22097A862A3C6A880007EC10 /* LinkedInProfileModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -389,6 +403,7 @@
 				E94E1FE729CA011100C58B18 /* CustomButton.swift */,
 				E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */,
 				E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */,
+				22097A8E2A3C6C9C0007EC10 /* LinkedInLoginRegisterButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -467,9 +482,12 @@
 			files = (
 				E92924572A31FDF100049820 /* CompanyViewController+Row.swift in Sources */,
 				220F0B622A390BFE004E214C /* FollowedMemberViewController.swift in Sources */,
+				22097A852A3C6A690007EC10 /* LinkedInEmailModel.swift in Sources */,
 				220F0B762A39A996004E214C /* UpdatePasswordViewController.swift in Sources */,
 				E94E1FE629C9F9B500C58B18 /* CustomTextField.swift in Sources */,
+				22097A872A3C6A880007EC10 /* LinkedInProfileModel.swift in Sources */,
 				E94E1FEC29CB3EC400C58B18 /* Register.swift in Sources */,
+				22097A892A3C6AB30007EC10 /* Extensions.swift in Sources */,
 				AAD0598C28EC8D10004F4962 /* UserListViewController.swift in Sources */,
 				22BF6E1E2A2B1FE100D766E2 /* SkillListViewController.swift in Sources */,
 				22EF2BD92A2BE2170078CE12 /* ExperienceListViewController.swift in Sources */,
@@ -477,6 +495,7 @@
 				DB3111C5299649D20058A3A9 /* UserViewController.swift in Sources */,
 				22BF6E1B2A2A9CAE00D766E2 /* TabBarViewController.swift in Sources */,
 				22BF6E192A2A199200D766E2 /* Member.swift in Sources */,
+				22097A8F2A3C6C9C0007EC10 /* LinkedInLoginRegisterButton.swift in Sources */,
 				220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */,
 				E94E1FE429C8B40100C58B18 /* Login.swift in Sources */,
 				E929244D2A30A43800049820 /* MemberViewController+Row.swift in Sources */,
@@ -492,6 +511,7 @@
 				220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */,
 				22097A822A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift in Sources */,
 				220F0B642A390C0C004E214C /* FollowingMemberViewController.swift in Sources */,
+				22097A8D2A3C6C820007EC10 /* LinkedInConstants.swift in Sources */,
 				DBCECF9F29B37399009373FE /* CompanyViewController.swift in Sources */,
 				DBE888D029B2B68700E5B6F9 /* UserFilterViewController.swift in Sources */,
 				DB3111C8299652990058A3A9 /* UserViewController+Row.swift in Sources */,

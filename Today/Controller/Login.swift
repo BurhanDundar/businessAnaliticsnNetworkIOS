@@ -13,6 +13,7 @@ struct LoginResponseModel: Codable {
     var _id: String
     var fullname: String
     var username: String
+    var userId: String?
 }
 
 class Login: UIViewController {
@@ -108,7 +109,7 @@ class Login: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/auth/login"
             let params = [
-                "email": "dundarburhann@gmail.com", // self.email.text
+                "email": "dundarrburhan@gmail.com", // self.email.text
                 "password": "123456" // self.password.text
             ]
         
@@ -132,24 +133,43 @@ class Login: UIViewController {
                     let loginRes = try decoder.decode(LoginResponseModel.self, from: data)
                     DispatchQueue.main.async {
                         self.signInResponse = loginRes
-                    }
+                    
                     
                     if self.signInResponse.status == "ok" {
                         print("Giriş başarılı")
                         
                         let defaults = UserDefaults.standard
                         defaults.set(loginRes._id, forKey: "memberId")
+                        defaults.set("dundarrburhan@gmail.com", forKey: "memberEmail")
                         defaults.set(loginRes.fullname, forKey: "memberFullName")
                         defaults.set(loginRes.username, forKey: "memberUserName")
                         
-                        DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: "LoginToTabBar", sender: self)
+                        if(self.signInResponse.userId != nil){
+                            defaults.set(self.signInResponse.userId ?? "", forKey: "memberUserId")
                         }
+                        
+                        let alert = UIAlertController(title: "Yey! 🎉", message: "Logged in successfully", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                            self.performSegue(withIdentifier: "LoginToTabBar", sender: self)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                     } else {
+                        let alert = UIAlertController(title: "Oops Error!", message: loginRes.msg, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                            NSLog("The \"OK\" alert occured.")
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                         print("Giriş başarısız")
                     }
-                    
+                    }
                 } catch {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Oops Error!", message: "Problem Occured", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                            NSLog("The \"OK\" alert occured.")
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
                     print("Hatalı Giriş")
                 }
                 

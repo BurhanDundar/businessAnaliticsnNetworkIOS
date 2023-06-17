@@ -8,6 +8,7 @@
 // başına self alamayanları global tanımlayıp selfli mi yapsak bu bir gözden geçirelecek
 
 import UIKit
+import WebKit
 
 struct RegisterResponseModel: Codable {
     var status: String
@@ -18,8 +19,7 @@ class Register: UIViewController{
     private let scrollView = UIScrollView(frame: UIScreen.main.bounds)
     private let authHeader = AuthHeaderView(title: "Sign Up", subTitle: "Create an account")
     
-    private let name = CustomTextField(fieldType: .name)
-    private let surname = CustomTextField(fieldType: .surname)
+    private let fullname = CustomTextField(fieldType: .fullname)
     private let username = CustomTextField(fieldType: .username)
     private let email = CustomTextField(fieldType: .email)
     private let password = CustomTextField(fieldType: .password)
@@ -58,8 +58,7 @@ class Register: UIViewController{
         self.termsTextView.delegate = self
         
         self.signInBtn.addTarget(self, action: #selector(goToSignInPage), for: .touchUpInside)
-        self.registerBtn.addTarget(self, action: #selector(registerRequest), for: .touchUpInside)
-        
+        self.registerBtn.addTarget(self, action: #selector(registerRequest), for: .touchUpInside)        
     }
     
     private func setupUI(){
@@ -90,8 +89,7 @@ class Register: UIViewController{
         self.view.backgroundColor = .systemBackground
         
         stackView.addArrangedSubview(authHeader)
-        stackView.addArrangedSubview(name)
-        stackView.addArrangedSubview(surname)
+        stackView.addArrangedSubview(fullname)
         stackView.addArrangedSubview(username)
         stackView.addArrangedSubview(email)
         stackView.addArrangedSubview(password)
@@ -101,8 +99,7 @@ class Register: UIViewController{
         stackView.addArrangedSubview(signInBtn)
 
         self.authHeader.translatesAutoresizingMaskIntoConstraints = false
-        self.name.translatesAutoresizingMaskIntoConstraints = false
-        self.surname.translatesAutoresizingMaskIntoConstraints = false
+        self.fullname.translatesAutoresizingMaskIntoConstraints = false
         self.username.translatesAutoresizingMaskIntoConstraints = false
         self.email.translatesAutoresizingMaskIntoConstraints = false
         self.password.translatesAutoresizingMaskIntoConstraints = false
@@ -119,17 +116,12 @@ class Register: UIViewController{
             self.authHeader.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             
             //self.name.topAnchor.constraint(equalTo: self.authHeader.bottomAnchor, constant: 20),
-            self.name.centerXAnchor.constraint(equalTo: self.authHeader.centerXAnchor),
-            self.name.heightAnchor.constraint(equalToConstant: 55),
-            self.name.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
-            
-            //self.surname.topAnchor.constraint(equalTo: self.name.bottomAnchor, constant: 10),
-            self.surname.centerXAnchor.constraint(equalTo: self.name.centerXAnchor),
-            self.surname.heightAnchor.constraint(equalToConstant: 55),
-            self.surname.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
+            self.fullname.centerXAnchor.constraint(equalTo: self.authHeader.centerXAnchor),
+            self.fullname.heightAnchor.constraint(equalToConstant: 55),
+            self.fullname.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
             
             //self.username.topAnchor.constraint(equalTo: self.surname.bottomAnchor, constant: 10), // 20
-            self.username.centerXAnchor.constraint(equalTo: self.surname.centerXAnchor),
+            self.username.centerXAnchor.constraint(equalTo: self.fullname.centerXAnchor),
             self.username.heightAnchor.constraint(equalToConstant: 55),
             self.username.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
        
@@ -171,12 +163,39 @@ class Register: UIViewController{
     }
     
     @objc private func registerRequest(){
+        
+        if((self.password.text?.count ?? 0) < 6){
+            let alert = UIAlertController(title: "Password Length Error", message: "Password must be at least 6 character...", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        if((self.username.text?.count ?? 0) < 4){
+            let alert = UIAlertController(title: "Username Length Error", message: "Username must be at least 4 character...", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        if((self.fullname.text?.components(separatedBy: " ").count ?? 0) < 2){
+            let alert = UIAlertController(title: "Fullname Length Error", message: "Fullname should be created by a name and surname at least!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                NSLog("The \"OK\" alert occured.")
+            }))
+            self.present(alert, animated: true, completion: nil)
+            return
+        }
+        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/auth/signup"
                     
             let params = [
-                "name": self.name.text,
-                "surname": self.surname.text,
+                "fullname": self.fullname.text,
                 "username": self.username.text,
                 "email": self.email.text,
                 "password": self.password.text,
@@ -203,17 +222,29 @@ class Register: UIViewController{
                     let registerRes = try decoder.decode(RegisterResponseModel.self, from: data)
                     DispatchQueue.main.async {
                         self.registerResponse = registerRes
+                        if self.registerResponse.status == "ok" {
+                            let alert = UIAlertController(title: "Successful Registration!", message: self.registerResponse.msg, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                                self.navigationController?.popViewController(animated: true)
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        } else {
+                            let alert = UIAlertController(title: "Unsuccessful Registration!", message: self.registerResponse.msg, preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                                NSLog("The \"OK\" alert occured.")
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
                     }
-                    print("register response: ", self.registerResponse.status)
-                    if self.registerResponse.status == "ok" {
-                        print("Kayıt başarılı")
-                        //self.navigationController?.popViewController(animated: true)
-                    } else {
-                        print("Kayıt başarısız")
-                        print("msg: ", self.registerResponse.msg)
-                    }
-                    
                 } catch {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Oops Error!", message: "Problem Occured", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                            NSLog("The \"OK\" alert occured.")
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+
                     print("Hatalı Kayıt")
                 }
                 
@@ -248,4 +279,3 @@ extension Register: UITextViewDelegate {
         textView.delegate = self
     }
 }
-

@@ -12,6 +12,7 @@ struct Member: Identifiable, Codable {
     var id: String? { _id }
     var fullname: String
     var username: String
+    var userId: String?
     var password: String?
     var email: String
     var isBookmarked: Bool = false

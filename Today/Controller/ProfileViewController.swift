@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WebKit
 
 class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     
@@ -30,17 +31,31 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     var followedMembersCount = UILabel()
     
     let memberId = UserDefaults.standard.string(forKey: "memberId") ?? ""
+    let memberEmail = UserDefaults.standard.string(forKey: "memberEmail") ?? ""
     let memberFullName = UserDefaults.standard.string(forKey: "memberFullName") ?? ""
     let memberUserName = UserDefaults.standard.string(forKey: "memberUserName") ?? ""
+    let memberUserId = UserDefaults.standard.string(forKey: "memberUserId") ?? ""
     
     var followingUsersArray = [User]()
     var followingCompaniesArray = [Company]()
     var followingMembersArray = [Member]()
     var followedMembersArray = [Member]()
     
+    var connectWithLinkedInTitle = UILabel()
+    var connectWithLinkedInTextField = CustomTextField(fieldType: .linkedinProfileLink)
+    var connectWithLinkedInBtn = LinkedInLoginRegisterButton(title: "Connect account with linkedIn", image: UIImage(named: "linkedin_icon")!)
+    var webView = WKWebView()
+    
+    var linkedInId = ""
+    var linkedInFirstName = ""
+    var linkedInLastName = ""
+    var linkedInEmail = ""
+    var linkedInProfilePicURL = ""
+    var linkedInAccessToken = ""
+    
     override func viewDidLoad(){
         super.viewDidLoad()
-        
+                
         self.getFollowingUsers()
         self.getFollowingCompanies()
         self.getFollowingMembers()
@@ -48,12 +63,22 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         
         let settingsBarButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(openSettings))
         navigationItem.rightBarButtonItem = settingsBarButton
-        
+        self.connectWithLinkedInBtn.addTarget(self, action: #selector(linkedInAuthVC), for: .touchUpInside)
+        self.connectWithLinkedInTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        self.connectWithLinkedInBtn.isEnabled = false
         self.setupUI()
     }
     
     @objc func openSettings(_ sender: Any){
         self.performSegue(withIdentifier: "OpenSettings", sender: self)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        if(self.connectWithLinkedInTextField.text == ""){
+            self.connectWithLinkedInBtn.isEnabled = false
+        } else {
+            self.connectWithLinkedInBtn.isEnabled = true
+        }
     }
     
     private func getFollowingUsers(){
@@ -319,6 +344,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.followedMembersView.addSubview(followedMembersText)
         self.followedMembersView.addSubview(followedMembersCount)
         
+        self.connectWithLinkedInTitle.text = "Connect Your Account With LinkedIn"
+        self.connectWithLinkedInTitle.textAlignment = .left
+        self.connectWithLinkedInTitle.font = .preferredFont(forTextStyle: .headline, compatibleWith: .none)
+        
 //        self.followingUsersView.backgroundColor = .red
         
 //        self.followingUsersView.isUserInteractionEnabled = true
@@ -366,6 +395,10 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.followedMembersCount.translatesAutoresizingMaskIntoConstraints = false
         self.followedMembersView.translatesAutoresizingMaskIntoConstraints = false
         
+        self.connectWithLinkedInTitle.translatesAutoresizingMaskIntoConstraints = false
+        self.connectWithLinkedInTextField.translatesAutoresizingMaskIntoConstraints = false
+        self.connectWithLinkedInBtn.translatesAutoresizingMaskIntoConstraints = false
+        
         self.view.addSubview(self.profileImage)
         self.view.addSubview(self.fullName)
         self.view.addSubview(self.userName)
@@ -374,6 +407,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         stackView.addArrangedSubview(self.followingCompaniesView)
         stackView.addArrangedSubview(self.followingMembersView)
         stackView.addArrangedSubview(self.followedMembersView)
+        self.view.addSubview(self.connectWithLinkedInTitle)
+        self.view.addSubview(self.connectWithLinkedInTextField)
+        self.view.addSubview(self.connectWithLinkedInBtn)
         
         NSLayoutConstraint.activate([
             self.profileImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 110),
@@ -450,6 +486,22 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             self.followedMembersText.topAnchor.constraint(equalTo: self.followedMembersCount.bottomAnchor, constant: 5),
             self.followedMembersText.centerXAnchor.constraint(equalTo: self.followedMembersView.centerXAnchor),
             self.followedMembersText.leadingAnchor.constraint(equalTo: self.followedMembersView.leadingAnchor),
+            
+            self.connectWithLinkedInTitle.topAnchor.constraint(equalTo: self.followedMembersText.bottomAnchor, constant: 40),
+            self.connectWithLinkedInTitle.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.connectWithLinkedInTitle.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
+            
+            self.connectWithLinkedInTextField.topAnchor.constraint(equalTo: self.connectWithLinkedInTitle.bottomAnchor, constant: 20),
+            self.connectWithLinkedInTextField.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.connectWithLinkedInTextField.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
+            self.connectWithLinkedInTextField.heightAnchor.constraint(equalToConstant: 55),
+            
+            self.connectWithLinkedInBtn.topAnchor.constraint(equalTo: self.connectWithLinkedInTextField.bottomAnchor, constant: 20),
+            self.connectWithLinkedInBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.connectWithLinkedInBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
+            self.connectWithLinkedInBtn.heightAnchor.constraint(equalToConstant: 55),
+            
+            
         ])
     }
     
@@ -501,5 +553,276 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         super.viewDidAppear(animated)
         self.userName.text = UserDefaults.standard.string(forKey: "memberUserName")
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if(self.memberUserId != ""){
+            self.connectWithLinkedInTitle.removeFromSuperview()
+            self.connectWithLinkedInTextField.removeFromSuperview()
+            self.connectWithLinkedInBtn.removeFromSuperview()
+        }
+    }
+    
+    // LINKEDIN LOGIN
+    @objc func linkedInAuthVC() {
+        // Create linkedIn Auth ViewController
+        let linkedInVC = UIViewController()
+        // Create WebView
+        let webView = WKWebView()
+        webView.navigationDelegate = self
+        linkedInVC.view.addSubview(webView)
+        webView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            webView.topAnchor.constraint(equalTo: linkedInVC.view.topAnchor),
+            webView.leadingAnchor.constraint(equalTo: linkedInVC.view.leadingAnchor),
+            webView.bottomAnchor.constraint(equalTo: linkedInVC.view.bottomAnchor),
+            webView.trailingAnchor.constraint(equalTo: linkedInVC.view.trailingAnchor)
+            ])
+
+        let state = "linkedin\(Int(NSDate().timeIntervalSince1970))"
+
+        let authURLFull = LinkedInConstants.AUTHURL + "?response_type=code&client_id=" + LinkedInConstants.CLIENT_ID + "&scope=" + LinkedInConstants.SCOPE + "&state=" + state + "&redirect_uri=" + LinkedInConstants.REDIRECT_URI
+
+
+        let urlRequest = URLRequest.init(url: URL.init(string: authURLFull)!)
+        webView.load(urlRequest)
+
+        // Create Navigation Controller
+        let navController = UINavigationController(rootViewController: linkedInVC)
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelAction))
+        linkedInVC.navigationItem.leftBarButtonItem = cancelButton
+        let refreshButton = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.refreshAction))
+        linkedInVC.navigationItem.rightBarButtonItem = refreshButton
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        navController.navigationBar.titleTextAttributes = textAttributes
+        linkedInVC.navigationItem.title = "linkedin.com"
+        navController.navigationBar.isTranslucent = false
+        navController.navigationBar.tintColor = UIColor.black
+        navController.navigationBar.barTintColor = UIColor.colorFromHex("#0072B1")
+        navController.modalPresentationStyle = UIModalPresentationStyle.overFullScreen //overFullScreen
+        navController.modalTransitionStyle = .coverVertical
+
+        self.present(navController, animated: true, completion: nil)
+    }
+
+    @objc func cancelAction() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func refreshAction() {
+        self.webView.reload()
+    }
 
 }
+
+// LINKEDIN LOGIN
+extension ProfileViewController: WKNavigationDelegate {
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        RequestForCallbackURL(request: navigationAction.request)
+        
+        //Close the View Controller after getting the authorization code
+        if let urlStr = navigationAction.request.url?.absoluteString {
+            if urlStr.contains("?code=") {
+                self.dismiss(animated: true, completion: nil)
+            }
+        }
+        decisionHandler(.allow)
+    }
+
+    func RequestForCallbackURL(request: URLRequest) {
+        // Get the authorization code string after the '?code=' and before '&state='
+        let requestURLString = (request.url?.absoluteString)! as String
+        if requestURLString.hasPrefix(LinkedInConstants.REDIRECT_URI) {
+            if requestURLString.contains("?code=") {
+                if let range = requestURLString.range(of: "=") {
+                    let linkedinCode = requestURLString[range.upperBound...]
+                    if let range = linkedinCode.range(of: "&state=") {
+                        let linkedinCodeFinal = linkedinCode[..<range.lowerBound]
+                        handleAuth(linkedInAuthorizationCode: String(linkedinCodeFinal))
+                    }
+                }
+            }
+        }
+    }
+
+    func handleAuth(linkedInAuthorizationCode: String) {
+        linkedinRequestForAccessToken(authCode: linkedInAuthorizationCode)
+    }
+
+    func linkedinRequestForAccessToken(authCode: String) {
+        let grantType = "authorization_code"
+
+        // Set the POST parameters.
+        let postParams = "grant_type=" + grantType + "&code=" + authCode + "&redirect_uri=" + LinkedInConstants.REDIRECT_URI + "&client_id=" + LinkedInConstants.CLIENT_ID + "&client_secret=" + LinkedInConstants.CLIENT_SECRET
+        let postData = postParams.data(using: String.Encoding.utf8)
+        let request = NSMutableURLRequest(url: URL(string: LinkedInConstants.TOKENURL)!)
+        request.httpMethod = "POST"
+        request.httpBody = postData
+        request.addValue("application/x-www-form-urlencoded;", forHTTPHeaderField: "Content-Type")
+        let session = URLSession(configuration: URLSessionConfiguration.default)
+        let task: URLSessionDataTask = session.dataTask(with: request as URLRequest) { (data, response, error) -> Void in
+            let statusCode = (response as! HTTPURLResponse).statusCode
+            if statusCode == 200 {
+                let results = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [AnyHashable: Any]
+                
+//                print("results is: \(results)")
+
+
+                let accessToken = results?["access_token"] as! String
+//                print("accessToken is: \(accessToken)")
+
+                let expiresIn = results?["expires_in"] as! Int
+//                print("expires in: \(expiresIn)")
+
+                // Get user's id, first name, last name, profile pic url
+                self.fetchLinkedInUserProfile(accessToken: accessToken)
+            }
+        }
+        task.resume()
+    }
+
+
+    func fetchLinkedInUserProfile(accessToken: String) {
+        let tokenURLFull = "https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))&oauth2_access_token=\(accessToken)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let verify: NSURL = NSURL(string: tokenURLFull!)!
+        let request: NSMutableURLRequest = NSMutableURLRequest(url: verify as URL)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+//            print("data is: \(data)")
+//            print("response is: \(response)")
+
+
+            if error == nil {
+                let linkedInProfileModel = try? JSONDecoder().decode(LinkedInProfileModel.self, from: data!)
+                
+//                print("Profile Model **************",linkedInProfileModel)
+                
+//                print("Linkedin Profile Link")
+                print(self.connectWithLinkedInTextField.text)
+                
+                //AccessToken
+//                print("LinkedIn Access Token: \(accessToken)")
+                self.linkedInAccessToken = accessToken
+                
+                // LinkedIn Id
+                let linkedinId: String! = linkedInProfileModel?.id
+//                print("LinkedIn Id: \(linkedinId ?? "")")
+                self.linkedInId = linkedinId
+
+                // LinkedIn First Name
+                let linkedinFirstName: String! = linkedInProfileModel?.firstName.localized.enUS
+//                print("LinkedIn First Name: \(linkedinFirstName ?? "")")
+                self.linkedInFirstName = linkedinFirstName
+
+                // LinkedIn Last Name
+                let linkedinLastName: String! = linkedInProfileModel?.lastName.localized.enUS
+//                print("LinkedIn Last Name: \(linkedinLastName ?? "")")
+                self.linkedInLastName = linkedinLastName
+
+                // LinkedIn Profile Picture URL
+                let linkedinProfilePic: String!
+
+                if let pictureUrls = linkedInProfileModel?.profilePicture?.displayImage.elements[2].identifiers[0].identifier {
+                    linkedinProfilePic = pictureUrls
+                } else {
+                    linkedinProfilePic = "Not exists"
+                }
+//                print("LinkedIn Profile Avatar URL: \(linkedinProfilePic ?? "")")
+                self.linkedInProfilePicURL = linkedinProfilePic
+
+                // Get user's email address
+                self.fetchLinkedInEmailAddress(accessToken: accessToken)
+            }
+        }
+        task.resume()
+    }
+
+    func fetchLinkedInEmailAddress(accessToken: String) {
+        let tokenURLFull = "https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))&oauth2_access_token=\(accessToken)".addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        let verify: NSURL = NSURL(string: tokenURLFull!)!
+        let request: NSMutableURLRequest = NSMutableURLRequest(url: verify as URL)
+        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
+            if error == nil {
+                let linkedInEmailModel = try? JSONDecoder().decode(LinkedInEmailModel.self, from: data!)
+
+                // LinkedIn Email
+                let linkedinEmail: String! = linkedInEmailModel?.elements[0].elementHandle.emailAddress
+//                print("LinkedIn Email: \(linkedinEmail ?? "")")
+                self.linkedInEmail = linkedinEmail
+                
+                DispatchQueue.main.async {
+                    if((self.memberEmail ?? "") == (self.linkedInEmail ?? "")){
+                        self.connectAccountWithLinkedInFunc()
+                    } else {
+                        let alert = UIAlertController(title: "Oops!", message: "Mails don't match", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                            self.navigationController?.popViewController(animated: true)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+        }
+        task.resume()
+    }
+    
+    func connectAccountWithLinkedInFunc(){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let stringURL = "\(appDelegate.APIURL)/member/connectAccountWithLinkedIn"
+        
+            let params = [
+                "memberId": memberId,
+                "profileLink": self.connectWithLinkedInTextField.text ?? ""
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let response = try decoder.decode(UpdatePasswordandUsernameResponse.self, from: data)
+                    print(response)
+                    
+                    DispatchQueue.main.async {
+                        if response.status == "ok" {
+                            let alert = UIAlertController(title: "Congratulations! 🎉", message: "Your accounts are matched successfully", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                                self.navigationController?.popViewController(animated: true)
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                            
+                            self.connectWithLinkedInTitle.removeFromSuperview()
+                            self.connectWithLinkedInTextField.removeFromSuperview()
+                            self.connectWithLinkedInBtn.removeFromSuperview()
+                        } else {
+                            let alert = UIAlertController(title: "Oops!", message: "Mails don't match", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                                NSLog("The \"OK\" alert occured.")
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                    }
+                    
+                } catch {
+                    print("Hatalı Giriş Yapıldı")
+                }
+                
+            }
+            session.resume()
+    }
+    
+    
+    
+}
+
