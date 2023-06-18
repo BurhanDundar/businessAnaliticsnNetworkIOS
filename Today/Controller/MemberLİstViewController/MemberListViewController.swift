@@ -9,7 +9,6 @@ import UIKit
 
 class MemberListViewController: UICollectionViewController {
 
-            
             typealias DataSource = UICollectionViewDiffableDataSource<Int, Member.ID>
             typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Member.ID>
             
@@ -27,42 +26,12 @@ class MemberListViewController: UICollectionViewController {
         
             // search bar
             var searchController: UISearchController!
-        
             let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
         
              override func viewDidLoad() {
-                 
-                 //print(companyIdForCompanyUsers ?? "")
-                 //let defaults = UserDefaults.standard
-                 //defaults.set(25, forKey: "Age")
-                 /*
-                 if let data = UserDefaults.standard.data(forKey: "Member") {
-                     do {
-                         // Create JSON Decoder
-                         let decoder = JSONDecoder()
-
-                         // Decode Note
-                         let member = try decoder.decode(Member.self, from: data)
-                         print(member)
-
-                     } catch {
-                         print("Unable to Decode Note (\(error))")
-                     }
-                 }*/
-                 
-                 //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                 //appDelegate.userName = "Burhan"
-                 //appDelegate.userid = "1241hd9bısdbf12893"
-//
-//                 let defaults = UserDefaults.standard
-//                 self.memberId = defaults.string(forKey: "memberId") ?? ""
-//                 self.memberName = defaults.string(forKey: "memberName") ?? ""
-//                 self.memberSurname = defaults.string(forKey: "memberSurname") ?? ""
-//                 self.memberUsername = defaults.string(forKey: "memberUsername") ?? ""
-//
                  view.backgroundColor = .systemBackground //.white
                  
-                 
+                 Member.sampleData = []
                 self.getMembers()
                  
                  //self.getUsers()
@@ -141,15 +110,30 @@ class MemberListViewController: UICollectionViewController {
             return members[index]
         }
         
-        internal func updateMember(_ member: Member) {
+        func updateMember(_ member: Member) {
                 let index = self.members.indexOfMember(withId: member.id)
                 self.members[index] = member
            }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       if (segue.identifier == "showMemberDetail") {
+          let memberVC = segue.destination as! MemberViewController
+          let object = sender as! [String: Member?]
+           memberVC.member = object["member"] as! Member
+       }
+        
+    }
         
         func pushDetailViewForMember(withId id:Member.ID){
+//            let member = member(withId: id)
+//            let viewController = MemberViewController(member: member, parent: self)
+//            navigationController?.pushViewController(viewController, animated: true)
+            
             let member = member(withId: id)
-            let viewController = MemberViewController(member: member, parent: self)
-            navigationController?.pushViewController(viewController, animated: true)
+            DispatchQueue.main.async {
+                let sender: [String: Member?] = [ "member": member]
+                self.performSegue(withIdentifier: "showMemberDetail", sender: sender)
+            }
          }
 
          private func listLayout() -> UICollectionViewCompositionalLayout {
@@ -170,7 +154,6 @@ class MemberListViewController: UICollectionViewController {
         private func getMembers(){
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let stringURL = "\(appDelegate.APIURL)/member"
-            
             guard let url = URL(string: stringURL) else { return }
             let session = URLSession.shared.dataTask(with: url) { data, response, error in
                 if let error = error {
@@ -196,48 +179,6 @@ class MemberListViewController: UICollectionViewController {
             }
             session.resume()
         }
-        
-//        private func getCompanyUsers(){
-//
-//                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//                let stringURL = "\(appDelegate.APIURL)/user/getCompanyUsersAsUserObj"
-//                let params = [
-//                    "company_id": self.company_id,
-//                ]
-//
-//                guard let url = URL(string: stringURL) else { return }
-//
-//                var request = URLRequest(url: url)
-//                request.httpMethod = "POST"
-//                request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
-//                request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
-//
-//                let session = URLSession.shared.dataTask(with: request) { data, response, error in
-//
-//                    guard let data = data else { return }
-//
-//                    if let error = error {
-//                        print("there was an error: \(error.localizedDescription)")
-//                    }
-//
-//                    do {
-//                        let decoder = JSONDecoder()
-//                        let companyUsers = try decoder.decode([User].self, from: data)
-//                        DispatchQueue.main.async {
-//                            self.users = companyUsers
-//                            User.sampleData = self.users
-//                            self.filteredUsers = []
-//                            self.collectionView.reloadData()
-//                            self.updateSnapshot(for: self.users)
-//                        }
-//                    } catch {
-//                        print("Error Occured!")
-//                    }
-//
-//                }
-//
-//                session.resume()
-//            }
     }
 
     extension MemberListViewController: UISearchBarDelegate {

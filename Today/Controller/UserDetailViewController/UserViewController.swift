@@ -45,7 +45,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
     var location: UILabel!
     var button: UIButton!
     var systemImageName: String!
-    var scrollView = UIScrollView()
+    var scrollView = UIScrollView(frame: UIScreen.main.bounds)
     var stackView = UIStackView()
     
     lazy var fetchedImageView: UIImageView = {
@@ -56,7 +56,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         iv.backgroundColor = .clear
         iv.layer.borderWidth = 1
         iv.layer.borderColor = UIColor.blue.cgColor
-        iv.layer.cornerRadius = iv.frame.size.height/2
+        iv.layer.cornerRadius = iv.frame.size.width / 2
         iv.clipsToBounds = true
         return iv
     }()
@@ -70,25 +70,25 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         self.getUserCourses()
         self.getUserLanguages()
         
-        skillsBtn.addTarget(self, action: #selector(showUserSkills), for: .touchUpInside)
-        experiencesBtn.addTarget(self, action: #selector(showUserExperiences), for: .touchUpInside)
-        educationsBtn.addTarget(self, action: #selector(showUserEducations), for: .touchUpInside)
-        coursesBtn.addTarget(self, action: #selector(showUserCourses), for: .touchUpInside)
-        languagesBtn.addTarget(self, action: #selector(showUserLanguages), for: .touchUpInside)
+        self.skillsBtn.addTarget(self, action: #selector(showUserSkills), for: .touchUpInside)
+        self.experiencesBtn.addTarget(self, action: #selector(showUserExperiences), for: .touchUpInside)
+        self.educationsBtn.addTarget(self, action: #selector(showUserEducations), for: .touchUpInside)
+        self.coursesBtn.addTarget(self, action: #selector(showUserCourses), for: .touchUpInside)
+        self.languagesBtn.addTarget(self, action: #selector(showUserLanguages), for: .touchUpInside)
         self.openUserProfileLinkedInPageBtn.addTarget(self, action: #selector(setUserLinkedInProfileView), for: .touchUpInside)
         
         view = UIView()
         view.backgroundColor = .systemBackground
     
 //        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 400)
-        scrollView.backgroundColor = .red
+//        scrollView.backgroundColor = .red
         self.view.addSubview(self.scrollView)
         
         
         self.scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100).isActive = true
-        self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -100).isActive = true
+        self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
         
         self.scrollView.addSubview(self.stackView)
         
@@ -113,7 +113,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         self.stackView.addArrangedSubview(fetchedImageView)
         
         loadFetchedImage(for: user.image ?? "")
-    
+            
         // Name
         nameLabel = UILabel()
         nameLabel.textAlignment = .center
@@ -287,7 +287,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.skills = userSkillsRes
                         if self.skills.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.stackView.addSubview(self.skillsBtn)
+                            self.stackView.addArrangedSubview(self.skillsBtn)
                             self.skillsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.skillsBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
@@ -343,7 +343,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.experiences = userExperiencesRes
                         if self.experiences.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.stackView.addSubview(self.experiencesBtn)
+                            self.stackView.addArrangedSubview(self.experiencesBtn)
                             self.experiencesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.experiencesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
@@ -397,7 +397,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.educations = userEducationsRes
                         if self.educations.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.stackView.addSubview(self.educationsBtn)
+                            self.stackView.addArrangedSubview(self.educationsBtn)
                             self.educationsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.educationsBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
@@ -452,7 +452,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.courses = userCoursesRes
                         if self.courses.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.stackView.addSubview(self.coursesBtn)
+                            self.stackView.addArrangedSubview(self.coursesBtn)
                             self.coursesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.coursesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
@@ -508,7 +508,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                         self.languages = userLanguagesRes
                         if self.languages.count > 0{
                             var topAnc = (self.buttonCounter + 1) * 40
-                            self.stackView.addSubview(self.languagesBtn)
+                            self.stackView.addArrangedSubview(self.languagesBtn)
                             self.languagesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
                                 self.languagesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),

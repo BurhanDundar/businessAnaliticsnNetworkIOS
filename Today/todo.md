@@ -27,3 +27,5 @@ NSLog("The \"OK\" alert occured.")
 self.present(alert, animated: true, completion: nil)
 
 loadImage içerisinde default user ve company resimlerine bakarsın bi oldu mu diye
+
+ProfileViewController ve MemberViewController neredeyse aynı bakarsın o duruma

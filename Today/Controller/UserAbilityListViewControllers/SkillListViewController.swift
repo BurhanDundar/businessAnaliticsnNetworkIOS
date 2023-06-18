@@ -22,11 +22,10 @@ class SkillListViewController: UICollectionViewController {
         var searchController: UISearchController!
     
          override func viewDidLoad() {
-             
+             super.viewDidLoad()
              let appDelegate = UIApplication.shared.delegate as! AppDelegate
              Skill.sampleData = appDelegate.userSkills as [Skill]
              self.skills = Skill.sampleData
-             
              
              view.backgroundColor = .systemBackground
              navigationItem.title = "User skills"
@@ -39,7 +38,6 @@ class SkillListViewController: UICollectionViewController {
                  return searchController
              }()
              
-             super.viewDidLoad()
              navigationItem.searchController = searchController
 
              let listLayout = listLayout()

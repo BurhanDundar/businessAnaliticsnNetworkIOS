@@ -42,6 +42,7 @@
                     <navigationItem key="navigationItem" id="4g0-rd-7f8"/>
                     <connections>
                         <segue destination="qxm-AW-3p9" kind="show" identifier="GoToProfilePage" id="ifi-kW-4iK"/>
+                        <segue destination="qTh-Dk-ReO" kind="show" identifier="showMemberDetail" id="02I-Os-9f6"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dc6-dc-GWF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -476,6 +477,28 @@
             </objects>
             <point key="canvasLocation" x="1568.7022900763359" y="-444.36619718309862"/>
         </scene>
+        <!--Member View Controller-->
+        <scene sceneID="Oqy-of-ibS">
+            <objects>
+                <viewController id="qTh-Dk-ReO" customClass="MemberViewController" customModule="Today" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gRJ-dl-h7x">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="X1L-sq-a5Z"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="b23-7e-yHS"/>
+                    <connections>
+                        <segue destination="esB-KI-ICf" kind="show" identifier="MemberShowFollowedMembers" id="vAp-P3-CQH"/>
+                        <segue destination="3ts-eg-iqB" kind="show" identifier="MemberShowFollowingUsers" id="Uvh-32-TW1"/>
+                        <segue destination="jQO-W1-kHc" kind="show" identifier="MemberShowFollowingCompanies" id="I8U-sd-Sad"/>
+                        <segue destination="ChT-Ew-Z9U" kind="show" identifier="MemberShowFollowingMembers" id="eiF-vE-Jdv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="29z-Fa-lqM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1350" y="1458"/>
+        </scene>
         <!--Companies-->
         <scene sceneID="q9D-hy-1FL">
             <objects>
@@ -756,12 +779,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="qnb-JR-h9B"/>
-        <segue reference="iOp-ZW-rDO"/>
-        <segue reference="qSX-tA-COr"/>
+        <segue reference="eiF-vE-Jdv"/>
+        <segue reference="vAp-P3-CQH"/>
+        <segue reference="I8U-sd-Sad"/>
         <segue reference="y50-Ih-WU0"/>
-        <segue reference="Kg8-cf-Uvm"/>
-        <segue reference="7GE-bG-g8l"/>
+        <segue reference="Uvh-32-TW1"/>
+        <segue reference="ifi-kW-4iK"/>
         <segue reference="Fpp-ut-rP6"/>
     </inferredMetricsTieBreakers>
     <resources>

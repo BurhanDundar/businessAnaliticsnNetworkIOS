@@ -15,6 +15,7 @@ struct User: Identifiable,Codable{
     var memberId: String?
     var location: String?
     var profileLink: String?
+    var isBookmarked: Bool = false
 }
 
 extension [User] {

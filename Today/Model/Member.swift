@@ -10,12 +10,14 @@ import Foundation
 struct Member: Identifiable, Codable {
     var _id: String? = UUID().uuidString
     var id: String? { _id }
-    var userId: String?
     var fullname: String
     var username: String
     var password: String?
     var email: String
+    var createdAt: Int?
+    var updatedAt: Int?
     var isBookmarked: Bool = false
+    var userId: String?
 }
 
 extension [Member] {
@@ -32,3 +34,14 @@ extension Member{
     static var sampleData: [Member] = [Member]()
 }
 #endif
+
+//Member(
+//        _id: "645e51dbfe9d157ab099031c",
+//        fullname: "Şerife Türksever",
+//       username: "st",
+//        password: "$2b$12$hgGEwzlPO7YoV8u3HbEXCOzMnD.HdbC/lvPAJUJCwjlPdgEJsX5em",
+//       email: "serifeturksever@gmail.com",
+//       createdAt: 1683902939700,
+//       updatedAt: 1686872203326,
+//        isBookmarked: false
+//      )

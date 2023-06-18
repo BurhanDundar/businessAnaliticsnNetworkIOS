@@ -9,6 +9,6 @@ import Foundation
 
 struct SubExperience: Codable {
     var title: String
-    var start_date: String
-    var end_date: String
+    var start_date: String?
+    var end_date: String?
 }
