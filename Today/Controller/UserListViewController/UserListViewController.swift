@@ -99,7 +99,6 @@ class UserListViewController: UICollectionViewController {
              DispatchQueue.main.async {
                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
                  self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
-                             
                  if self.filteredUsers.count == 0 {
                      if self.company_id != nil {
                          User.sampleData = []
@@ -134,7 +133,6 @@ class UserListViewController: UICollectionViewController {
                  (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
                  var user: User!
                  if(self.listStyleSelectedIndex == 1) {
-                     self.updateSnapshot(for: self.filteredUsers)
                      user = self.filteredUsers[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
                      user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
@@ -208,7 +206,7 @@ class UserListViewController: UICollectionViewController {
         var snapshot = Snapshot()
         snapshot.appendSections([0])
         snapshot.appendItems(pUsers.map { $0.id })
-        dataSource.apply(snapshot) // , animatingDifferences: true
+        dataSource.apply(snapshot)
         collectionView.dataSource = dataSource
     }
     
@@ -313,6 +311,8 @@ class UserListViewController: UICollectionViewController {
                     let userFavs = try decoder.decode([String].self, from: data)
                     DispatchQueue.main.async {
                         self.userFavs = userFavs
+                        appDelegate.memberUserFavs = self.userFavs
+                        self.collectionView.reloadData() // bundan emin değilim
                     }
                 } catch {
                     print("Error Occured!")
@@ -447,11 +447,38 @@ extension UserListViewController: UISearchBarDelegate {
     
     
     extension UserListViewController {
+        func getAllUsers() async throws -> [User] {
+
+            let stringURL = "http://192.168.0.100:3001/user"
+            
+            
+            guard let url = URL(string: stringURL) else {
+                throw GHError.invalidURL
+            }
+            var request = URLRequest(url: url)
+            let (data,response) = try await URLSession.shared.data(for: request)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw GHError.invalidResponse
+            }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let users = try decoder.decode([User].self, from: data)
+                    self.users = users
+                    self.filteredUsers = []
+                    self.collectionView.reloadData()
+                    self.updateSnapshot(for: self.users)
+                    return users
+                } catch {
+                    throw GHError.invalidData
+                }
+        }
         func getBookmarkedUsers() async throws -> [User]{
             
             let endpoint = "http://192.168.0.100:3001/favourite/getBookmarkedUsers"
             let params = [
-                "user_id": "6472520b35c3e07944e5a6d5",
+                "user_id": memberId,
                 "fav_type": "user"
             ]
             
@@ -474,6 +501,9 @@ extension UserListViewController: UISearchBarDelegate {
             do {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode([User].self, from: data)
+                self.filteredUsers = response
+                self.collectionView.reloadData()
+                self.updateSnapshot(for: self.filteredUsers)
                 return response
             } catch {
                 throw GHError.invalidData

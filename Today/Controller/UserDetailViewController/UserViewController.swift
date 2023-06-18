@@ -618,9 +618,11 @@ extension UIViewController {
                 do {
                     let decoder = JSONDecoder()
                     let UpdateMemberResponse = try decoder.decode(String.self, from: data)
-                    print(UpdateMemberResponse)
+                    if UpdateMemberResponse == "success" {
+                        appDelegate.memberUserFavs.append(followed)
+                    }
                 } catch {
-                    print("Skill verileri cekilemedi")
+                    print("Member Favourite Güncellenemedi")
                 }
                 
             }
