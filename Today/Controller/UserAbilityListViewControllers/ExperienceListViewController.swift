@@ -37,11 +37,21 @@ class ExperienceListViewController: UIViewController {
                      
                      var experienceNameTxt = UILabel()
                      experienceNameTxt.translatesAutoresizingMaskIntoConstraints = false
-                     experienceNameTxt.text = "\(experience.name ?? "") at \(experience.establishment)"
+                     experienceNameTxt.text = experience.name ?? ""
                      experienceNameTxt.font = UIFont.boldSystemFont(ofSize: 18)
                      experienceNameTxt.numberOfLines = 0
                      experienceNameTxt.sizeToFit()
+                     experienceNameTxt.textColor = .systemBlue
                      self.stackView.addArrangedSubview(experienceNameTxt)
+                     
+                     var experienceEstablishmentTxt = UILabel()
+                     experienceEstablishmentTxt.translatesAutoresizingMaskIntoConstraints = false
+                     experienceEstablishmentTxt.text = experience.establishment ?? ""
+                     experienceEstablishmentTxt.font = UIFont.boldSystemFont(ofSize: 18)
+                     experienceEstablishmentTxt.numberOfLines = 0
+                     experienceEstablishmentTxt.sizeToFit()
+                     experienceEstablishmentTxt.textAlignment = .center
+                     self.stackView.addArrangedSubview(experienceEstablishmentTxt)
                      
                      if let date = experience.range {
                          if date.contains("·"){
@@ -52,6 +62,7 @@ class ExperienceListViewController: UIViewController {
                              experienceDate.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: .none)
                              experienceDate.numberOfLines = 0
                              experienceDate.sizeToFit()
+                             experienceDate.textColor = .systemGray
                              self.stackView.addArrangedSubview(experienceDate)
                          }
                      }
@@ -77,6 +88,7 @@ class ExperienceListViewController: UIViewController {
                          subExperienceTxt.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: .none)
                          subExperienceTxt.numberOfLines = 0
                          subExperienceTxt.sizeToFit()
+                         subExperienceTxt.textColor = .systemBlue
                          self.stackView.addArrangedSubview(subExperienceTxt)
                          
                          if let date = subExperience.start_date {
@@ -88,6 +100,7 @@ class ExperienceListViewController: UIViewController {
                                  subExperienceDate.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: .none)
                                  subExperienceDate.numberOfLines = 0
                                  subExperienceDate.sizeToFit()
+                                 subExperienceDate.textColor = .systemGray
                                  self.stackView.addArrangedSubview(subExperienceDate)
                              }
                          }
