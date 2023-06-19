@@ -88,9 +88,15 @@ class MemberListViewController: UICollectionViewController {
                      let isMemberInBookmarkedArray = self.memberFavs.contains(member.id!) ? true : false
                      let systemImageName = isMemberInBookmarkedArray ? "bookmark.fill" :  "bookmark"
                      
-                     let customAccessory = UICellAccessory.CustomViewConfiguration(
+                     var customAccessory = UICellAccessory.CustomViewConfiguration(
                        customView: UIImageView(image: UIImage(systemName: systemImageName)),
                        placement: .trailing(displayed: .always))
+                     
+                     if(self.memberId == member.id) { // bu kullanıcı benim demek ki
+                         customAccessory = UICellAccessory.CustomViewConfiguration(
+                           customView: UIImageView(image: UIImage(systemName: "person.circle")),
+                           placement: .trailing(displayed: .always))
+                     }
                      
                      cell.accessories = [.customView(configuration: customAccessory),.disclosureIndicator(displayed: .always)]
                      cell.contentConfiguration = contentConfiguration

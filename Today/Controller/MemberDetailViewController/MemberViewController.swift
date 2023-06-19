@@ -42,6 +42,8 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     var memberUserName = ""
     var memberUserId = ""
     
+    var globalMemberId = ""
+    
     var systemImageName: String!
     var member: Member!
     var isMemberBookmarked: Bool?
@@ -59,12 +61,13 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     
     override func viewDidLoad(){
-        
+        self.globalMemberId = UserDefaults.standard.string(forKey: "memberId") ?? ""
         self.memberId = self.member.id ?? ""
         self.memberEmail = self.member.email
         self.memberFullName = self.member.fullname
         self.memberUserName = self.member.username
         self.memberUserId = self.member.userId ?? ""
+        
         
         super.viewDidLoad()
                 
@@ -75,8 +78,10 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
         
         systemImageName = (self.isMemberBookmarked ?? false) ? "bookmark.fill" :  "bookmark"
     
-        let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
-        navigationItem.rightBarButtonItem = bookmarkBarButton
+        if(self.globalMemberId != self.member.id) {
+            let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
+            navigationItem.rightBarButtonItem = bookmarkBarButton
+        }
         
         self.setupUI()
     }
