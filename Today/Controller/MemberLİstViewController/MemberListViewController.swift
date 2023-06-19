@@ -19,16 +19,30 @@ class MemberListViewController: UICollectionViewController {
             var listStyleSelectedIndex: Int = 0
             var dynamicSearchText: String = ""
         
+            var memberFavs: [String] = [String]()
             var memberId: String = ""
             var memberFullname: String = ""
             var memberUsername: String = ""
+    
+            
             
         
             // search bar
             var searchController: UISearchController!
             let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
-        
+    
+            override func viewWillAppear(_ animated: Bool) {
+                super.viewWillAppear(animated)
+                if(self.filteredMembers.count == 0){
+                    self.getMemberFavAsMemberIds()
+                }
+            }
+    
              override func viewDidLoad() {
+                 let defaults = UserDefaults.standard
+                 self.memberId = defaults.string(forKey: "memberId") ?? ""
+                 self.memberFullname = defaults.string(forKey: "memberFullName") ?? ""
+                 
                  view.backgroundColor = .systemBackground //.white
                  
                  Member.sampleData = []
@@ -71,7 +85,8 @@ class MemberListViewController: UICollectionViewController {
                      contentConfiguration.text = member.fullname
                      contentConfiguration.secondaryText = member.username
                      
-                     let systemImageName = member.isBookmarked ? "bookmark.fill" :  "bookmark"
+                     let isMemberInBookmarkedArray = self.memberFavs.contains(member.id!) ? true : false
+                     let systemImageName = isMemberInBookmarkedArray ? "bookmark.fill" :  "bookmark"
                      
                      let customAccessory = UICellAccessory.CustomViewConfiguration(
                        customView: UIImageView(image: UIImage(systemName: systemImageName)),
@@ -118,8 +133,9 @@ class MemberListViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if (segue.identifier == "showMemberDetail") {
           let memberVC = segue.destination as! MemberViewController
-          let object = sender as! [String: Member?]
+          let object = sender as! [String: Any?]
            memberVC.member = object["member"] as! Member
+           memberVC.isMemberBookmarked = object["isMemberBookmarked"] as! Bool
        }
         
     }
@@ -130,8 +146,9 @@ class MemberListViewController: UICollectionViewController {
 //            navigationController?.pushViewController(viewController, animated: true)
             
             let member = member(withId: id)
+            let isMemberInBookmarkedArray = self.memberFavs.contains(member.id!) ? true : false
             DispatchQueue.main.async {
-                let sender: [String: Member?] = [ "member": member]
+                let sender: [String: Any?] = [ "member": member, "isMemberBookmarked": isMemberInBookmarkedArray ]
                 self.performSegue(withIdentifier: "showMemberDetail", sender: sender)
             }
          }
@@ -149,6 +166,47 @@ class MemberListViewController: UICollectionViewController {
             snapshot.appendItems(pMembers.map { $0.id })
             dataSource.apply(snapshot)
             collectionView.dataSource = dataSource
+        }
+    
+    private func getMemberFavAsMemberIds(){
+        
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/favourite/getMemberFavAsUserIds"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "member"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let memberFavs = try decoder.decode([String].self, from: data)
+                    DispatchQueue.main.async {
+                        self.memberFavs = memberFavs
+                        appDelegate.memberMemberFavs = self.memberFavs
+                        self.collectionView.reloadData() // bundan emin değilim
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
         }
         
         private func getMembers(){
@@ -183,14 +241,21 @@ class MemberListViewController: UICollectionViewController {
 
     extension MemberListViewController: UISearchBarDelegate {
         func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            var res = [Member]()
             self.dynamicSearchText = searchText
             if searchText.isEmpty {
                 isSearching = false
                 self.dynamicSearchText = ""
                 if(listStyleSelectedIndex == 1){
-                    let bookmarkedFilteredValues = self.members.filter({ $0.isBookmarked })
-                    self.filteredMembers = bookmarkedFilteredValues
-                    updateSnapshot(for: bookmarkedFilteredValues)
+                    Task{
+                        do {
+                            res = try await getBookmarkedMembers()
+                            } catch {
+                                print("Oops!")
+                            }
+                    }
+                    self.filteredMembers = res
+                    self.updateSnapshot(for: self.filteredMembers)
                 } else {
                     self.filteredMembers = []
                     updateSnapshot(for: self.members)
@@ -211,12 +276,19 @@ class MemberListViewController: UICollectionViewController {
         }
         
         func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            var res = [Member]()
             isSearching = false
             self.dynamicSearchText = ""
             if(listStyleSelectedIndex == 1){
-                let bookmarkedFilteredValues = self.members.filter({ $0.isBookmarked })
-                self.filteredMembers = bookmarkedFilteredValues
-                updateSnapshot(for: bookmarkedFilteredValues)
+                Task{
+                    do {
+                        res = try await getBookmarkedMembers()
+                    } catch {
+                        print("Oops!")
+                    }
+                }
+                self.filteredMembers = res
+                self.updateSnapshot(for: self.filteredMembers)
             } else {
                 self.filteredMembers = []
                 updateSnapshot(for: Member.sampleData)
@@ -231,4 +303,84 @@ class MemberListViewController: UICollectionViewController {
             print("bookmark is tapped")
         }
         
+    }
+
+
+extension MemberListViewController {
+        func getAllMembers() async throws -> [Member] {
+
+            let stringURL = "http://192.168.0.100:3001/member"
+            
+            
+            guard let url = URL(string: stringURL) else {
+                throw GHError.invalidURL
+            }
+            var request = URLRequest(url: url)
+            let (data,response) = try await URLSession.shared.data(for: request)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw GHError.invalidResponse
+            }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let members = try decoder.decode([Member].self, from: data)
+                    
+                    if(self.dynamicSearchText != ""){
+                        self.members = members
+                        self.filteredMembers = self.members.filter({ $0.fullname.lowercased().contains(self.dynamicSearchText.lowercased()) })
+                        self.collectionView.reloadData()
+                        self.updateSnapshot(for: self.filteredMembers)
+                    } else {
+                        self.members = members
+                        self.filteredMembers = []
+                        self.collectionView.reloadData()
+                        self.updateSnapshot(for: self.members)
+                    }
+                    
+                    return members
+                } catch {
+                    throw GHError.invalidData
+                }
+        }
+        func getBookmarkedMembers() async throws -> [Member]{
+            
+            let endpoint = "http://192.168.0.100:3001/favourite/getBookmarkedUsers"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "member"
+            ]
+            
+            guard let url = URL(string: endpoint) else {
+                throw GHError.invalidURL
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let (data,response) = try await URLSession.shared.data(for: request)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw GHError.invalidResponse
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode([Member].self, from: data)
+                
+                self.filteredMembers = response
+                
+                if(self.dynamicSearchText != ""){
+                    self.filteredMembers = self.filteredMembers.filter({ $0.fullname.lowercased().contains( self.dynamicSearchText.lowercased() ) })
+                }
+                self.collectionView.reloadData()
+                self.updateSnapshot(for: self.filteredMembers)
+                
+                return response
+            } catch {
+                throw GHError.invalidData
+            }
+        }
     }

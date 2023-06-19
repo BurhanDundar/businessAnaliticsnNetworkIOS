@@ -39,33 +39,33 @@ extension MemberListViewController {
     }
     
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
-        // index -> 0: all, 1: bookmarked
-        if(sender.selectedSegmentIndex == 0){
-            self.listStyleSelectedIndex = 0
-            if(self.dynamicSearchText == ""){
-                self.filteredMembers = []
+            // index -> 0: all, 1: bookmarked
+        var res = [Member]()
+        var members = [Member]()
+            if(sender.selectedSegmentIndex == 0){
+                Task{
+                        do {
+                            members = try await getAllMembers()
+                            } catch {
+                                print("Oops!")
+                            }
+                }
+                self.listStyleSelectedIndex = 0
+                self.members = members
                 updateSnapshot(for: self.members)
-            } else {
-                let searchBarFilterMembers = self.members.filter({ $0.fullname.lowercased().contains(self.dynamicSearchText.lowercased()) })
-                self.filteredMembers = searchBarFilterMembers
-                updateSnapshot(for: searchBarFilterMembers)
-            }
-            collectionView.reloadData()
-                
-        } else if(sender.selectedSegmentIndex == 1){
-            self.listStyleSelectedIndex = 1
-            if(self.dynamicSearchText == ""){
-                let bookmarkedMembers = self.members.filter({ $0.isBookmarked })
-                self.filteredMembers = bookmarkedMembers
-                updateSnapshot(for: self.filteredMembers)
-            } else {
-                var filteredBookmarkMembers = self.members.filter({ $0.isBookmarked })
-                filteredBookmarkMembers = filteredBookmarkMembers.filter({ $0.fullname.lowercased().contains( self.dynamicSearchText.lowercased() ) })
-                self.filteredMembers = filteredBookmarkMembers
+                    
+            } else if(sender.selectedSegmentIndex == 1){
+                Task{
+                        do {
+                            res = try await getBookmarkedMembers()
+                            } catch {
+                                print("Oops!")
+                            }
+                }
+                self.listStyleSelectedIndex = 1
+                self.filteredMembers = res
                 updateSnapshot(for: self.filteredMembers)
             }
-            collectionView.reloadData()
-        }
-        
-        }
+            
+            }
 }

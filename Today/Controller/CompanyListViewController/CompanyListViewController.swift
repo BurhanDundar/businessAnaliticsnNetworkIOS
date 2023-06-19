@@ -17,6 +17,10 @@ class CompanyListViewController: UICollectionViewController {
         var isSearching: Bool = false
         var listStyleSelectedIndex: Int = 0
         var dynamicSearchText: String = ""
+        var companyFavs: [String] = [String]()
+        var memberId: String = ""
+        var memberFullName: String = ""
+        var memberUsername: String = ""
     
         // search bar
         var searchController: UISearchController!
@@ -36,8 +40,22 @@ class CompanyListViewController: UICollectionViewController {
             iv.clipsToBounds = true
             return iv
         }()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if(self.filteredCompanies.count == 0){
+            self.getMemberFavAsCompanyIds()
+        }
+    }
          override func viewDidLoad() {
+             
+             let defaults = UserDefaults.standard
+             self.memberId = defaults.string(forKey: "memberId") ?? ""
+             self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
+             
+//             self.getMemberFavAsCompanyIds()
              self.getCompanies()
+             
              navigationItem.title = "Companies"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
@@ -76,8 +94,8 @@ class CompanyListViewController: UICollectionViewController {
                  
                  contentConfiguration.image = UIImage(systemName: "building.fill")
                  
-                 
-                 let systemImageName = company.isBookmarked ? "bookmark.fill" :  "bookmark"
+                 let isCompanyInBookmarkedArray = self.companyFavs.contains(company.id!) ? true : false
+                 let systemImageName = isCompanyInBookmarkedArray ? "bookmark.fill" :  "bookmark"
                  
                  let customAccessory = UICellAccessory.CustomViewConfiguration(
                    customView: UIImageView(image: UIImage(systemName: systemImageName)),
@@ -124,8 +142,9 @@ class CompanyListViewController: UICollectionViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if (segue.identifier == "showCompanyDetail") {
           let companyVC = segue.destination as! CompanyViewController
-          let object = sender as! [String: Company?]
+          let object = sender as! [String: Any?]
            companyVC.company = object["company"] as! Company
+           companyVC.isCompanyBookmarked = object["isCompanyBookmarked"] as! Bool
        }
         
     }
@@ -142,8 +161,9 @@ class CompanyListViewController: UICollectionViewController {
         let viewController = CompanyViewController(company: company) // company: company, parent: self
         navigationController?.pushViewController(viewController, animated: true)*/
         let company = company(withId: id)
+        let isCompanyInBookmarkedArray = self.companyFavs.contains(company.id!) ? true : false
         DispatchQueue.main.async {
-            let sender: [String: Company?] = [ "company": company ]
+            let sender: [String: Any?] = [ "company": company, "isCompanyBookmarked":  isCompanyInBookmarkedArray]
             self.performSegue(withIdentifier: "showCompanyDetail", sender: sender)
         }
      }
@@ -197,18 +217,66 @@ class CompanyListViewController: UICollectionViewController {
         session.resume()
     }
     
+    private func getMemberFavAsCompanyIds(){
+        
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/favourite/getMemberFavAsUserIds"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "company"
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let companyFavs = try decoder.decode([String].self, from: data)
+                    DispatchQueue.main.async {
+                        self.companyFavs = companyFavs
+                        appDelegate.memberCompanyFavs = self.companyFavs
+                        self.collectionView.reloadData() // bundan emin değilim
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
 }
 
 extension CompanyListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        var res = [Company]()
         self.dynamicSearchText = searchText
         if searchText.isEmpty {
             isSearching = false
             self.dynamicSearchText = ""
             if(listStyleSelectedIndex == 1){
-                let bookmarkedFilteredValues = self.companies.filter({ $0.isBookmarked })
-                self.filteredCompanies = bookmarkedFilteredValues
-                updateSnapshot(for: bookmarkedFilteredValues)
+                Task{
+                    do {
+                        res = try await getBookmarkedCompanies()
+                    } catch {
+                        print("Oops!")
+                    }
+                }
+                self.filteredCompanies = res
+                self.updateSnapshot(for: self.filteredCompanies) // DÖN BURAYAAA
             } else {
                 self.filteredCompanies = []
                 updateSnapshot(for: self.companies)
@@ -229,24 +297,102 @@ extension CompanyListViewController: UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        var res = [Company]()
         isSearching = false
         self.dynamicSearchText = ""
         if(listStyleSelectedIndex == 1){
-            let bookmarkedFilteredValues = self.companies.filter({ $0.isBookmarked })
-            self.filteredCompanies = bookmarkedFilteredValues
-            updateSnapshot(for: bookmarkedFilteredValues)
+            Task{
+                do {
+                    res = try await getBookmarkedCompanies()
+                } catch {
+                    print("Oops!")
+                }
+            }
+            self.filteredCompanies = res
+            updateSnapshot(for: self.filteredCompanies)
         } else {
             self.filteredCompanies = []
             updateSnapshot(for: Company.sampleData)
         }
     }
-    
-    @objc private func filterMembers(){
-        print("filter members")
-    }
-    
-    @objc private func bookmark(){
-        print("bookmark is tapped")
-    }
-    
 }
+
+extension CompanyListViewController {
+        func getAllCompanies() async throws -> [Company] {
+
+            let stringURL = "http://192.168.0.100:3001/company"
+            
+            
+            guard let url = URL(string: stringURL) else {
+                throw GHError.invalidURL
+            }
+            var request = URLRequest(url: url)
+            let (data,response) = try await URLSession.shared.data(for: request)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw GHError.invalidResponse
+            }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let companies = try decoder.decode([Company].self, from: data)
+                    
+                    if(self.dynamicSearchText != ""){
+                        self.companies = companies
+                        self.filteredCompanies = self.companies.filter({ $0.name.lowercased().contains(self.dynamicSearchText.lowercased()) })
+                        self.collectionView.reloadData()
+                        self.updateSnapshot(for: self.filteredCompanies)
+                    } else {
+                        self.companies = companies
+                        self.filteredCompanies = []
+                        self.collectionView.reloadData()
+                        self.updateSnapshot(for: self.companies)
+                    }
+                    
+                    return companies
+                } catch {
+                    throw GHError.invalidData
+                }
+        }
+        func getBookmarkedCompanies() async throws -> [Company]{
+            
+            let endpoint = "http://192.168.0.100:3001/favourite/getBookmarkedUsers"
+            let params = [
+                "user_id": memberId,
+                "fav_type": "company"
+            ]
+            
+            
+            guard let url = URL(string: endpoint) else {
+                throw GHError.invalidURL
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let (data,response) = try await URLSession.shared.data(for: request)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw GHError.invalidResponse
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode([Company].self, from: data)
+                
+                self.filteredCompanies = response
+                
+                if(self.dynamicSearchText != ""){
+                    self.filteredCompanies = self.filteredCompanies.filter({ $0.name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
+                }
+                self.collectionView.reloadData()
+                self.updateSnapshot(for: self.filteredCompanies)
+                
+                return response
+            } catch {
+                throw GHError.invalidData
+            }
+        }
+    }

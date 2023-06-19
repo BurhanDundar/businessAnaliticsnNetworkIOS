@@ -40,41 +40,26 @@ extension UserListViewController {
         var users = [User]()
             if(sender.selectedSegmentIndex == 0){
                 Task{
-                        do {
-                            users = try await getAllUsers()
-                            } catch {
-                                print("Oops!")
-                            }
+                    do {
+                        users = try await getAllUsers()
+                        } catch {
+                            print("Oops!")
+                        }
                 }
                 self.listStyleSelectedIndex = 0
-                if(self.dynamicSearchText == ""){
-                    self.filteredUsers = users
-                    self.updateSnapshot(for: self.filteredUsers)
-                } else {
-                    let searchBarFilterUsers = self.users.filter({ $0.full_name.lowercased().contains(self.dynamicSearchText.lowercased()) })
-                    self.filteredUsers = searchBarFilterUsers
-                    self.updateSnapshot(for: searchBarFilterUsers)
-                }
+                self.users = users
+                updateSnapshot(for: self.users)
                     
             } else if(sender.selectedSegmentIndex == 1){
                 Task{
-                        do {
-                            res = try await getBookmarkedUsers()
-                            } catch {
-                                print("Oops!")
-                            }
+                    do {
+                        res = try await getBookmarkedUsers()
+                    } catch {
+                        print("Oops!")
+                    }
                 }
                 self.listStyleSelectedIndex = 1
-                if(self.dynamicSearchText == ""){
-//                    let bookmarkedUsers = res //self.users.filter({ $0.isBookmarked })
-                    self.filteredUsers = res
-                    updateSnapshot(for: self.filteredUsers)
-                } else {
-                    var filteredBookmarkUsers = self.users.filter({ $0.isBookmarked })
-                    filteredBookmarkUsers = filteredBookmarkUsers.filter({ $0.full_name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
-                    self.filteredUsers = filteredBookmarkUsers
-                    updateSnapshot(for: self.filteredUsers)
-                }
+                
             }
             
             }

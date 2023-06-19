@@ -34,7 +34,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     var followingMembersArray = [Member]()
     var followedMembersArray = [Member]()
     
-//    var scrollView = UIScrollView(UIScreen.main.bounds)
     var stackView = UIStackView()
     
     var memberId = ""
@@ -44,26 +43,19 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     var memberUserId = ""
     
     var systemImageName: String!
-    var parentView: MemberListViewController = MemberListViewController(collectionViewLayout: UICollectionViewLayout())
     var member: Member!
+    var isMemberBookmarked: Bool?
     
     var memberUserDetailBtn = CustomButton(title: "Show User Detail", hasBackground: true, fontSize: .med)
-    
-    func inheritedMemberUpdate(_ member: Member){
-        self.parentView.updateMember(member)
-        self.parentView.collectionView.reloadData()
-    }
 
     @objc private func bookmarkMember(){
-        self.member.isBookmarked.toggle()
-        systemImageName = self.member.isBookmarked ? "bookmark.fill" : "bookmark"
+        self.isMemberBookmarked?.toggle()
+        systemImageName = (self.isMemberBookmarked ?? false) ? "bookmark.fill" : "bookmark"
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
         
         if let memberId = UserDefaults.standard.string(forKey: "memberId") {
             self.updateMemberFavourite(who: memberId, whom: member.id!, with: "member")
         }
-        
-        self.inheritedMemberUpdate(member)
     }
     
     override func viewDidLoad(){
@@ -81,8 +73,8 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
         self.getFollowingMembers()
         self.getFollowedMembers()
         
-        systemImageName = member.isBookmarked ? "bookmark.fill" :  "bookmark"
-        
+        systemImageName = (self.isMemberBookmarked ?? false) ? "bookmark.fill" :  "bookmark"
+    
         let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkMember))
         navigationItem.rightBarButtonItem = bookmarkBarButton
         

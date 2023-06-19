@@ -11,15 +11,9 @@ class CompanyViewController: UIViewController {
     
     var tryButton = CustomButton(title: "Burada Çalışanları Gör", hasBackground: true ,fontSize: .med)
     
+    var systemImageName: String!
     var company: Company?
-    /*init(company: Company) {
-        self.company = company
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("Always initialize UserViewController using init(reminder:)")
-    }*/
+    var isCompanyBookmarked: Bool?
     
     lazy var fetchedImageView: UIImageView = {
         let iv = UIImageView()
@@ -46,6 +40,10 @@ class CompanyViewController: UIViewController {
         //print(namee ?? "")
         //print(idd ?? "")
         //print(age)
+        
+        systemImageName = (self.isCompanyBookmarked ?? false) ? "bookmark.fill" :  "bookmark"
+        let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkCompany))
+        navigationItem.rightBarButtonItem = bookmarkBarButton
                 
         view.backgroundColor = .systemBackground //.white
         
@@ -79,6 +77,16 @@ class CompanyViewController: UIViewController {
         ])
         
         self.tryButton.addTarget(self, action: #selector(go), for: .touchUpInside)
+    }
+    
+    @objc private func bookmarkCompany(){
+        self.isCompanyBookmarked?.toggle()
+        systemImageName = (self.isCompanyBookmarked ?? false) ? "bookmark.fill" : "bookmark"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: self.systemImageName), style: .plain, target: self, action: #selector(bookmarkCompany))
+        
+        if let memberId = UserDefaults.standard.string(forKey: "memberId") {
+            self.updateMemberFavourite(who: memberId, whom: company?.id ?? "" , with: "company")
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

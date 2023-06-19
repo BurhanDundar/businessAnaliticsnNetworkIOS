@@ -29,33 +29,33 @@ extension CompanyListViewController {
     }
     
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
-        // index -> 0: all, 1: bookmarked
-        if(sender.selectedSegmentIndex == 0){
-            self.listStyleSelectedIndex = 0
-            if(self.dynamicSearchText == ""){
-                self.filteredCompanies = []
+            // index -> 0: all, 1: bookmarked
+        var res = [Company]()
+        var companies = [Company]()
+            if(sender.selectedSegmentIndex == 0){
+                Task{
+                    do {
+                        companies = try await getAllCompanies()
+                    } catch {
+                        print("Oops!")
+                    }
+                }
+                self.listStyleSelectedIndex = 0
+                self.companies = companies
                 updateSnapshot(for: self.companies)
-            } else {
-                let searchBarFilterCompanies = self.companies.filter({ $0.name.lowercased().contains(self.dynamicSearchText.lowercased()) })
-                self.filteredCompanies = searchBarFilterCompanies
-                updateSnapshot(for: searchBarFilterCompanies)
-            }
-            collectionView.reloadData()
-                
-        } else if(sender.selectedSegmentIndex == 1){
-            self.listStyleSelectedIndex = 1
-            if(self.dynamicSearchText == ""){
-                let bookmarkedCompanies = self.companies.filter({ $0.isBookmarked })
-                self.filteredCompanies = bookmarkedCompanies
-                updateSnapshot(for: self.filteredCompanies)
-            } else {
-                var filteredBookmarkCompanies = self.companies.filter({ $0.isBookmarked })
-                filteredBookmarkCompanies = filteredBookmarkCompanies.filter({ $0.name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
-                self.filteredCompanies = filteredBookmarkCompanies
+                    
+            } else if(sender.selectedSegmentIndex == 1){
+                Task{
+                    do {
+                        res = try await getBookmarkedCompanies()
+                    } catch {
+                        print("Oops!")
+                    }
+                }
+                self.listStyleSelectedIndex = 1
+                self.filteredCompanies = res
                 updateSnapshot(for: self.filteredCompanies)
             }
-            collectionView.reloadData()
-        }
-        
-        }
+            
+            }
 }

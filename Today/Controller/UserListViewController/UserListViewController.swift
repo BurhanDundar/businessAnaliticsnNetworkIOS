@@ -27,7 +27,7 @@ class UserListViewController: UICollectionViewController {
         var memberFullName: String = ""
         var memberUsername: String = ""
         var userFavs: [String] = [String]()
-        var tempFilteredUsers: [User] = [User]()
+//        var tempFilteredUsers: [User] = [User]()
         
     
         // search bar
@@ -36,51 +36,6 @@ class UserListViewController: UICollectionViewController {
         let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
     
          override func viewDidLoad() {
-             
-             //print(companyIdForCompanyUsers ?? "")
-             //let defaults = UserDefaults.standard
-             //defaults.set(25, forKey: "Age")
-             /*
-             if let data = UserDefaults.standard.data(forKey: "Member") {
-                 do {
-                     // Create JSON Decoder
-                     let decoder = JSONDecoder()
-
-                     // Decode Note
-                     let member = try decoder.decode(Member.self, from: data)
-                     print(member)
-
-                 } catch {
-                     print("Unable to Decode Note (\(error))")
-                 }
-             }*/
-             
-             //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-             //appDelegate.userName = "Burhan"
-             //appDelegate.userid = "1241hd9bısdbf12893"
-             
-//             DispatchQueue.main.async {
-//                 let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//                 self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
-//
-//                 print(self.specialFilterUsers.count)
-//
-//                 if self.company_id != nil {
-//                     print("************************************")
-//                     User.sampleData = []
-//                     self.getCompanyUsers()
-//                 } else if self.specialFilterUsers.count > 0 {
-//                     print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-//                     User.sampleData = []
-//                     self.loadFilteredUsers()
-//                 } else {
-//                     print("???????????????????????????????????????")
-//                     User.sampleData = []
-//                     self.getUsers()
-//                 }
-//             }
-             
-             
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
              self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
@@ -110,7 +65,7 @@ class UserListViewController: UICollectionViewController {
                          User.sampleData = []
                          self.getUsers()
                      }
-                     self.getMemberFavAsUserIds()
+//                     self.getMemberFavAsUserIds()
                  }
              }
              
@@ -143,7 +98,7 @@ class UserListViewController: UICollectionViewController {
                  contentConfiguration.secondaryText = user.title
                  
                  self.isUserInBookmarkedArray = self.userFavs.contains(user.id!) ? true : false
-                 self.isUserInBookmarkedArray ? self.tempFilteredUsers.append(user) : nil
+//                 self.isUserInBookmarkedArray ? self.tempFilteredUsers.append(user) : nil
                  let systemImageName = self.isUserInBookmarkedArray ? "bookmark.fill" :  "bookmark"
                  
                  let customAccessory = UICellAccessory.CustomViewConfiguration(
@@ -334,14 +289,21 @@ class UserListViewController: UICollectionViewController {
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        DispatchQueue.main.async {
+//        DispatchQueue.main.async {
+            var res = [User]()
             self.dynamicSearchText = searchText
             if searchText.isEmpty {
                 self.isSearching = false
                 self.dynamicSearchText = ""
                 if(self.listStyleSelectedIndex == 1){
-                    //                    self.getBookmarkedUsers()
-                    self.filteredUsers = []
+                    Task{
+                        do {
+                            res = try await getBookmarkedUsers()
+                            } catch {
+                                print("Oops!")
+                            }
+                    }
+                    self.filteredUsers = res
                     self.updateSnapshot(for: self.filteredUsers) // DÖN BURAYAAA
                 } else {
                     self.filteredUsers = []
@@ -351,7 +313,6 @@ extension UserListViewController: UISearchBarDelegate {
                 self.isSearching = true
                 if(self.listStyleSelectedIndex == 1) {
                     let bookmarkedFilteredValues = self.filteredUsers.filter({ $0.full_name.lowercased().contains(searchText.lowercased()) })
-                    // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
                     self.filteredUsers = bookmarkedFilteredValues
                     self.updateSnapshot(for: bookmarkedFilteredValues)
                 } else if(self.listStyleSelectedIndex == 0) {
@@ -360,20 +321,27 @@ extension UserListViewController: UISearchBarDelegate {
                     self.updateSnapshot(for: allFilteredUsers)
                 }
             }
-        }
+//        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        DispatchQueue.main.async {
+        var res = [User]()
             self.isSearching = false
             self.dynamicSearchText = ""
             if(self.listStyleSelectedIndex == 1){
-                //                self.getBookmarkedUsers()
+                Task{
+                    do {
+                        res = try await getBookmarkedUsers()
+                    } catch {
+                        print("Oops!")
+                    }
+                }
+                self.filteredUsers = res
+                updateSnapshot(for: self.filteredUsers)
             } else {
                 self.filteredUsers = []
                 self.updateSnapshot(for: User.sampleData)
             }
-        }
     }
     
     
@@ -446,7 +414,7 @@ extension UserListViewController: UISearchBarDelegate {
 
     
     
-    extension UserListViewController {
+extension UserListViewController {
         func getAllUsers() async throws -> [User] {
 
             let stringURL = "http://192.168.0.100:3001/user"
@@ -465,11 +433,19 @@ extension UserListViewController: UISearchBarDelegate {
                 do {
                     let decoder = JSONDecoder()
                     let users = try decoder.decode([User].self, from: data)
-                    self.users = users
-                    self.filteredUsers = []
-                    self.collectionView.reloadData()
-                    self.updateSnapshot(for: self.users)
-                    return users
+                    
+                    if(self.dynamicSearchText != ""){
+                        self.users = users
+                        self.filteredUsers = self.users.filter({ $0.full_name.lowercased().contains(self.dynamicSearchText.lowercased()) })
+                        self.collectionView.reloadData()
+                        self.updateSnapshot(for: self.filteredUsers)
+                    } else {
+                        self.users = users
+                        self.filteredUsers = []
+                        self.collectionView.reloadData()
+                        self.updateSnapshot(for: self.users)
+                    }
+                    return users // burda ne dönmeli emin değilim bakarsın sonra
                 } catch {
                     throw GHError.invalidData
                 }
@@ -502,6 +478,10 @@ extension UserListViewController: UISearchBarDelegate {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode([User].self, from: data)
                 self.filteredUsers = response
+                
+                if(self.dynamicSearchText != ""){
+                    self.filteredUsers = self.filteredUsers.filter({ $0.full_name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
+                }
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredUsers)
                 return response
