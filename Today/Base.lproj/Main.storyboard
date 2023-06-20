@@ -63,11 +63,28 @@
                         <segue destination="FXI-K4-rTy" kind="relationship" relationship="viewControllers" id="tZu-2i-QU2"/>
                         <segue destination="zv1-mP-sNP" kind="relationship" relationship="viewControllers" id="oNE-Sn-ujj"/>
                         <segue destination="nu1-0f-pFp" kind="relationship" relationship="viewControllers" id="pNe-yw-6gK"/>
+                        <segue destination="Mkk-dJ-4Vd" kind="relationship" relationship="viewControllers" id="bZH-e3-XIf"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rei-rF-nIo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-736.64122137404581" y="-444.36619718309862"/>
+        </scene>
+        <!--about-->
+        <scene sceneID="dst-l5-LNc">
+            <objects>
+                <viewController id="Mkk-dJ-4Vd" customClass="AboutViewController" customModule="Today" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OnD-Qc-AFP">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="uqd-LH-pTP"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="about" image="info.circle" catalog="system" id="HBC-hG-XZe"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pKr-yI-buP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="204" y="-93"/>
         </scene>
         <!--Company List View Controller-->
         <scene sceneID="eXY-ax-Ipj">
@@ -788,8 +805,9 @@
         <segue reference="Fpp-ut-rP6"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="building.2.fill" catalog="system" width="128" height="108"/>
-        <image name="person.and.person.fill" catalog="system" width="128" height="81"/>
+        <image name="building.2.fill" catalog="system" width="32" height="32"/>
+        <image name="info.circle" catalog="system" width="128" height="123"/>
+        <image name="person.and.person.fill" catalog="system" width="32" height="32"/>
         <image name="person.crop.circle.fill" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -26,6 +26,7 @@
 		220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */; };
 		220F0B762A39A996004E214C /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */; };
 		2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */; };
+		2211F7242A4226DB0047103F /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7232A4226DB0047103F /* AboutViewController.swift */; };
 		22262B1C2A27423700B7DBCF /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1B2A27423700B7DBCF /* Experience.swift */; };
 		22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1E2A27481600B7DBCF /* SubExperience.swift */; };
 		22262B212A27491300B7DBCF /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B202A27491300B7DBCF /* Education.swift */; };
@@ -93,6 +94,7 @@
 		220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameViewController.swift; sourceTree = "<group>"; };
 		220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
 		2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFilterViewController.swift; sourceTree = "<group>"; };
+		2211F7232A4226DB0047103F /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		22262B1B2A27423700B7DBCF /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
 		22262B1E2A27481600B7DBCF /* SubExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubExperience.swift; sourceTree = "<group>"; };
 		22262B202A27491300B7DBCF /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				E92924522A30D9F000049820 /* MemberFilterViewController.swift */,
 				E92924542A31F2C900049820 /* ProfileViewController.swift */,
 				22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */,
+				2211F7232A4226DB0047103F /* AboutViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -506,6 +509,7 @@
 				22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */,
 				22758A882A20EC000028DD17 /* APIRequest.swift in Sources */,
 				E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */,
+				2211F7242A4226DB0047103F /* AboutViewController.swift in Sources */,
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
 				220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */,
 				220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */,
