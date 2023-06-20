@@ -7,7 +7,7 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    let APIURL: String = "http://192.168.0.100:3001"
+    let APIURL: String = "http://192.168.1.101:3001"
     var userSkills = [Skill]()
     var userExperiences = [Experience]()
     var userEducations = [Education]()

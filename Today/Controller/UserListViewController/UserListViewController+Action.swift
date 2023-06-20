@@ -59,6 +59,8 @@ extension UserListViewController {
                     }
                 }
                 self.listStyleSelectedIndex = 1
+                self.filteredUsers = res
+                updateSnapshot(for: self.filteredUsers)
                 
             }
             

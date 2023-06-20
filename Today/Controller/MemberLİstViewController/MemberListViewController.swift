@@ -314,9 +314,8 @@ class MemberListViewController: UICollectionViewController {
 
 extension MemberListViewController {
         func getAllMembers() async throws -> [Member] {
-
-            let stringURL = "http://192.168.0.100:3001/member"
-            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/member"
             
             guard let url = URL(string: stringURL) else {
                 throw GHError.invalidURL
@@ -350,8 +349,8 @@ extension MemberListViewController {
                 }
         }
         func getBookmarkedMembers() async throws -> [Member]{
-            
-            let endpoint = "http://192.168.0.100:3001/favourite/getBookmarkedUsers"
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let endpoint = "\(appDelegate.APIURL)/favourite/getBookmarkedUsers"
             let params = [
                 "user_id": memberId,
                 "fav_type": "member"

@@ -416,10 +416,9 @@ extension UserListViewController: UISearchBarDelegate {
     
 extension UserListViewController {
         func getAllUsers() async throws -> [User] {
-
-            let stringURL = "http://192.168.0.100:3001/user"
-            
-            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/user"
+                        
             guard let url = URL(string: stringURL) else {
                 throw GHError.invalidURL
             }
@@ -451,8 +450,8 @@ extension UserListViewController {
                 }
         }
         func getBookmarkedUsers() async throws -> [User]{
-            
-            let endpoint = "http://192.168.0.100:3001/favourite/getBookmarkedUsers"
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let endpoint = "\(appDelegate.APIURL)/favourite/getBookmarkedUsers"
             let params = [
                 "user_id": memberId,
                 "fav_type": "user"

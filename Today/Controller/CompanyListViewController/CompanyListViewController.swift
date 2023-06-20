@@ -319,10 +319,9 @@ extension CompanyListViewController: UISearchBarDelegate {
 
 extension CompanyListViewController {
         func getAllCompanies() async throws -> [Company] {
-
-            let stringURL = "http://192.168.0.100:3001/company"
-            
-            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/company"
+                        
             guard let url = URL(string: stringURL) else {
                 throw GHError.invalidURL
             }
@@ -355,8 +354,8 @@ extension CompanyListViewController {
                 }
         }
         func getBookmarkedCompanies() async throws -> [Company]{
-            
-            let endpoint = "http://192.168.0.100:3001/favourite/getBookmarkedUsers"
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let endpoint = "\(appDelegate.APIURL)/favourite/getBookmarkedUsers"
             let params = [
                 "user_id": memberId,
                 "fav_type": "company"
