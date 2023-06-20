@@ -26,6 +26,7 @@
 		220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */; };
 		220F0B762A39A996004E214C /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */; };
 		2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */; };
+		2211F7222A41C3350047103F /* ConnectAccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7212A41C3350047103F /* ConnectAccountResponse.swift */; };
 		22262B1C2A27423700B7DBCF /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1B2A27423700B7DBCF /* Experience.swift */; };
 		22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1E2A27481600B7DBCF /* SubExperience.swift */; };
 		22262B212A27491300B7DBCF /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B202A27491300B7DBCF /* Education.swift */; };
@@ -93,6 +94,7 @@
 		220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameViewController.swift; sourceTree = "<group>"; };
 		220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
 		2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFilterViewController.swift; sourceTree = "<group>"; };
+		2211F7212A41C3350047103F /* ConnectAccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAccountResponse.swift; sourceTree = "<group>"; };
 		22262B1B2A27423700B7DBCF /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
 		22262B1E2A27481600B7DBCF /* SubExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubExperience.swift; sourceTree = "<group>"; };
 		22262B202A27491300B7DBCF /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				22097A812A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift */,
 				22097A842A3C6A690007EC10 /* LinkedInEmailModel.swift */,
 				22097A862A3C6A880007EC10 /* LinkedInProfileModel.swift */,
+				2211F7212A41C3350047103F /* ConnectAccountResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 				22BF6E1B2A2A9CAE00D766E2 /* TabBarViewController.swift in Sources */,
 				22BF6E192A2A199200D766E2 /* Member.swift in Sources */,
 				22097A8F2A3C6C9C0007EC10 /* LinkedInButton.swift in Sources */,
+				2211F7222A41C3350047103F /* ConnectAccountResponse.swift in Sources */,
 				220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */,
 				E94E1FE429C8B40100C58B18 /* Login.swift in Sources */,
 				E929244D2A30A43800049820 /* MemberViewController+Row.swift in Sources */,

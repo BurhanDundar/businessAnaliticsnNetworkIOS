@@ -791,8 +791,12 @@ extension ProfileViewController: WKNavigationDelegate {
                 
                 do {
                     let decoder = JSONDecoder()
-                    let response = try decoder.decode(UpdatePasswordandUsernameResponse.self, from: data)
+                    let response = try decoder.decode(ConnectAccountResponse.self, from: data)
                     print(response)
+                    
+                    if(response.userId != ""){
+                        UserDefaults.standard.set(response.userId, forKey: "memberUserId")
+                    }
                     
                     DispatchQueue.main.async {
                         if response.status == "ok" {
@@ -813,7 +817,6 @@ extension ProfileViewController: WKNavigationDelegate {
                             self.present(alert, animated: true, completion: nil)
                         }
                     }
-                    
                 } catch {
                     print("Hatalı Giriş Yapıldı")
                 }

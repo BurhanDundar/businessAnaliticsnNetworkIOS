@@ -90,7 +90,7 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
         self.performSegue(withIdentifier: "OpenSettings", sender: self)
     }
     
-    private func showConnectedUserDetailButton(){
+    @objc private func showConnectedUserDetailButton(_ sender: Any){
         self.memberUserDetailBtn.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.memberUserDetailBtn)
         self.memberUserDetailBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85).isActive = true
@@ -411,11 +411,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
         self.stackView.addArrangedSubview(self.followingMembersView)
         self.stackView.addArrangedSubview(self.followedMembersView)
         
-        if(self.memberUserId != ""){
-            self.showConnectedUserDetailButton()
-            self.memberUserDetailBtn.addTarget(self, action: #selector(showConnectedUser), for: .touchUpInside)
-        }
-        
         NSLayoutConstraint.activate([
             self.profileImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 110),
             self.profileImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
@@ -538,5 +533,14 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     @objc func openFollowedMembers(_ sender: UITapGestureRecognizer){
         let sender: [String: [Member]?] = [ "members": self.followedMembersArray ]
         self.performSegue(withIdentifier: "MemberShowFollowedMembers", sender: sender)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if(self.memberUserId != ""){
+            self.showConnectedUserDetailButton()
+            self.memberUserDetailBtn.addTarget(self, action: #selector(showConnectedUser), for: .touchUpInside)
+        }
     }
 }
