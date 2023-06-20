@@ -223,7 +223,7 @@ class Register: UIViewController{
                     DispatchQueue.main.async {
                         self.registerResponse = registerRes
                         if self.registerResponse.status == "ok" {
-                            let alert = UIAlertController(title: "Successful Registration!", message: self.registerResponse.msg, preferredStyle: .alert)
+                            let alert = UIAlertController(title: "Başarılı!", message: "Mikroservis uygulamasına başarıyla kaydoldun.", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
                                 self.navigationController?.popViewController(animated: true)
                             }))

@@ -41,15 +41,12 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     var memberFullName = ""
     var memberUserName = ""
     var memberUserId = ""
-    
     var globalMemberId = ""
     
     var systemImageName: String!
     var member: Member!
     var isMemberBookmarked: Bool?
     
-    var memberUserDetailBtn = CustomButton(title: "Show User Detail", hasBackground: true, fontSize: .med)
-
     @objc private func bookmarkMember(){
         self.isMemberBookmarked?.toggle()
         systemImageName = (self.isMemberBookmarked ?? false) ? "bookmark.fill" : "bookmark"
@@ -88,16 +85,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     
     @objc func openSettings(_ sender: Any){
         self.performSegue(withIdentifier: "OpenSettings", sender: self)
-    }
-    
-    private func showConnectedUserDetailButton(){
-        self.memberUserDetailBtn.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.memberUserDetailBtn)
-        self.memberUserDetailBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85).isActive = true
-        self.memberUserDetailBtn.heightAnchor.constraint(equalToConstant: 55).isActive = true
-        self.memberUserDetailBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-        self.memberUserDetailBtn.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 25).isActive = true
-        
     }
     
     private func getFollowingUsers(){
@@ -411,11 +398,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
         self.stackView.addArrangedSubview(self.followingMembersView)
         self.stackView.addArrangedSubview(self.followedMembersView)
         
-        if(self.memberUserId != ""){
-            self.showConnectedUserDetailButton()
-            self.memberUserDetailBtn.addTarget(self, action: #selector(showConnectedUser), for: .touchUpInside)
-        }
-        
         NSLayoutConstraint.activate([
             self.profileImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 110),
             self.profileImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
@@ -512,12 +494,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
            let object = sender as! [String: [Member]?]
            followedMembersVC.members = object["members"] as! [Member]
        }
-    }
-    
-    @objc func showConnectedUser(_ sender: Any){
-        let userListVC = UserListViewController(collectionViewLayout: UICollectionViewLayout())
-        let user = userListVC.user(withId: self.memberUserId)
-        navigationController?.pushViewController(UserViewController(user: user, isUserBookmarked: user.isBookmarked), animated: true)
     }
     
     @objc func openFollowingUsers(_ sender: UITapGestureRecognizer){

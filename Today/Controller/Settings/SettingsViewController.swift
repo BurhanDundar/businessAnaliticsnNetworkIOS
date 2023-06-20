@@ -10,9 +10,9 @@ import UIKit
 class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
-    let settingsNames = ["update password","update username"]
-    let settingsSystemImages = ["lock.rectangle.on.rectangle","rectangle.and.pencil.and.ellipsis"]
-    let settingDetailSegues = ["UpdatePassword","UpdateUsername"]
+    let settingsNames = ["update password"]
+    let settingsSystemImages = ["lock.rectangle.on.rectangle"]
+    let settingDetailSegues = ["UpdatePassword"]
     
     var settingsName = ""
     var settingsSystemImage = ""
@@ -21,7 +21,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Settings"
+        navigationItem.title = "Microservice App Settings"
         
         tableView.delegate = self
         tableView.dataSource = self

@@ -148,7 +148,7 @@ class Login: UIViewController {
                             defaults.set(self.signInResponse.userId ?? "", forKey: "memberUserId")
                         }
                         
-                        let alert = UIAlertController(title: "Yey! 🎉", message: "Logged in successfully", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Hoşgeldin 🎉", message: "Mikroservis uygulamasına başarıyla giriş yapıldı!", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
                             self.performSegue(withIdentifier: "LoginToTabBar", sender: self)
                         }))
