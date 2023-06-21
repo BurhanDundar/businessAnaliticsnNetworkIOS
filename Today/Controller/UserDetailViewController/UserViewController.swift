@@ -283,12 +283,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                     DispatchQueue.main.async {
                         self.skills = userSkillsRes
                         if self.skills.count > 0{
-                            var topAnc = (self.buttonCounter + 1) * 40
                             self.stackView.addArrangedSubview(self.skillsBtn)
                             self.skillsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.skillsBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
-                                self.skillsBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.skillsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -339,12 +336,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                     DispatchQueue.main.async {
                         self.experiences = userExperiencesRes
                         if self.experiences.count > 0{
-                            var topAnc = (self.buttonCounter + 1) * 40
                             self.stackView.addArrangedSubview(self.experiencesBtn)
                             self.experiencesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.experiencesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
-                                self.experiencesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.experiencesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -393,12 +387,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                     DispatchQueue.main.async {
                         self.educations = userEducationsRes
                         if self.educations.count > 0{
-                            var topAnc = (self.buttonCounter + 1) * 40
                             self.stackView.addArrangedSubview(self.educationsBtn)
                             self.educationsBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.educationsBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
-                                self.educationsBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.educationsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -448,12 +439,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                     DispatchQueue.main.async {
                         self.courses = userCoursesRes
                         if self.courses.count > 0{
-                            var topAnc = (self.buttonCounter + 1) * 40
                             self.stackView.addArrangedSubview(self.coursesBtn)
                             self.coursesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.coursesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
-                                self.coursesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.coursesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
@@ -504,12 +492,9 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                     DispatchQueue.main.async {
                         self.languages = userLanguagesRes
                         if self.languages.count > 0{
-                            var topAnc = (self.buttonCounter + 1) * 40
                             self.stackView.addArrangedSubview(self.languagesBtn)
                             self.languagesBtn.translatesAutoresizingMaskIntoConstraints = false
                             NSLayoutConstraint.activate([
-                                self.languagesBtn.centerXAnchor.constraint(equalTo: self.stackView.centerXAnchor),
-                                self.languagesBtn.topAnchor.constraint(equalTo: self.openUserProfileLinkedInPageBtn.bottomAnchor,constant: CGFloat(topAnc)),
                                 self.languagesBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
