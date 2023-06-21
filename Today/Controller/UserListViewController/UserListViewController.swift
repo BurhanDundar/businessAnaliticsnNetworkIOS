@@ -27,10 +27,6 @@ class UserListViewController: UICollectionViewController {
         var memberFullName: String = ""
         var memberUsername: String = ""
         var userFavs: [String] = [String]()
-//        var tempFilteredUsers: [User] = [User]()
-        
-    
-        // search bar
         var searchController: UISearchController!
     
         let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
@@ -47,14 +43,8 @@ class UserListViewController: UICollectionViewController {
              navigationItem.title = "Members"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
-             
-//             if(self.company_id != nil){
-//                 navigationItem.leftBarButtonItem = .none
-//             }
-//             if(self.company_id == nil){
                  let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
                  navigationItem.leftBarButtonItem = profileBarButton
-//             }
              
              DispatchQueue.main.async {
                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -70,7 +60,6 @@ class UserListViewController: UICollectionViewController {
                          User.sampleData = []
                          self.getUsers()
                      }
-//                     self.getMemberFavAsUserIds()
                  }
              }
              
@@ -103,7 +92,6 @@ class UserListViewController: UICollectionViewController {
                  contentConfiguration.secondaryText = user.title
                  
                  self.isUserInBookmarkedArray = self.userFavs.contains(user.id!) ? true : false
-//                 self.isUserInBookmarkedArray ? self.tempFilteredUsers.append(user) : nil
                  let systemImageName = self.isUserInBookmarkedArray ? "bookmark.fill" :  "bookmark"
                  
                  let customAccessory = UICellAccessory.CustomViewConfiguration(
@@ -294,7 +282,6 @@ class UserListViewController: UICollectionViewController {
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        DispatchQueue.main.async {
             var res = [User]()
             self.dynamicSearchText = searchText
             if searchText.isEmpty {
@@ -326,7 +313,6 @@ extension UserListViewController: UISearchBarDelegate {
                     self.updateSnapshot(for: allFilteredUsers)
                 }
             }
-//        }
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -359,29 +345,6 @@ extension UserListViewController: UISearchBarDelegate {
     @objc private func bookmark(){
         print("bookmark is tapped")
     }
-    
-    
-    
-    //    override func viewDidAppear(_ animated: Bool) {
-    //        super.viewDidDisappear(true)
-    //
-    //        DispatchQueue.main.async {
-    //            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    //            self.specialFilterUsers = appDelegate.UserSpecialFilterUsers as [User]
-    //
-    //            if self.company_id != nil {
-    //                User.sampleData = []
-    //                self.getCompanyUsers()
-    //            } else if self.specialFilterUsers.count > 0 {
-    //                User.sampleData = []
-    //                self.loadFilteredUsers()
-    //            } else {
-    //                User.sampleData = []
-    //                self.getUsers()
-    //            }
-    //        }
-    //    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if(self.filteredUsers.count == 0){

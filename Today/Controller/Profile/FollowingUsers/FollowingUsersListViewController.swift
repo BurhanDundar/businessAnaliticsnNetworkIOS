@@ -11,7 +11,7 @@ class FollowingUsersListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, User.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, User.ID>
     
-        var users: [User]! // bu kesin gelecek ama User.sampleDataboş kaldı var users: [User] = User.sampleData ne olacak bak buna
+        var users: [User]!
         var filteredUsers: [User] = []
         var dataSource: DataSource!
         var isSearching: Bool = false

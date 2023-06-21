@@ -48,10 +48,7 @@ class MemberListViewController: UICollectionViewController {
                  Member.sampleData = []
                 self.getMembers()
                  
-                 //self.getUsers()
                  navigationItem.title = "Members"
-//                 let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
-//                 navigationItem.rightBarButtonItem = filterBarButton
                  
                  let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
                  navigationItem.leftBarButtonItem = profileBarButton
@@ -147,9 +144,6 @@ class MemberListViewController: UICollectionViewController {
     }
         
         func pushDetailViewForMember(withId id:Member.ID){
-//            let member = member(withId: id)
-//            let viewController = MemberViewController(member: member, parent: self)
-//            navigationController?.pushViewController(viewController, animated: true)
             
             let member = member(withId: id)
             let isMemberInBookmarkedArray = self.memberFavs.contains(member.id!) ? true : false

@@ -34,14 +34,3 @@ extension Member{
     static var sampleData: [Member] = [Member]()
 }
 #endif
-
-//Member(
-//        _id: "645e51dbfe9d157ab099031c",
-//        fullname: "Şerife Türksever",
-//       username: "st",
-//        password: "$2b$12$hgGEwzlPO7YoV8u3HbEXCOzMnD.HdbC/lvPAJUJCwjlPdgEJsX5em",
-//       email: "serifeturksever@gmail.com",
-//       createdAt: 1683902939700,
-//       updatedAt: 1686872203326,
-//        isBookmarked: false
-//      )

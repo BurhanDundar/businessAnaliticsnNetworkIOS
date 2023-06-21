@@ -5,8 +5,6 @@
 //  Created by Şerife Türksever on 22.03.2023.
 //
 
-// başına self alamayanları global tanımlayıp selfli mi yapsak bu bir gözden geçirelecek
-
 import UIKit
 import WebKit
 

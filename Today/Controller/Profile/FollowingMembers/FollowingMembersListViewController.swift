@@ -17,7 +17,6 @@ class FollowingMembersListViewController: UICollectionViewController {
         var isSearching: Bool = false
         var dynamicSearchText: String = ""
     
-        // search bar
         var searchController: UISearchController!
     
         lazy var fetchedImageView: UIImageView = {

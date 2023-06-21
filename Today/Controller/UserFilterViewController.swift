@@ -133,12 +133,3 @@ class UserFilterViewController: UIViewController {
             
         }
 }
-
-
-/*text = UILabel()
-text.translatesAutoresizingMaskIntoConstraints = false
-text.text = "Burhan"
-text.textAlignment = .center
-view.addSubview(text)
-text.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-text.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 20).isActive = true*/

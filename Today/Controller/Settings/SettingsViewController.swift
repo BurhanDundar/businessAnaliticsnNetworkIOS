@@ -40,7 +40,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             cell.accessoryType = .disclosureIndicator
             cell.contentConfiguration = content
             cell.selectionStyle = .none
-//            cell.selectionStyle = UITableViewCellSelectionStyleGray;
             return cell
         }
     

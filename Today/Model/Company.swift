@@ -12,7 +12,7 @@ struct Company: Identifiable, Codable {
     var id: String? { _id }
     var name: String
     var image: String?
-    var type: String? // sonra enum olabilir
+    var type: String?
     var isBookmarked: Bool = false
 }
 

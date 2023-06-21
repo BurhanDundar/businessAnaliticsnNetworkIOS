@@ -1,5 +1,5 @@
 //
-//  CreateExperienceModel.swift
+//  ResponseModel.swift
 //  Today
 //
 //  Created by Yapı Kredi Teknoloji A.Ş. on 21.06.2023.

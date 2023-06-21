@@ -465,7 +465,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             self.followingCompaniesView.topAnchor.constraint(equalTo: stackView.topAnchor),
             self.followingCompaniesView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
             self.followingCompaniesView.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.20),
-//            self.followingCompaniesView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
 
             self.followingCompaniesCount.topAnchor.constraint(equalTo: self.followingCompaniesView.topAnchor),
             self.followingCompaniesCount.centerXAnchor.constraint(equalTo: self.followingCompaniesView.centerXAnchor),
@@ -479,7 +478,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             self.followingMembersView.topAnchor.constraint(equalTo: stackView.topAnchor),
             self.followingMembersView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
             self.followingMembersView.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.20),
-//            self.followingMembersView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
 
             self.followingMembersCount.topAnchor.constraint(equalTo: self.followingMembersView.topAnchor),
             self.followingMembersCount.centerXAnchor.constraint(equalTo: self.followingMembersView.centerXAnchor),
@@ -493,7 +491,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             self.followedMembersView.topAnchor.constraint(equalTo: stackView.topAnchor),
             self.followedMembersView.heightAnchor.constraint(equalTo: stackView.heightAnchor),
             self.followedMembersView.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.20),
-//            self.followedMembersView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 20),
 
             self.followedMembersCount.topAnchor.constraint(equalTo: self.followedMembersView.topAnchor),
             self.followedMembersCount.centerXAnchor.constraint(equalTo: self.followedMembersView.centerXAnchor),
@@ -516,8 +513,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             self.connectWithLinkedInBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.connectWithLinkedInBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
             self.connectWithLinkedInBtn.heightAnchor.constraint(equalToConstant: 55),
-            
-            
         ])
     }
     
@@ -688,15 +683,10 @@ extension ProfileViewController: WKNavigationDelegate {
             let statusCode = (response as! HTTPURLResponse).statusCode
             if statusCode == 200 {
                 let results = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? [AnyHashable: Any]
-                
-//                print("results is: \(results)")
-
 
                 let accessToken = results?["access_token"] as! String
-//                print("accessToken is: \(accessToken)")
 
                 let expiresIn = results?["expires_in"] as! Int
-//                print("expires in: \(expiresIn)")
 
                 // Get user's id, first name, last name, profile pic url
                 self.fetchLinkedInUserProfile(accessToken: accessToken)
@@ -711,35 +701,24 @@ extension ProfileViewController: WKNavigationDelegate {
         let verify: NSURL = NSURL(string: tokenURLFull!)!
         let request: NSMutableURLRequest = NSMutableURLRequest(url: verify as URL)
         let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
-//            print("data is: \(data)")
-//            print("response is: \(response)")
 
 
             if error == nil {
                 let linkedInProfileModel = try? JSONDecoder().decode(LinkedInProfileModel.self, from: data!)
                 
-//                print("Profile Model **************",linkedInProfileModel)
-                
-//                print("Linkedin Profile Link")
-                print(self.connectWithLinkedInTextField.text)
-                
                 //AccessToken
-//                print("LinkedIn Access Token: \(accessToken)")
                 self.linkedInAccessToken = accessToken
                 
                 // LinkedIn Id
                 let linkedinId: String! = linkedInProfileModel?.id
-//                print("LinkedIn Id: \(linkedinId ?? "")")
                 self.linkedInId = linkedinId
 
                 // LinkedIn First Name
                 let linkedinFirstName: String! = linkedInProfileModel?.firstName.localized.enUS
-//                print("LinkedIn First Name: \(linkedinFirstName ?? "")")
                 self.linkedInFirstName = linkedinFirstName
 
                 // LinkedIn Last Name
                 let linkedinLastName: String! = linkedInProfileModel?.lastName.localized.enUS
-//                print("LinkedIn Last Name: \(linkedinLastName ?? "")")
                 self.linkedInLastName = linkedinLastName
 
                 // LinkedIn Profile Picture URL
@@ -750,7 +729,6 @@ extension ProfileViewController: WKNavigationDelegate {
                 } else {
                     linkedinProfilePic = "Not exists"
                 }
-//                print("LinkedIn Profile Avatar URL: \(linkedinProfilePic ?? "")")
                 self.linkedInProfilePicURL = linkedinProfilePic
 
                 // Get user's email address
@@ -770,7 +748,6 @@ extension ProfileViewController: WKNavigationDelegate {
 
                 // LinkedIn Email
                 let linkedinEmail: String! = linkedInEmailModel?.elements[0].elementHandle.emailAddress
-//                print("LinkedIn Email: \(linkedinEmail ?? "")")
                 self.linkedInEmail = linkedinEmail
                 
                 DispatchQueue.main.async {

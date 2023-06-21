@@ -30,17 +30,6 @@ class CompanyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let defaults = UserDefaults.standard
-        //let age = defaults.integer(forKey: "Age")
-        
-        //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        //let  namee = appDelegate.userName as! String
-        //let  idd = appDelegate.userid as! String
-        
-        //print(namee ?? "")
-        //print(idd ?? "")
-        //print(age)
-        
         systemImageName = (self.isCompanyBookmarked ?? false) ? "bookmark.fill" :  "bookmark"
         let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkCompany))
         navigationItem.rightBarButtonItem = bookmarkBarButton

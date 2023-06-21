@@ -14,8 +14,3 @@ struct Favourite: Identifiable,Codable{
     var fav_id: String?
     var fav_type: String?
 }
-
-//struct FavouriteResponse: Codable {
-//    var status: String?
-//    var msg: String?
-//}

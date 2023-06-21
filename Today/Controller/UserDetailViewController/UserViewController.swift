@@ -79,9 +79,6 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         
         view = UIView()
         view.backgroundColor = .systemBackground
-    
-//        scrollView.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 400)
-//        scrollView.backgroundColor = .red
         self.view.addSubview(self.scrollView)
         
         

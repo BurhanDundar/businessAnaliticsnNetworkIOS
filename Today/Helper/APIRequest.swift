@@ -5,11 +5,6 @@
 //  Created by Yapı Kredi Teknoloji A.Ş. on 26.05.2023.
 //
 
-// URLSession vs Alamofire
-// Alamofire paket yükümlülükleriyle geliyor dolayısıyla ilk tercih olmamalı
-
-// Bunlar burda bir şablon olarak dursun
-
 import Foundation
 
 struct APIRequest {

@@ -22,7 +22,6 @@ class CompanyListViewController: UICollectionViewController {
         var memberFullName: String = ""
         var memberUsername: String = ""
     
-        // search bar
         var searchController: UISearchController!
     
         let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
@@ -52,13 +51,8 @@ class CompanyListViewController: UICollectionViewController {
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
              self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
-             
-//             self.getMemberFavAsCompanyIds()
              self.getCompanies()
-             
              navigationItem.title = "Companies"
-//             let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
-//             navigationItem.rightBarButtonItem = filterBarButton
              
              let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
              navigationItem.leftBarButtonItem = profileBarButton

@@ -25,6 +25,6 @@ extension [Skill] {
 
 #if DEBUG
 extension Skill{
-    static var sampleData: [Skill] = [Skill]() //[Skill]()
+    static var sampleData: [Skill] = [Skill]()
 }
 #endif

@@ -449,7 +449,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
             self.followingCompaniesView.topAnchor.constraint(equalTo: self.stackView.topAnchor),
             self.followingCompaniesView.heightAnchor.constraint(equalTo: self.stackView.heightAnchor),
             self.followingCompaniesView.widthAnchor.constraint(equalTo: self.stackView.widthAnchor, multiplier: 0.20),
-//            self.followingCompaniesView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
 
             self.followingCompaniesCount.topAnchor.constraint(equalTo: self.followingCompaniesView.topAnchor),
             self.followingCompaniesCount.centerXAnchor.constraint(equalTo: self.followingCompaniesView.centerXAnchor),
@@ -463,7 +462,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
             self.followingMembersView.topAnchor.constraint(equalTo: self.stackView.topAnchor),
             self.followingMembersView.heightAnchor.constraint(equalTo: self.stackView.heightAnchor),
             self.followingMembersView.widthAnchor.constraint(equalTo: self.stackView.widthAnchor, multiplier: 0.20),
-//            self.followingMembersView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
 
             self.followingMembersCount.topAnchor.constraint(equalTo: self.followingMembersView.topAnchor),
             self.followingMembersCount.centerXAnchor.constraint(equalTo: self.followingMembersView.centerXAnchor),
@@ -477,7 +475,6 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
             self.followedMembersView.topAnchor.constraint(equalTo: self.stackView.topAnchor),
             self.followedMembersView.heightAnchor.constraint(equalTo: self.stackView.heightAnchor),
             self.followedMembersView.widthAnchor.constraint(equalTo: self.stackView.widthAnchor, multiplier: 0.20),
-//            self.followedMembersView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 20),
 
             self.followedMembersCount.topAnchor.constraint(equalTo: self.followedMembersView.topAnchor),
             self.followedMembersCount.centerXAnchor.constraint(equalTo: self.followedMembersView.centerXAnchor),
