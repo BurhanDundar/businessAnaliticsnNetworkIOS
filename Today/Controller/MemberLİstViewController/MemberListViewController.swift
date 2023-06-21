@@ -336,7 +336,7 @@ extension MemberListViewController {
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: self.members)
                     }
-                    
+                    self.listStyleSegmentedControl.isEnabled = true
                     return members
                 } catch {
                     throw GHError.invalidData
@@ -376,7 +376,7 @@ extension MemberListViewController {
                 }
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredMembers)
-                
+                self.listStyleSegmentedControl.isEnabled = true
                 return response
             } catch {
                 throw GHError.invalidData

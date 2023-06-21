@@ -43,8 +43,11 @@ class UserListViewController: UICollectionViewController {
              navigationItem.title = "Members"
              let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
              navigationItem.rightBarButtonItem = filterBarButton
+                 
+             if self.company_id == nil {
                  let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
                  navigationItem.leftBarButtonItem = profileBarButton
+             }
              
              DispatchQueue.main.async {
                  let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -52,12 +55,15 @@ class UserListViewController: UICollectionViewController {
                  if self.filteredUsers.count == 0 {
                      if self.company_id != nil {
                          User.sampleData = []
+                         self.updateSnapshot(for: User.sampleData)
                          self.getCompanyUsers()
                      } else if self.specialFilterUsers.count > 0 {
                          User.sampleData = []
+                         self.updateSnapshot(for: User.sampleData)
                          self.loadFilteredUsers()
                      } else {
                          User.sampleData = []
+                         self.updateSnapshot(for: User.sampleData)
                          self.getUsers()
                      }
                  }
@@ -219,7 +225,7 @@ class UserListViewController: UICollectionViewController {
                         User.sampleData = self.users
                         self.filteredUsers = []
                         self.collectionView.reloadData()
-                        self.updateSnapshot(for: self.users)
+                        self.updateSnapshot(for: companyUsers)
                     }
                 } catch {
                     print("Error Occured!")
@@ -368,8 +374,10 @@ extension UserListViewController: UISearchBarDelegate {
         User.sampleData = []
         self.filteredUsers = []
         self.getUsers()
-        let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
-        navigationItem.leftBarButtonItem = profileBarButton
+        if self.company_id == nil {
+            let profileBarButton = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.fill"), style: .plain, target: self, action: #selector(didPressProfileButton))
+            navigationItem.leftBarButtonItem = profileBarButton
+        }
     }
     
     
@@ -412,6 +420,7 @@ extension UserListViewController {
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: self.users)
                     }
+                    self.listStyleSegmentedControl.isEnabled = true
                     return users // burda ne dönmeli emin değilim bakarsın sonra
                 } catch {
                     throw GHError.invalidData
@@ -451,6 +460,7 @@ extension UserListViewController {
                 }
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredUsers)
+                self.listStyleSegmentedControl.isEnabled = true
                 return response
             } catch {
                 throw GHError.invalidData

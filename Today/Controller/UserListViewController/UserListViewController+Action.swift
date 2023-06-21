@@ -35,6 +35,7 @@ extension UserListViewController {
     }
     
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
+        self.listStyleSegmentedControl.isEnabled = false
             // index -> 0: all, 1: bookmarked
         var res = [User]()
         var users = [User]()
@@ -61,8 +62,6 @@ extension UserListViewController {
                 self.listStyleSelectedIndex = 1
                 self.filteredUsers = res
                 updateSnapshot(for: self.filteredUsers)
-                
             }
-            
             }
 }

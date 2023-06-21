@@ -108,7 +108,6 @@ class CompanyListViewController: UICollectionViewController {
              listStyleSegmentedControl.selectedSegmentIndex = listStyleSelectedIndex
              listStyleSegmentedControl.addTarget(
                 self, action: #selector(didChangeListStyle(_:)), for: .valueChanged)
-             
              navigationItem.titleView = listStyleSegmentedControl
              
                           
@@ -341,7 +340,7 @@ extension CompanyListViewController {
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: self.companies)
                     }
-                    
+                    self.listStyleSegmentedControl.isEnabled = true
                     return companies
                 } catch {
                     throw GHError.invalidData
@@ -382,7 +381,7 @@ extension CompanyListViewController {
                 }
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredCompanies)
-                
+                self.listStyleSegmentedControl.isEnabled = true
                 return response
             } catch {
                 throw GHError.invalidData

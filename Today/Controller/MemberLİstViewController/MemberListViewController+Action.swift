@@ -36,6 +36,7 @@ extension MemberListViewController {
     }
     
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
+        self.listStyleSegmentedControl.isEnabled = false
             // index -> 0: all, 1: bookmarked
         var res = [Member]()
         var members = [Member]()
