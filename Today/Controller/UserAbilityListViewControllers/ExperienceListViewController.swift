@@ -64,6 +64,15 @@ class ExperienceListViewController: UIViewController {
                              experienceDate.sizeToFit()
                              experienceDate.textColor = .systemGray
                              self.stackView.addArrangedSubview(experienceDate)
+                         } else {
+                             let experienceDate = UILabel()
+                             experienceDate.translatesAutoresizingMaskIntoConstraints = false
+                             experienceDate.text = "\(experience.range ?? "")"
+                             experienceDate.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: .none)
+                             experienceDate.numberOfLines = 0
+                             experienceDate.sizeToFit()
+                             experienceDate.textColor = .systemGray
+                             self.stackView.addArrangedSubview(experienceDate)
                          }
                      }
                      self.seperator()

@@ -22,6 +22,10 @@ class CustomTextField: UITextField {
         case experiences
         case languages
         case linkedinProfileLink
+        case experienceName
+        case experienceCompany
+        case experienceDate
+        case experienceLocation
     }
     
     private let authFieldType: CustomTextFieldType
@@ -73,6 +77,14 @@ class CustomTextField: UITextField {
             self.placeholder = "Languages"
         case .linkedinProfileLink:
             self.placeholder = "Linkedin Profile Link"
+        case .experienceName:
+            self.placeholder = "Experience Name"
+        case .experienceCompany:
+            self.placeholder = "Experience Company"
+        case .experienceDate:
+            self.placeholder = "Experience Date"
+        case .experienceLocation:
+            self.placeholder = "Experience Location"
         }
     }
     required init?(coder: NSCoder) {

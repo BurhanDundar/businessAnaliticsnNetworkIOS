@@ -16,6 +16,7 @@ struct Experience: Identifiable,Codable {
     var establishment: String
     var range: String?
     var location: String?
+    var external: Bool?
     var subExperiences: [SubExperience]?
 }
 

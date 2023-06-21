@@ -44,6 +44,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     var connectWithLinkedInTitle = UILabel()
     var connectWithLinkedInTextField = CustomTextField(fieldType: .linkedinProfileLink)
     var connectWithLinkedInBtn = LinkedInButton(title: "Connect account with linkedIn", image: UIImage(named: "linkedin_icon")!)
+    
+    var addExperience = CustomButton(title: "Deneyim oluştur" ,fontSize: .med)
+    var stackView = UIStackView()
     var webView = WKWebView()
     
     var linkedInId = ""
@@ -66,6 +69,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.connectWithLinkedInBtn.addTarget(self, action: #selector(linkedInAuthVC), for: .touchUpInside)
         self.connectWithLinkedInTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.connectWithLinkedInBtn.isEnabled = false
+        self.addExperience.addTarget(self, action: #selector(createExperiencePage), for: .touchUpInside)
         self.setupUI()
     }
     
@@ -79,6 +83,20 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         } else {
             self.connectWithLinkedInBtn.isEnabled = true
         }
+    }
+    
+    @objc func createExperiencePage (_ sender: UIBarButtonItem){
+        let viewController = CreateExperiencePage()
+        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
+            barButtonSystemItem: .cancel, target: self, action: #selector(didCancelAdd(_:)))
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
+        
+    }
+    
+    @objc func didCancelAdd(_ sender: UIBarButtonItem){
+        dismiss(animated: true)
     }
     
     private func getFollowingUsers(){
@@ -271,9 +289,7 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.userName.textAlignment = .center
         self.userName.numberOfLines = 0
         self.userName.sizeToFit()
-        
-        let stackView = UIStackView()
-        
+                
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .equalSpacing
@@ -545,10 +561,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.performSegue(withIdentifier: "ShowFollowedMembers", sender: sender)
     }
     
-    @objc func didCancelAdd(_ sender: UIBarButtonItem){
-        dismiss(animated: true)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.userName.text = UserDefaults.standard.string(forKey: "memberUserName")
@@ -560,7 +572,19 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             self.connectWithLinkedInTitle.removeFromSuperview()
             self.connectWithLinkedInTextField.removeFromSuperview()
             self.connectWithLinkedInBtn.removeFromSuperview()
+            
+            self.addCreateExperinceButtonToView()
+            
         }
+    }
+    
+    func addCreateExperinceButtonToView(){
+        // create ExperienceBtn
+        self.addExperience.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.addExperience)
+        self.addExperience.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 20).isActive = true
+        self.addExperience.widthAnchor.constraint(equalTo: self.stackView.widthAnchor).isActive = true
+        self.addExperience.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
     
     // LINKEDIN LOGIN
@@ -809,6 +833,8 @@ extension ProfileViewController: WKNavigationDelegate {
                             self.connectWithLinkedInTitle.removeFromSuperview()
                             self.connectWithLinkedInTextField.removeFromSuperview()
                             self.connectWithLinkedInBtn.removeFromSuperview()
+                            
+                            self.addCreateExperinceButtonToView()
                         } else {
                             let alert = UIAlertController(title: "Oops!", message: "Mails don't match", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in

@@ -90,7 +90,7 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
         self.performSegue(withIdentifier: "OpenSettings", sender: self)
     }
     
-    @objc private func showConnectedUserDetailButton(_ sender: Any){
+    func showConnectedUserDetailButton(){
         self.memberUserDetailBtn.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(self.memberUserDetailBtn)
         self.memberUserDetailBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85).isActive = true
