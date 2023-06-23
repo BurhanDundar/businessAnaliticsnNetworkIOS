@@ -64,6 +64,11 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.getFollowingMembers()
         self.getFollowedMembers()
         
+        self.followingUsersView.isUserInteractionEnabled = false
+        self.followingCompaniesView.isUserInteractionEnabled = false
+        self.followingMembersView.isUserInteractionEnabled = false
+        self.followedMembersView.isUserInteractionEnabled = false
+        
         let settingsBarButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(openSettings))
         navigationItem.rightBarButtonItem = settingsBarButton
         self.connectWithLinkedInBtn.addTarget(self, action: #selector(linkedInAuthVC), for: .touchUpInside)

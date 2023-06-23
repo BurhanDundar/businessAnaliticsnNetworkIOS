@@ -39,6 +39,7 @@
 		22262B2D2A27947000B7DBCF /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2C2A27947000B7DBCF /* Company.swift */; };
 		22758A882A20EC000028DD17 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22758A872A20EC000028DD17 /* APIRequest.swift */; };
 		22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22973E462A34B1BE00BBFB5F /* Favourite.swift */; };
+		229E0FD92A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E0FD82A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift */; };
 		22BF6E192A2A199200D766E2 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E182A2A199200D766E2 /* Member.swift */; };
 		22BF6E1B2A2A9CAE00D766E2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */; };
 		22BF6E1E2A2B1FE100D766E2 /* SkillListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E1D2A2B1FE100D766E2 /* SkillListViewController.swift */; };
@@ -109,6 +110,7 @@
 		22262B2C2A27947000B7DBCF /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		22758A872A20EC000028DD17 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		22973E462A34B1BE00BBFB5F /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
+		229E0FD82A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyExperienceCountResponseModel.swift; sourceTree = "<group>"; };
 		22BF6E182A2A199200D766E2 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		22BF6E1D2A2B1FE100D766E2 /* SkillListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillListViewController.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				22097A862A3C6A880007EC10 /* LinkedInProfileModel.swift */,
 				2211F7212A41C3350047103F /* ConnectAccountResponse.swift */,
 				2211F7272A425C830047103F /* ResponseModel.swift */,
+				229E0FD82A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -533,6 +536,7 @@
 				220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */,
 				220F0B682A390C36004E214C /* FollowingUserViewController.swift in Sources */,
 				E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */,
+				229E0FD92A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift in Sources */,
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,
