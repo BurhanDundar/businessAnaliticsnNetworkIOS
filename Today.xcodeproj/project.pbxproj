@@ -29,6 +29,7 @@
 		2211F7222A41C3350047103F /* ConnectAccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7212A41C3350047103F /* ConnectAccountResponse.swift */; };
 		2211F7262A4244B20047103F /* CreateExperiencePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7252A4244B20047103F /* CreateExperiencePage.swift */; };
 		2211F7282A425C830047103F /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7272A425C830047103F /* ResponseModel.swift */; };
+		221D6EEF2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D6EEE2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift */; };
 		22262B1C2A27423700B7DBCF /* Experience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1B2A27423700B7DBCF /* Experience.swift */; };
 		22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B1E2A27481600B7DBCF /* SubExperience.swift */; };
 		22262B212A27491300B7DBCF /* Education.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B202A27491300B7DBCF /* Education.swift */; };
@@ -100,6 +101,7 @@
 		2211F7212A41C3350047103F /* ConnectAccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAccountResponse.swift; sourceTree = "<group>"; };
 		2211F7252A4244B20047103F /* CreateExperiencePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExperiencePage.swift; sourceTree = "<group>"; };
 		2211F7272A425C830047103F /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
+		221D6EEE2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyExperienceCountResponseModel.swift; sourceTree = "<group>"; };
 		22262B1B2A27423700B7DBCF /* Experience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Experience.swift; sourceTree = "<group>"; };
 		22262B1E2A27481600B7DBCF /* SubExperience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubExperience.swift; sourceTree = "<group>"; };
 		22262B202A27491300B7DBCF /* Education.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Education.swift; sourceTree = "<group>"; };
@@ -342,7 +344,8 @@
 				22097A862A3C6A880007EC10 /* LinkedInProfileModel.swift */,
 				2211F7212A41C3350047103F /* ConnectAccountResponse.swift */,
 				2211F7272A425C830047103F /* ResponseModel.swift */,
-				229E0FD82A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift */,
+				221D6EEE2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift */,
+
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -536,7 +539,7 @@
 				220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */,
 				220F0B682A390C36004E214C /* FollowingUserViewController.swift in Sources */,
 				E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */,
-				229E0FD92A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift in Sources */,
+				221D6EEF2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift in Sources */,
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,

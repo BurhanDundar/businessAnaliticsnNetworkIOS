@@ -109,8 +109,8 @@ class Login: UIViewController {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/auth/login"
             let params = [
-                "email": "serifeturksever@gmail.com", // self.email.text
-                "password": "123456" // self.password.text
+                "email": self.email.text, // self.email.text
+                "password": self.password.text // self.password.text
             ]
         
             guard let url = URL(string: stringURL) else { return }
@@ -140,7 +140,7 @@ class Login: UIViewController {
                         
                         let defaults = UserDefaults.standard
                         defaults.set(loginRes._id, forKey: "memberId")
-                        defaults.set("serifeturksever@gmail.com", forKey: "memberEmail")
+                        defaults.set(self.email.text, forKey: "memberEmail")
                         defaults.set(loginRes.fullname, forKey: "memberFullName")
                         defaults.set(loginRes.username, forKey: "memberUserName")
                         
