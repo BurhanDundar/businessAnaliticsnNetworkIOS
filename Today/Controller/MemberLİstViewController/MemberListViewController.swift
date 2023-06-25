@@ -24,9 +24,6 @@ class MemberListViewController: UICollectionViewController {
             var memberFullname: String = ""
             var memberUsername: String = ""
     
-            
-            
-        
             // search bar
             var searchController: UISearchController!
             let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
@@ -39,6 +36,7 @@ class MemberListViewController: UICollectionViewController {
             }
     
              override func viewDidLoad() {
+                 self.showSpinner()
                  let defaults = UserDefaults.standard
                  self.memberId = defaults.string(forKey: "memberId") ?? ""
                  self.memberFullname = defaults.string(forKey: "memberFullName") ?? ""
@@ -229,6 +227,7 @@ class MemberListViewController: UICollectionViewController {
                         self.filteredMembers = []
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: self.members)
+                        self.removeSpinner()
                     }
                 } catch {
                     print("Error Occured!")
@@ -337,6 +336,7 @@ extension MemberListViewController {
                         self.updateSnapshot(for: self.members)
                     }
                     self.listStyleSegmentedControl.isEnabled = true
+                    self.removeSpinner()
                     return members
                 } catch {
                     throw GHError.invalidData
@@ -377,6 +377,7 @@ extension MemberListViewController {
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredMembers)
                 self.listStyleSegmentedControl.isEnabled = true
+                self.removeSpinner()
                 return response
             } catch {
                 throw GHError.invalidData

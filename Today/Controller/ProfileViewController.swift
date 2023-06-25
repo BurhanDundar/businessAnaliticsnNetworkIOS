@@ -45,7 +45,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     var connectWithLinkedInTextField = CustomTextField(fieldType: .linkedinProfileLink)
     var connectWithLinkedInBtn = LinkedInButton(title: "Connect account with linkedIn", image: UIImage(named: "linkedin_icon")!)
     
-    var addExperience = CustomButton(title: "Deneyim oluştur" ,fontSize: .med)
     var stackView = UIStackView()
     var webView = WKWebView()
     
@@ -55,6 +54,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     var linkedInEmail = ""
     var linkedInProfilePicURL = ""
     var linkedInAccessToken = ""
+    
+    var settingsBarButton: UIBarButtonItem!
+    var createExperienceBarButton: UIBarButtonItem!
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -69,12 +71,14 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.followingMembersView.isUserInteractionEnabled = false
         self.followedMembersView.isUserInteractionEnabled = false
         
-        let settingsBarButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(openSettings))
-        navigationItem.rightBarButtonItem = settingsBarButton
+        self.createExperienceBarButton = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(createExperiencePage))
+        self.settingsBarButton = UIBarButtonItem(image: UIImage(systemName: "gearshape"), style: .plain, target: self, action: #selector(openSettings))
+        
+        navigationItem.rightBarButtonItems = [settingsBarButton, createExperienceBarButton]
+        self.createExperienceBarButton.isEnabled = false
         self.connectWithLinkedInBtn.addTarget(self, action: #selector(linkedInAuthVC), for: .touchUpInside)
         self.connectWithLinkedInTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         self.connectWithLinkedInBtn.isEnabled = false
-        self.addExperience.addTarget(self, action: #selector(createExperiencePage), for: .touchUpInside)
         self.setupUI()
     }
     
@@ -573,18 +577,9 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             self.connectWithLinkedInTextField.removeFromSuperview()
             self.connectWithLinkedInBtn.removeFromSuperview()
             
-            self.addCreateExperinceButtonToView()
+            self.createExperienceBarButton.isEnabled = true
             
         }
-    }
-    
-    func addCreateExperinceButtonToView(){
-        // create ExperienceBtn
-        self.addExperience.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(self.addExperience)
-        self.addExperience.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 20).isActive = true
-        self.addExperience.widthAnchor.constraint(equalTo: self.stackView.widthAnchor).isActive = true
-        self.addExperience.heightAnchor.constraint(equalToConstant: 55).isActive = true
     }
     
     // LINKEDIN LOGIN
@@ -816,7 +811,7 @@ extension ProfileViewController: WKNavigationDelegate {
                             self.connectWithLinkedInTextField.removeFromSuperview()
                             self.connectWithLinkedInBtn.removeFromSuperview()
                             
-                            self.addCreateExperinceButtonToView()
+                            self.createExperienceBarButton.isEnabled = true
                         } else {
                             let alert = UIAlertController(title: "Oops!", message: "Mails don't match", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in

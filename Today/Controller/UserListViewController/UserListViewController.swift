@@ -35,9 +35,9 @@ class UserListViewController: UICollectionViewController {
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
              self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
-             
-                          
              view.backgroundColor = .systemBackground //.white
+             
+             self.showSpinner()
              
              //self.getUsers()
              navigationItem.title = "Members"
@@ -185,6 +185,7 @@ class UserListViewController: UICollectionViewController {
                     self.filteredUsers = []
                     self.collectionView.reloadData()
                     self.updateSnapshot(for: self.users)
+                    self.removeSpinner()
                 }
             } catch {
                 print("Error Occured!")
@@ -226,6 +227,7 @@ class UserListViewController: UICollectionViewController {
                         self.filteredUsers = []
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: companyUsers)
+                        self.removeSpinner()
                     }
                 } catch {
                     print("Error Occured!")
@@ -283,6 +285,7 @@ class UserListViewController: UICollectionViewController {
         self.filteredUsers = [] //self.specialFilterUsers
         self.collectionView.reloadData()
         self.updateSnapshot(for: self.specialFilterUsers)
+        self.removeSpinner()
     }
 }
 
@@ -421,6 +424,7 @@ extension UserListViewController {
                         self.updateSnapshot(for: self.users)
                     }
                     self.listStyleSegmentedControl.isEnabled = true
+                    self.removeSpinner()
                     return users // burda ne dönmeli emin değilim bakarsın sonra
                 } catch {
                     throw GHError.invalidData
@@ -461,6 +465,7 @@ extension UserListViewController {
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredUsers)
                 self.listStyleSegmentedControl.isEnabled = true
+                self.removeSpinner()
                 return response
             } catch {
                 throw GHError.invalidData
