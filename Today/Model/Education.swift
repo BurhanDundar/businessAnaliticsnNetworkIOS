@@ -12,7 +12,8 @@ struct Education: Identifiable, Codable {
     var id: String? { _id }
     var company_id: String
     var user_id: String
-    var department: String?
+    var establishment: String?
+//    var department: String?
     var degree: String?
     var startDate: String?
     var endDate: String?

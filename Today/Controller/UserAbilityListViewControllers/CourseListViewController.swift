@@ -52,6 +52,7 @@ class CourseListViewController: UICollectionViewController {
                  
                  var contentConfiguration = cell.defaultContentConfiguration()
                  contentConfiguration.text = course.title
+                 contentConfiguration.secondaryText = course.company_name ?? ""
                  cell.contentConfiguration = contentConfiguration
              }
 

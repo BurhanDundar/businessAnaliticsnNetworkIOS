@@ -51,8 +51,8 @@ class EducationListViewController: UICollectionViewController {
                  education = self.filteredEducations.count > 0 ? self.filteredEducations[indexPath.item] : self.educations[indexPath.item]
                  
                  var contentConfiguration = cell.defaultContentConfiguration()
-                 contentConfiguration.text = education.department
-                 contentConfiguration.secondaryText = education.degree
+                 contentConfiguration.text = education.degree ?? ""
+                 contentConfiguration.secondaryText = education.establishment ?? ""
                  cell.contentConfiguration = contentConfiguration
              }
 
@@ -96,7 +96,7 @@ extension EducationListViewController: UISearchBarDelegate {
             updateSnapshot(for: self.educations)
         } else {
             isSearching = true
-            let allFilteredEducations = Education.sampleData.filter({ $0.department!.lowercased().contains(searchText.lowercased()) })
+            let allFilteredEducations = Education.sampleData.filter({ $0.degree!.lowercased().contains(searchText.lowercased()) })
             self.filteredEducations = allFilteredEducations
             updateSnapshot(for: allFilteredEducations)
         }

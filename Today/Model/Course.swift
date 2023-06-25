@@ -12,6 +12,7 @@ struct Course: Identifiable, Codable {
     var id: String? { _id }
     var user_id: String?
     var company_id: String?
+    var company_name: String?
     var title: String
 }
 

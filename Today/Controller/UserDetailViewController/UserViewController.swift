@@ -393,8 +393,6 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                                 self.educationsBtn.widthAnchor.constraint(equalToConstant: 150)
                             ])
                             self.buttonCounter += 1
-                            /*let defaults = UserDefaults.standard
-                            defaults.set(self.educations, forKey: "userEducations")*/
                             
                             let appDelegate = UIApplication.shared.delegate as! AppDelegate
                             appDelegate.userEducations = self.educations
