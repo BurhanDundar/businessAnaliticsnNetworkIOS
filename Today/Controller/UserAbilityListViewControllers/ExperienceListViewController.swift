@@ -7,9 +7,14 @@
 
 import UIKit
 
+class UpdateExperienceUIButton: UIButton {
+    var experienceId: String?
+}
+
 class ExperienceListViewController: UIViewController {
         var stackView = UIStackView()
         var scrollView = UIScrollView(frame: UIScreen.main.bounds)
+    
     
         var experiences: [Experience]
         init(experiences: [Experience]) {
@@ -35,15 +40,6 @@ class ExperienceListViewController: UIViewController {
                          self.divider()
                      }
                      
-                     var experienceNameTxt = UILabel()
-                     experienceNameTxt.translatesAutoresizingMaskIntoConstraints = false
-                     experienceNameTxt.text = experience.name ?? ""
-                     experienceNameTxt.font = UIFont.boldSystemFont(ofSize: 18)
-                     experienceNameTxt.numberOfLines = 0
-                     experienceNameTxt.sizeToFit()
-                     experienceNameTxt.textColor = .systemBlue
-                     self.stackView.addArrangedSubview(experienceNameTxt)
-                     
                      var experienceEstablishmentTxt = UILabel()
                      experienceEstablishmentTxt.translatesAutoresizingMaskIntoConstraints = false
                      experienceEstablishmentTxt.text = experience.establishment ?? ""
@@ -52,6 +48,16 @@ class ExperienceListViewController: UIViewController {
                      experienceEstablishmentTxt.sizeToFit()
                      experienceEstablishmentTxt.textAlignment = .center
                      self.stackView.addArrangedSubview(experienceEstablishmentTxt)
+                     
+                     var experienceNameTxt = UILabel()
+                     experienceNameTxt.translatesAutoresizingMaskIntoConstraints = false
+                     experienceNameTxt.text = experience.name ?? ""
+                     experienceNameTxt.font = .preferredFont(forTextStyle: .subheadline, compatibleWith: .none)
+                     experienceNameTxt.numberOfLines = 0
+                     experienceNameTxt.textColor = .systemBlue
+                     experienceNameTxt.sizeToFit()
+                     self.stackView.addArrangedSubview(experienceNameTxt)
+                     
                      
                      if let date = experience.range {
                          if date.contains("·"){
@@ -75,6 +81,43 @@ class ExperienceListViewController: UIViewController {
                              self.stackView.addArrangedSubview(experienceDate)
                          }
                      }
+                     
+                     let editDeleteStackView = UIStackView()
+                     
+                     let editButton = UpdateExperienceUIButton()
+                     let deleteButton = UpdateExperienceUIButton()
+                     
+                     editButton.backgroundColor = .systemBlue
+                     editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+                     editButton.tintColor = .white
+                     editButton.isUserInteractionEnabled = true
+                     editButton.addTarget(self, action: #selector(editExperience), for: .touchUpInside)
+                     
+                     deleteButton.backgroundColor = .systemRed
+                     deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+                     deleteButton.tintColor = .white
+                     deleteButton.isUserInteractionEnabled = true
+                     deleteButton.addTarget(self, action: #selector(deleteExperience), for: .touchUpInside)
+
+                     
+                     editDeleteStackView.axis = .horizontal
+                     editDeleteStackView.alignment = .fill
+                     editDeleteStackView.distribution = .fillEqually
+                     editDeleteStackView.spacing = 10
+                     editDeleteStackView.isUserInteractionEnabled = true
+
+
+                
+                     editDeleteStackView.translatesAutoresizingMaskIntoConstraints = false
+                     editButton.translatesAutoresizingMaskIntoConstraints = false
+                     deleteButton.translatesAutoresizingMaskIntoConstraints = false
+                     
+                     
+                     editDeleteStackView.addArrangedSubview(editButton)
+                     editDeleteStackView.addArrangedSubview(deleteButton)
+                     self.stackView.addArrangedSubview(editDeleteStackView)
+
+                     
                      self.seperator()
                  } else { // experience has subExperiences array
                      
@@ -138,6 +181,14 @@ class ExperienceListViewController: UIViewController {
             seperator.widthAnchor.constraint(equalTo: self.stackView.widthAnchor).isActive = true
     }
     
+    @objc func editExperience(){
+        print("Edit")
+    }
+    
+    @objc func deleteExperience(){
+        print("Delete")
+    }
+    
         private func setupUI(){
             self.view.addSubview(self.scrollView)
             
@@ -146,13 +197,15 @@ class ExperienceListViewController: UIViewController {
             self.scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
             self.scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
             self.scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
-            
+            self.scrollView.isUserInteractionEnabled = true
+
             self.scrollView.addSubview(self.stackView)
             
             self.stackView.axis = .vertical
             self.stackView.alignment = .center
             self.stackView.spacing = 10
-            
+                        
+            self.stackView.isUserInteractionEnabled = true
             self.stackView.leadingAnchor.constraint(equalTo: self.scrollView.leadingAnchor).isActive = true
             self.stackView.trailingAnchor.constraint(equalTo: self.scrollView.trailingAnchor).isActive = true
             self.stackView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 60).isActive = true
