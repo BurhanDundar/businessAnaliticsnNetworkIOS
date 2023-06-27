@@ -91,12 +91,16 @@ class ExperienceListViewController: UIViewController {
                      editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
                      editButton.tintColor = .white
                      editButton.isUserInteractionEnabled = true
+                     
+                     editButton.experienceId = experience.id
                      editButton.addTarget(self, action: #selector(editExperience), for: .touchUpInside)
                      
                      deleteButton.backgroundColor = .systemRed
                      deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
                      deleteButton.tintColor = .white
                      deleteButton.isUserInteractionEnabled = true
+                     
+                     deleteButton.experienceId = experience.id
                      deleteButton.addTarget(self, action: #selector(deleteExperience), for: .touchUpInside)
 
                      
@@ -181,12 +185,12 @@ class ExperienceListViewController: UIViewController {
             seperator.widthAnchor.constraint(equalTo: self.stackView.widthAnchor).isActive = true
     }
     
-    @objc func editExperience(){
-        print("Edit")
+    @objc func editExperience(_ sender: UpdateExperienceUIButton){
+        print(sender.experienceId ?? "")
     }
     
-    @objc func deleteExperience(){
-        print("Delete")
+    @objc func deleteExperience(_ sender: UpdateExperienceUIButton){
+        print(sender.experienceId ?? "")
     }
     
         private func setupUI(){
