@@ -59,13 +59,19 @@ class ExperienceListViewController: UIViewController {
         return experiences[index]
     }
     
+    func updateExperience(_ experience: Experience) {
+            let index = self.experiences.indexOfExperience(withId: experience.id)
+            self.experiences[index] = experience
+            self.drawExperiencesScreen()
+       }
+    
     @objc func editExperience(_ sender: UpdateExperienceUIButton){
         let experience = experience(withId: sender.experienceId ?? "")
         self.updateExperiencePage(with: experience)
     }
     
     func updateExperiencePage (with experience: Experience){
-        let viewController = UpdateExperiencePage(paramExperience: experience)
+        let viewController = UpdateExperiencePage(paramExperience: experience, paramExperiences: self.experiences, parentView: self)
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel, target: self, action: #selector(didCancelAdd(_:)))
         let navigationController = UINavigationController(rootViewController: viewController)
@@ -175,7 +181,7 @@ class ExperienceListViewController: UIViewController {
             self.stackView.translatesAutoresizingMaskIntoConstraints = false
         }
     
-    private func drawExperiencesScreen(){
+    func drawExperiencesScreen(){
         self.stackView.subviews.forEach({ $0.removeFromSuperview() })
         var elementConter = 0
         for experience in self.experiences {

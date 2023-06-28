@@ -37,6 +37,7 @@ class MemberListViewController: UICollectionViewController {
     
              override func viewDidLoad() {
                  self.showSpinner()
+                 self.listStyleSegmentedControl.isEnabled = false
                  let defaults = UserDefaults.standard
                  self.memberId = defaults.string(forKey: "memberId") ?? ""
                  self.memberFullname = defaults.string(forKey: "memberFullName") ?? ""
@@ -227,7 +228,9 @@ class MemberListViewController: UICollectionViewController {
                         self.filteredMembers = []
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: self.members)
+                        
                         self.removeSpinner()
+                        self.listStyleSegmentedControl.isEnabled = true
                     }
                 } catch {
                     print("Error Occured!")

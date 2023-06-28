@@ -19,9 +19,13 @@ class UpdateExperiencePage: UIViewController {
     var footnote: UILabel!
     var titleTxt: UILabel!
     
+    var parentView: ExperienceListViewController!
     var paramExperience: Experience!
-    init(paramExperience: Experience) {
+    var paramExperiences: [Experience]!
+    init(paramExperience: Experience, paramExperiences: [Experience], parentView: ExperienceListViewController) {
         self.paramExperience = paramExperience
+        self.paramExperiences = paramExperiences
+        self.parentView = parentView
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -34,7 +38,6 @@ class UpdateExperiencePage: UIViewController {
     let memberFullName = UserDefaults.standard.string(forKey: "memberFullName") ?? ""
     let memberUserName = UserDefaults.standard.string(forKey: "memberUserName") ?? ""
     let memberUserId = UserDefaults.standard.string(forKey: "memberUserId") ?? ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = UIView()
@@ -119,14 +122,17 @@ class UpdateExperiencePage: UIViewController {
         ])
     }
     
+    func updateExperience(_ experience: Experience) {
+            let index = self.paramExperiences.indexOfExperience(withId: paramExperience.id)
+            self.paramExperiences[index] = experience
+       }
+    
     @objc private func updateExperienceRequest(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stringURL = "\(appDelegate.APIURL)/experience/createExperience"
+        let stringURL = "\(appDelegate.APIURL)/experience/update"
 
             let params = [
-                "memberFullname": memberFullName,
-                "memberId": memberId,
-                "memberUserId": memberUserId,
+                "experienceId": self.paramExperience.id,
                 "experienceName": self.experienceName.text,
                 "experienceCompany": self.experienceCompany.text,
                 "experienceDate": self.experienceDate.text,
@@ -153,16 +159,25 @@ class UpdateExperiencePage: UIViewController {
                     let createExperienceResponse = try decoder.decode(ResponseModel.self, from: data)
                     DispatchQueue.main.async {
                         if(createExperienceResponse.status == "ok") {
-                            let alert = UIAlertController(title: "işlem Başarılı", message: "Experience başarıyla oluşturuldu!", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "işlem Başarılı", message: "Experience başarıyla güncellendi!", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                                
+                                self.paramExperience.name = self.experienceName.text ?? ""
+                                self.paramExperience.establishment = self.experienceCompany.text ?? ""
+                                self.paramExperience.range = self.experienceDate.text ?? ""
+                                self.paramExperience.location = self.experienceLocation.text ?? ""
+                                
+                                self.parentView.updateExperience(self.paramExperience)
+                                
                                 self.dismiss(animated: true, completion: nil)
+                                
                             }))
                             self.present(alert, animated: true, completion: nil)
                         } else {
                             DispatchQueue.main.async {
-                                let alert = UIAlertController(title: "Experience Eklenemedi!", message: "Experience eklenirken bir hata oluştu", preferredStyle: .alert)
+                                let alert = UIAlertController(title: "Experience güncellenemedi!", message: "Experience güncellenirken bir hata oluştu", preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-                                    NSLog("The \"OK\" alert occured.")
+                                    NSLog("The \"Error\" alert occured.")
                                 }))
                                 self.present(alert, animated: true, completion: nil)
                             }
@@ -170,7 +185,7 @@ class UpdateExperiencePage: UIViewController {
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "Experience Eklenemedi!", message: "Experience eklenirken bir hata oluştu", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Experience güncellenemedi!", message: "Experience güncellenirken bir hata oluştu", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
                             NSLog("The \"OK\" alert occured.")
                         }))

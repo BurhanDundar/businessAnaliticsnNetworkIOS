@@ -38,6 +38,7 @@ class UserListViewController: UICollectionViewController {
              view.backgroundColor = .systemBackground //.white
              
              self.showSpinner()
+             self.listStyleSegmentedControl.isEnabled = true
              
              //self.getUsers()
              navigationItem.title = "Members"
@@ -185,7 +186,9 @@ class UserListViewController: UICollectionViewController {
                     self.filteredUsers = []
                     self.collectionView.reloadData()
                     self.updateSnapshot(for: self.users)
+                    
                     self.removeSpinner()
+                    self.listStyleSegmentedControl.isEnabled = true
                 }
             } catch {
                 print("Error Occured!")
@@ -227,7 +230,9 @@ class UserListViewController: UICollectionViewController {
                         self.filteredUsers = []
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: companyUsers)
+                        
                         self.removeSpinner()
+                        self.listStyleSegmentedControl.isEnabled = true
                     }
                 } catch {
                     print("Error Occured!")
@@ -285,7 +290,9 @@ class UserListViewController: UICollectionViewController {
         self.filteredUsers = [] //self.specialFilterUsers
         self.collectionView.reloadData()
         self.updateSnapshot(for: self.specialFilterUsers)
+        
         self.removeSpinner()
+        self.listStyleSegmentedControl.isEnabled = true
     }
 }
 

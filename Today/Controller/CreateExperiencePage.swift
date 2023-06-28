@@ -129,6 +129,7 @@ class CreateExperiencePage: UIViewController {
     }
     
     @objc private func createExperienceRequest(){
+        self.showSpinner()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/experience/createExperience"
 
@@ -162,6 +163,7 @@ class CreateExperiencePage: UIViewController {
                     let decoder = JSONDecoder()
                     let createExperienceResponse = try decoder.decode(ResponseModel.self, from: data)
                     DispatchQueue.main.async {
+                        self.removeSpinner()
                         if(createExperienceResponse.status == "ok") {
                             let alert = UIAlertController(title: "işlem Başarılı", message: "Experience başarıyla oluşturuldu!", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
