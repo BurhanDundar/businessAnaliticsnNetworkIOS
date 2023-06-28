@@ -101,7 +101,6 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
-        
     }
     
     @objc func didCancelAdd(_ sender: UIBarButtonItem){

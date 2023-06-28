@@ -39,6 +39,7 @@
 		22262B2B2A27943800B7DBCF /* CompanyListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2A2A27943800B7DBCF /* CompanyListViewController+Action.swift */; };
 		22262B2D2A27947000B7DBCF /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2C2A27947000B7DBCF /* Company.swift */; };
 		22758A882A20EC000028DD17 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22758A872A20EC000028DD17 /* APIRequest.swift */; };
+		2286619E2A4C270B00C7F506 /* UpdateExperiencePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */; };
 		22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22973E462A34B1BE00BBFB5F /* Favourite.swift */; };
 		22BF6E192A2A199200D766E2 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E182A2A199200D766E2 /* Member.swift */; };
 		22BF6E1B2A2A9CAE00D766E2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */; };
@@ -111,6 +112,7 @@
 		22262B2A2A27943800B7DBCF /* CompanyListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanyListViewController+Action.swift"; sourceTree = "<group>"; };
 		22262B2C2A27947000B7DBCF /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		22758A872A20EC000028DD17 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExperiencePage.swift; sourceTree = "<group>"; };
 		22973E462A34B1BE00BBFB5F /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 		22BF6E182A2A199200D766E2 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				E92924542A31F2C900049820 /* ProfileViewController.swift */,
 				22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */,
 				2211F7252A4244B20047103F /* CreateExperiencePage.swift */,
+				2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -528,6 +531,7 @@
 				220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */,
 				22097A822A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift in Sources */,
 				220F0B642A390C0C004E214C /* FollowingMemberViewController.swift in Sources */,
+				2286619E2A4C270B00C7F506 /* UpdateExperiencePage.swift in Sources */,
 				22097A8D2A3C6C820007EC10 /* LinkedInConstants.swift in Sources */,
 				DBCECF9F29B37399009373FE /* CompanyViewController.swift in Sources */,
 				DBE888D029B2B68700E5B6F9 /* UserFilterViewController.swift in Sources */,

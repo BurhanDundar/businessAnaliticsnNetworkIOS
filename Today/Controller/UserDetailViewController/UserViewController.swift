@@ -61,14 +61,18 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         return iv
     }()
     
-    override func loadView() {
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // call functions at the beggining of launch
         self.getUserSkills()
         self.getUserExperiences()
         self.getUserEducations()
         self.getUserCourses()
         self.getUserLanguages()
+    }
+    
+    override func loadView() {
+        // self.getUserSkills gibi istekler burdaydı
         
         self.skillsBtn.addTarget(self, action: #selector(showUserSkills), for: .touchUpInside)
         self.experiencesBtn.addTarget(self, action: #selector(showUserExperiences), for: .touchUpInside)
