@@ -230,7 +230,7 @@ class MemberListViewController: UICollectionViewController {
                         self.updateSnapshot(for: self.members)
                         
                         self.removeSpinner()
-                        self.listStyleSegmentedControl.isEnabled = true
+                        self.listStyleSegmentedControl.isEnabled = true   
                     }
                 } catch {
                     print("Error Occured!")
