@@ -108,9 +108,11 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         
         
         systemImageName = self.isUserBookmarked ? "bookmark.fill" :  "bookmark"
-        
         let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
-        navigationItem.rightBarButtonItem = bookmarkBarButton
+        
+        let notifyButton = UIBarButtonItem(image: UIImage(systemName: "bell.and.waves.left.and.right"), style: .plain, target: self, action: #selector(openNotifySheet))
+        
+        navigationItem.rightBarButtonItems = [bookmarkBarButton, notifyButton]
         self.stackView.addArrangedSubview(fetchedImageView)
         
         loadFetchedImage(for: user.image ?? "")
@@ -180,6 +182,14 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                 ])
         
 
+    }
+    
+    @objc private func openNotifySheet(){
+            let viewController = NotifyMeSheet(full_name: self.user.full_name)
+            if let presentationController = viewController.presentationController as? UISheetPresentationController {
+                    presentationController.detents = [.medium()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+                }
+            self.present(viewController, animated: true)
     }
     
     override func viewDidLoad() {
