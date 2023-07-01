@@ -15,10 +15,12 @@ class ExperienceListViewController: UIViewController {
         var stackView = UIStackView()
         var scrollView = UIScrollView(frame: UIScreen.main.bounds)
     
-    
+        let memberUserId = UserDefaults.standard.string(forKey: "memberUserId") ?? ""
+        var userId: String
         var experiences: [Experience]
-        init(experiences: [Experience]) {
+        init(experiences: [Experience], userId: String) {
             self.experiences = experiences
+            self.userId = userId
             super.init(nibName: nil, bundle: nil)
         }
     
@@ -232,44 +234,46 @@ class ExperienceListViewController: UIViewController {
                     }
                 }
                 
-                let editDeleteStackView = UIStackView()
-                
-                let editButton = UpdateExperienceUIButton()
-                let deleteButton = UpdateExperienceUIButton()
-                
-                editButton.backgroundColor = .systemBlue
-                editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
-                editButton.tintColor = .white
-                editButton.isUserInteractionEnabled = true
-                
-                editButton.experienceId = experience.id
-                editButton.addTarget(self, action: #selector(editExperience), for: .touchUpInside)
-                
-                deleteButton.backgroundColor = .systemRed
-                deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
-                deleteButton.tintColor = .white
-                deleteButton.isUserInteractionEnabled = true
-                
-                deleteButton.experienceId = experience.id
-                deleteButton.addTarget(self, action: #selector(deleteExperience), for: .touchUpInside)
+                if self.userId == self.memberUserId && experience.external == true {
+                    let editDeleteStackView = UIStackView()
+                    
+                    let editButton = UpdateExperienceUIButton()
+                    let deleteButton = UpdateExperienceUIButton()
+                    
+                    editButton.backgroundColor = .systemBlue
+                    editButton.setImage(UIImage(systemName: "pencil"), for: .normal)
+                    editButton.tintColor = .white
+                    editButton.isUserInteractionEnabled = true
+                    
+                    editButton.experienceId = experience.id
+                    editButton.addTarget(self, action: #selector(editExperience), for: .touchUpInside)
+                    
+                    deleteButton.backgroundColor = .systemRed
+                    deleteButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+                    deleteButton.tintColor = .white
+                    deleteButton.isUserInteractionEnabled = true
+                    
+                    deleteButton.experienceId = experience.id
+                    deleteButton.addTarget(self, action: #selector(deleteExperience), for: .touchUpInside)
 
-                
-                editDeleteStackView.axis = .horizontal
-                editDeleteStackView.alignment = .fill
-                editDeleteStackView.distribution = .fillEqually
-                editDeleteStackView.spacing = 10
-                editDeleteStackView.isUserInteractionEnabled = true
+                    
+                    editDeleteStackView.axis = .horizontal
+                    editDeleteStackView.alignment = .fill
+                    editDeleteStackView.distribution = .fillEqually
+                    editDeleteStackView.spacing = 10
+                    editDeleteStackView.isUserInteractionEnabled = true
 
 
-           
-                editDeleteStackView.translatesAutoresizingMaskIntoConstraints = false
-                editButton.translatesAutoresizingMaskIntoConstraints = false
-                deleteButton.translatesAutoresizingMaskIntoConstraints = false
-                
-                
-                editDeleteStackView.addArrangedSubview(editButton)
-                editDeleteStackView.addArrangedSubview(deleteButton)
-                self.stackView.addArrangedSubview(editDeleteStackView)
+               
+                    editDeleteStackView.translatesAutoresizingMaskIntoConstraints = false
+                    editButton.translatesAutoresizingMaskIntoConstraints = false
+                    deleteButton.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    
+                    editDeleteStackView.addArrangedSubview(editButton)
+                    editDeleteStackView.addArrangedSubview(deleteButton)
+                    self.stackView.addArrangedSubview(editDeleteStackView)
+                }
 
                 
                 self.seperator()

@@ -132,6 +132,12 @@ class MemberListViewController: UICollectionViewController {
                 self.members[index] = member
            }
     
+        @objc func didPressProfileButton (_ sender: UIBarButtonItem){
+            performSegue(withIdentifier: "GoToProfilePage", sender: self)
+            let backBarButtonItem = UIBarButtonItem(title: "Members", style: .plain, target: nil, action: nil)
+                    navigationItem.backBarButtonItem = backBarButtonItem
+        }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if (segue.identifier == "showMemberDetail") {
           let memberVC = segue.destination as! MemberViewController

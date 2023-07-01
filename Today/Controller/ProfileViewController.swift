@@ -45,6 +45,8 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
     var connectWithLinkedInTextField = CustomTextField(fieldType: .linkedinProfileLink)
     var connectWithLinkedInBtn = LinkedInButton(title: "Connect account with linkedIn", image: UIImage(named: "linkedin_icon")!)
     
+    var memberUserDetailBtn = CustomButton(title: "Show User Detail", hasBackground: true, fontSize: .med)
+    
     var stackView = UIStackView()
     var webView = WKWebView()
     
@@ -578,7 +580,28 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
             
             self.createExperienceBarButton.isEnabled = true
             
+            // show user detail if member is an user
+            self.showConnectedUserDetailButton()
+            self.memberUserDetailBtn.addTarget(self, action: #selector(showConnectedUser), for: .touchUpInside)
+            
         }
+    }
+    
+    @objc func showConnectedUser(_ sender: Any){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let userListVC = UserListViewController(collectionViewLayout: UICollectionViewLayout())
+        let user = userListVC.user(withId: self.memberUserId)
+        let isUserNotifiedByMember = appDelegate.memberNotifyMeUsers.contains(user.id!) ? true : false
+        navigationController?.pushViewController(UserViewController(user: user, isUserBookmarked: user.isBookmarked, isNotifiedByMember: isUserNotifiedByMember), animated: true)
+    }
+    
+    func showConnectedUserDetailButton(){
+        self.memberUserDetailBtn.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(self.memberUserDetailBtn)
+        self.memberUserDetailBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85).isActive = true
+        self.memberUserDetailBtn.heightAnchor.constraint(equalToConstant: 55).isActive = true
+        self.memberUserDetailBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        self.memberUserDetailBtn.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 25).isActive = true
     }
     
     // LINKEDIN LOGIN

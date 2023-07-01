@@ -25,7 +25,6 @@
 		220F0B6C2A3926DB004E214C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B6B2A3926DB004E214C /* SettingsViewController.swift */; };
 		220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */; };
 		220F0B762A39A996004E214C /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */; };
-		2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */; };
 		2211F7222A41C3350047103F /* ConnectAccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7212A41C3350047103F /* ConnectAccountResponse.swift */; };
 		2211F7262A4244B20047103F /* CreateExperiencePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7252A4244B20047103F /* CreateExperiencePage.swift */; };
 		2211F7282A425C830047103F /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7272A425C830047103F /* ResponseModel.swift */; };
@@ -70,7 +69,6 @@
 		E929244B2A30A42300049820 /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E929244A2A30A42300049820 /* MemberViewController.swift */; };
 		E929244D2A30A43800049820 /* MemberViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = E929244C2A30A43800049820 /* MemberViewController+Row.swift */; };
 		E92924512A30A48400049820 /* MemberListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924502A30A48400049820 /* MemberListViewController+Action.swift */; };
-		E92924532A30D9F000049820 /* MemberFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924522A30D9F000049820 /* MemberFilterViewController.swift */; };
 		E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924542A31F2C900049820 /* ProfileViewController.swift */; };
 		E92924572A31FDF100049820 /* CompanyViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924562A31FDF100049820 /* CompanyViewController+Row.swift */; };
 		E94E1FE429C8B40100C58B18 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE329C8B40100C58B18 /* Login.swift */; };
@@ -100,7 +98,6 @@
 		220F0B6B2A3926DB004E214C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameViewController.swift; sourceTree = "<group>"; };
 		220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
-		2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFilterViewController.swift; sourceTree = "<group>"; };
 		2211F7212A41C3350047103F /* ConnectAccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAccountResponse.swift; sourceTree = "<group>"; };
 		2211F7252A4244B20047103F /* CreateExperiencePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExperiencePage.swift; sourceTree = "<group>"; };
 		2211F7272A425C830047103F /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
@@ -150,7 +147,6 @@
 		E929244A2A30A42300049820 /* MemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewController.swift; sourceTree = "<group>"; };
 		E929244C2A30A43800049820 /* MemberViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberViewController+Row.swift"; sourceTree = "<group>"; };
 		E92924502A30A48400049820 /* MemberListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberListViewController+Action.swift"; sourceTree = "<group>"; };
-		E92924522A30D9F000049820 /* MemberFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberFilterViewController.swift; sourceTree = "<group>"; };
 		E92924542A31F2C900049820 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E92924562A31FDF100049820 /* CompanyViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanyViewController+Row.swift"; sourceTree = "<group>"; };
 		E94E1FE329C8B40100C58B18 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -409,8 +405,6 @@
 				E94E1FE329C8B40100C58B18 /* Login.swift */,
 				DBE888CF29B2B68700E5B6F9 /* UserFilterViewController.swift */,
 				22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */,
-				2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */,
-				E92924522A30D9F000049820 /* MemberFilterViewController.swift */,
 				E92924542A31F2C900049820 /* ProfileViewController.swift */,
 				22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */,
 				2211F7252A4244B20047103F /* CreateExperiencePage.swift */,
@@ -528,7 +522,6 @@
 				22EF2BDB2A2BE2250078CE12 /* EducationListViewController.swift in Sources */,
 				E92924512A30A48400049820 /* MemberListViewController+Action.swift in Sources */,
 				220F0B662A390C21004E214C /* FollowingCompanyViewController.swift in Sources */,
-				E92924532A30D9F000049820 /* MemberFilterViewController.swift in Sources */,
 				22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */,
 				22758A882A20EC000028DD17 /* APIRequest.swift in Sources */,
 				E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */,
@@ -556,7 +549,6 @@
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,
-				2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */,
 				22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */,
 				22262B2B2A27943800B7DBCF /* CompanyListViewController+Action.swift in Sources */,
 				22262B212A27491300B7DBCF /* Education.swift in Sources */,

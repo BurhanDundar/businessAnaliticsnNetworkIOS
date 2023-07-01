@@ -542,7 +542,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         navigationController?.pushViewController(skillsVC, animated: true)
     }
     @objc private func showUserExperiences(_ Sender: Any){
-        let experiencesVC = ExperienceListViewController(experiences: self.experiences)
+        let experiencesVC = ExperienceListViewController(experiences: self.experiences, userId: self.user.id ?? "")
         navigationController?.pushViewController(experiencesVC, animated: true)
     }
     @objc private func showUserEducations(_ Sender: Any){
