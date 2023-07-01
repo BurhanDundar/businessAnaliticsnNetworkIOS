@@ -22,11 +22,13 @@ class UserListViewController: UICollectionViewController {
         var listStyleSelectedIndex: Int = 0
         var dynamicSearchText: String = ""
         var isUserInBookmarkedArray: Bool = false
+        var isUserNotifiedByMember: Bool = false
     
         var memberId: String = ""
         var memberFullName: String = ""
         var memberUsername: String = ""
         var userFavs: [String] = [String]()
+        var memberNotifyUsers: [String] = [String]()
         var searchController: UISearchController!
     
         let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
@@ -105,7 +107,14 @@ class UserListViewController: UICollectionViewController {
                    customView: UIImageView(image: UIImage(systemName: systemImageName)),
                    placement: .trailing(displayed: .always))
                  
-                 cell.accessories = [.customView(configuration: customAccessory),.disclosureIndicator(displayed: .always)]
+                 self.isUserNotifiedByMember = self.memberNotifyUsers.contains(user.id!) ? true : false
+                 let systemImageName2 = self.isUserNotifiedByMember ? "bell.and.waves.left.and.right.fill" :  "bell.and.waves.left.and.right"
+                 
+                 let customAccessory2 = UICellAccessory.CustomViewConfiguration(
+                   customView: UIImageView(image: UIImage(systemName: systemImageName2)),
+                   placement: .trailing(displayed: .always))
+                 
+                 cell.accessories = [.customView(configuration: customAccessory2),.customView(configuration: customAccessory),.disclosureIndicator(displayed: .always)]
                  cell.contentConfiguration = contentConfiguration
              }
 
@@ -146,7 +155,8 @@ class UserListViewController: UICollectionViewController {
     func pushDetailViewForUser(withId id:User.ID){
         let user = user(withId: id)
         self.isUserInBookmarkedArray = self.userFavs.contains(user.id!) ? true : false
-        let viewController = UserViewController(user: user, isUserBookmarked: self.isUserInBookmarkedArray)
+        self.isUserNotifiedByMember = self.memberNotifyUsers.contains(user.id!) ? true : false
+        let viewController = UserViewController(user: user, isUserBookmarked: self.isUserInBookmarkedArray, isNotifiedByMember: self.isUserNotifiedByMember)
         navigationController?.pushViewController(viewController, animated: true)
      }
 
@@ -284,6 +294,46 @@ class UserListViewController: UICollectionViewController {
             session.resume()
         }
     
+    private func getMemberNotifyUsers(){
+        
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/follow/getMemberNotifyUsers"
+            let params = [
+                "memberId": memberId,
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let memberNotifyUsersArray = try decoder.decode([String].self, from: data)
+                    DispatchQueue.main.async {
+                        self.memberNotifyUsers = memberNotifyUsersArray
+                        appDelegate.memberNotifyMeUsers = self.memberNotifyUsers
+                        self.collectionView.reloadData() // bundan emin değilim
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
     func loadFilteredUsers(){
         self.users = self.specialFilterUsers
         User.sampleData = self.specialFilterUsers
@@ -374,6 +424,7 @@ extension UserListViewController: UISearchBarDelegate {
                 navigationItem.leftBarButtonItem = clearFilter
             }
             self.getMemberFavAsUserIds()
+            self.getMemberNotifyUsers()
         }
     }
     

@@ -40,6 +40,7 @@
 		22262B2D2A27947000B7DBCF /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2C2A27947000B7DBCF /* Company.swift */; };
 		22758A882A20EC000028DD17 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22758A872A20EC000028DD17 /* APIRequest.swift */; };
 		227F1EF42A4DA52800426AD9 /* NotifyMeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F1EF32A4DA52800426AD9 /* NotifyMeSheet.swift */; };
+		227F1EF62A4F91EF00426AD9 /* NotifyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F1EF52A4F91EF00426AD9 /* NotifyResponseModel.swift */; };
 		2286619E2A4C270B00C7F506 /* UpdateExperiencePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */; };
 		22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22973E462A34B1BE00BBFB5F /* Favourite.swift */; };
 		22BF6E192A2A199200D766E2 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E182A2A199200D766E2 /* Member.swift */; };
@@ -114,6 +115,7 @@
 		22262B2C2A27947000B7DBCF /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		22758A872A20EC000028DD17 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
 		227F1EF32A4DA52800426AD9 /* NotifyMeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyMeSheet.swift; sourceTree = "<group>"; };
+		227F1EF52A4F91EF00426AD9 /* NotifyResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyResponseModel.swift; sourceTree = "<group>"; };
 		2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExperiencePage.swift; sourceTree = "<group>"; };
 		22973E462A34B1BE00BBFB5F /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
 		22BF6E182A2A199200D766E2 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				2211F7212A41C3350047103F /* ConnectAccountResponse.swift */,
 				2211F7272A425C830047103F /* ResponseModel.swift */,
 				221D6EEE2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift */,
+				227F1EF52A4F91EF00426AD9 /* NotifyResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				22758A882A20EC000028DD17 /* APIRequest.swift in Sources */,
 				E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */,
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
+				227F1EF62A4F91EF00426AD9 /* NotifyResponseModel.swift in Sources */,
 				220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */,
 				220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */,
 				22097A822A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift in Sources */,

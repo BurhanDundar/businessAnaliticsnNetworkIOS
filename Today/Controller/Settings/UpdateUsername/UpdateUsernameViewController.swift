@@ -48,7 +48,6 @@ class UpdateUsernameViewController: UIViewController {
                     var alert: UIAlertController!
                     let decoder = JSONDecoder()
                     let updateUsernameRes = try decoder.decode(UpdatePasswordandUsernameResponse.self, from: data)
-                    print(updateUsernameRes)
                     DispatchQueue.main.async {
                         self.updateUsernameResponse = updateUsernameRes
                         

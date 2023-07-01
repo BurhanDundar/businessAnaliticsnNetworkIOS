@@ -507,9 +507,11 @@ class MemberViewController: UIViewController,UIGestureRecognizerDelegate {
     }
     
     @objc func showConnectedUser(_ sender: Any){
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let userListVC = UserListViewController(collectionViewLayout: UICollectionViewLayout())
         let user = userListVC.user(withId: self.memberUserId)
-        navigationController?.pushViewController(UserViewController(user: user, isUserBookmarked: user.isBookmarked), animated: true)
+        let isUserNotifiedByMember = appDelegate.memberNotifyMeUsers.contains(user.id!) ? true : false
+        navigationController?.pushViewController(UserViewController(user: user, isUserBookmarked: user.isBookmarked, isNotifiedByMember: isUserNotifiedByMember), animated: true)
     }
     
     @objc func openFollowingUsers(_ sender: UITapGestureRecognizer){
