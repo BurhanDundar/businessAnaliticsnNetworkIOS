@@ -12,22 +12,17 @@ extension UserListViewController {
         let viewController = UserFilterViewController()
         viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
             barButtonSystemItem: .cancel, target: self, action: #selector(didCancelAdd(_:)))
-        viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done, target: self, action: #selector(didDoneAdd(_:)))
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
-        
     }
+    
     @objc func didPressProfileButton (_ sender: UIBarButtonItem){
         performSegue(withIdentifier: "GoToProfilePage", sender: self)
         let backBarButtonItem = UIBarButtonItem(title: "Users", style: .plain, target: nil, action: nil)
                 navigationItem.backBarButtonItem = backBarButtonItem
         
         
-    }
-    @objc func didDoneAdd(_ sender: UIBarButtonItem){
-        dismiss(animated: true)
     }
     
     @objc func didCancelAdd(_ sender: UIBarButtonItem){
@@ -42,6 +37,10 @@ extension UserListViewController {
         var users = [User]()
         var notifiedUsers = [User]()
         if(sender.selectedSegmentIndex == 0){
+            
+            let filterBarButton = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"), style: .plain, target: self, action: #selector(didPressFilterButton))
+            navigationItem.rightBarButtonItem = filterBarButton
+            
             Task{
                 do {
                     users = try await getAllUsers()
@@ -54,6 +53,9 @@ extension UserListViewController {
             updateSnapshot(for: self.users)
                 
         } else if(sender.selectedSegmentIndex == 1){
+            
+            navigationItem.rightBarButtonItem = .none
+            
             Task{
                 do {
                     res = try await getBookmarkedUsers()
@@ -65,6 +67,9 @@ extension UserListViewController {
             self.filteredUsers = res
             updateSnapshot(for: self.filteredUsers)
         } else if(sender.selectedSegmentIndex == 2){
+            
+            navigationItem.rightBarButtonItem = .none
+            
             Task{
                 do {
                     notifiedUsers = try await getNotifiedUsers()
