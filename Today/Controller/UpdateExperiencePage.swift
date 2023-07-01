@@ -1,46 +1,59 @@
 //
-//  CreateExperiencePage.swift
+//  UpdateExperiencePage.swift
 //  Today
 //
-//  Created by Yapı Kredi Teknoloji A.Ş. on 20.06.2023.
+//  Created by Yapı Kredi Teknoloji A.Ş. on 28.06.2023.
 //
 
 import UIKit
 
-class CreateExperiencePage: UIViewController {
+class UpdateExperiencePage: UIViewController {
     
     var experienceName = CustomTextField(fieldType: .experienceName)
     var experienceCompany = CustomTextField(fieldType: .experienceCompany)
     var experienceDate = CustomTextField(fieldType: .experienceDate)
     var experienceLocation = CustomTextField(fieldType: .experienceLocation)
-    var isExperienceInformable = UISwitch()
     
-    var addBtn = CustomButton(title: "Add", fontSize: .med)
+    var addBtn = CustomButton(title: "Update", fontSize: .med)
     
     var footnote: UILabel!
     var titleTxt: UILabel!
-    var isExperienceInformableTitleTxt: UILabel!
+    
+    var parentView: ExperienceListViewController!
+    var paramExperience: Experience!
+    var paramExperiences: [Experience]!
+    init(paramExperience: Experience, paramExperiences: [Experience], parentView: ExperienceListViewController) {
+        self.paramExperience = paramExperience
+        self.paramExperiences = paramExperiences
+        self.parentView = parentView
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+           fatalError("init(coder:) has not been implemented")
+       }
     
     let memberId = UserDefaults.standard.string(forKey: "memberId") ?? ""
     let memberEmail = UserDefaults.standard.string(forKey: "memberEmail") ?? ""
     let memberFullName = UserDefaults.standard.string(forKey: "memberFullName") ?? ""
     let memberUserName = UserDefaults.standard.string(forKey: "memberUserName") ?? ""
     let memberUserId = UserDefaults.standard.string(forKey: "memberUserId") ?? ""
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.isExperienceInformable.setOn(false, animated: true)
         view = UIView()
         view.backgroundColor = .systemBackground
         
-        self.addBtn.addTarget(self, action: #selector(createExperienceRequest), for: .touchUpInside)
+        self.addBtn.addTarget(self, action: #selector(updateExperienceRequest), for: .touchUpInside)
         
         self.setupUI()
     }
     
     private func setupUI(){
-        print(memberId)
+
+        self.experienceName.text = paramExperience.name
+        self.experienceCompany.text = paramExperience.establishment
+        self.experienceDate.text = paramExperience.range
+        self.experienceLocation.text = paramExperience.location
         
         self.footnote = UILabel()
         self.footnote.text = "Example: IOS developer - Apple - USA/San Francisco - 17 Haziran 2023"
@@ -50,26 +63,17 @@ class CreateExperiencePage: UIViewController {
         self.footnote.textAlignment = .center
         
         self.titleTxt = UILabel()
-        self.titleTxt.text = "👩🏼‍💻 Create Experience 👨🏽‍💻"
+        self.titleTxt.text = "👩🏼‍💻 Update Experience 👨🏽‍💻"
         self.titleTxt.font = .boldSystemFont(ofSize: 18)
         self.titleTxt.numberOfLines = 0
         self.titleTxt.sizeToFit()
         self.titleTxt.textAlignment = .center
-        
-        self.isExperienceInformableTitleTxt = UILabel()
-        self.isExperienceInformableTitleTxt.text = "I want to share my new experience with my followers by email 🦾"
-        self.isExperienceInformableTitleTxt.font = .boldSystemFont(ofSize: 18)
-        self.isExperienceInformableTitleTxt.numberOfLines = 0
-        self.isExperienceInformableTitleTxt.sizeToFit()
-        self.isExperienceInformableTitleTxt.textAlignment = .center
 
         self.view.addSubview(self.titleTxt)
         self.view.addSubview(self.experienceName)
         self.view.addSubview(self.experienceCompany)
         self.view.addSubview(self.experienceDate)
         self.view.addSubview(self.experienceLocation)
-        self.view.addSubview(self.isExperienceInformableTitleTxt)
-        self.view.addSubview(self.isExperienceInformable)
         self.view.addSubview(self.addBtn)
         self.view.addSubview(self.footnote)
         
@@ -78,15 +82,12 @@ class CreateExperiencePage: UIViewController {
         self.experienceCompany.translatesAutoresizingMaskIntoConstraints = false
         self.experienceDate.translatesAutoresizingMaskIntoConstraints = false
         self.experienceLocation.translatesAutoresizingMaskIntoConstraints = false
-        self.isExperienceInformableTitleTxt.translatesAutoresizingMaskIntoConstraints = false
-        self.isExperienceInformable.translatesAutoresizingMaskIntoConstraints = false
         self.addBtn.translatesAutoresizingMaskIntoConstraints = false
         self.footnote.translatesAutoresizingMaskIntoConstraints = false
         
         
         
         NSLayoutConstraint.activate([
-            
             self.titleTxt.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 120),
             self.titleTxt.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.titleTxt.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.75),
@@ -111,14 +112,7 @@ class CreateExperiencePage: UIViewController {
             self.experienceLocation.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.75),
             self.experienceLocation.heightAnchor.constraint(equalToConstant: 55),
             
-            self.isExperienceInformableTitleTxt.topAnchor.constraint(equalTo: self.experienceLocation.bottomAnchor, constant: 10),
-            self.isExperienceInformableTitleTxt.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.isExperienceInformableTitleTxt.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
-            
-            self.isExperienceInformable.topAnchor.constraint(equalTo: self.isExperienceInformableTitleTxt.bottomAnchor, constant: 10),
-            self.isExperienceInformable.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            
-            self.footnote.topAnchor.constraint(equalTo: self.isExperienceInformable.bottomAnchor, constant: 10),
+            self.footnote.topAnchor.constraint(equalTo: self.experienceLocation.bottomAnchor, constant: 10),
             self.footnote.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.footnote.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.75),
             
@@ -128,20 +122,21 @@ class CreateExperiencePage: UIViewController {
         ])
     }
     
-    @objc private func createExperienceRequest(){
-        self.showSpinner()
+    func updateExperience(_ experience: Experience) {
+            let index = self.paramExperiences.indexOfExperience(withId: paramExperience.id)
+            self.paramExperiences[index] = experience
+       }
+    
+    @objc private func updateExperienceRequest(){
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let stringURL = "\(appDelegate.APIURL)/experience/createExperience"
+        let stringURL = "\(appDelegate.APIURL)/experience/update"
 
             let params = [
-                "memberFullname": memberFullName,
-                "memberId": memberId,
-                "memberUserId": memberUserId,
+                "experienceId": self.paramExperience.id,
                 "experienceName": self.experienceName.text,
                 "experienceCompany": self.experienceCompany.text,
                 "experienceDate": self.experienceDate.text,
                 "experienceLocation": self.experienceLocation.text,
-                "isExperienceConformable": self.isExperienceInformable.isOn
             ] as [String: Any?]
 
             guard let url = URL(string: stringURL) else { return }
@@ -163,18 +158,26 @@ class CreateExperiencePage: UIViewController {
                     let decoder = JSONDecoder()
                     let createExperienceResponse = try decoder.decode(ResponseModel.self, from: data)
                     DispatchQueue.main.async {
-                        self.removeSpinner()
                         if(createExperienceResponse.status == "ok") {
-                            let alert = UIAlertController(title: "işlem Başarılı", message: "Experience başarıyla oluşturuldu!", preferredStyle: .alert)
+                            let alert = UIAlertController(title: "işlem Başarılı", message: "Experience başarıyla güncellendi!", preferredStyle: .alert)
                             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
+                                
+                                self.paramExperience.name = self.experienceName.text ?? ""
+                                self.paramExperience.establishment = self.experienceCompany.text ?? ""
+                                self.paramExperience.range = self.experienceDate.text ?? ""
+                                self.paramExperience.location = self.experienceLocation.text ?? ""
+                                
+                                self.parentView.updateExperience(self.paramExperience)
+                                
                                 self.dismiss(animated: true, completion: nil)
+                                
                             }))
                             self.present(alert, animated: true, completion: nil)
                         } else {
                             DispatchQueue.main.async {
-                                let alert = UIAlertController(title: "Experience Eklenemedi!", message: "Experience eklenirken bir hata oluştu", preferredStyle: .alert)
+                                let alert = UIAlertController(title: "Experience güncellenemedi!", message: "Experience güncellenirken bir hata oluştu", preferredStyle: .alert)
                                 alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-                                    NSLog("The \"OK\" alert occured.")
+                                    NSLog("The \"Error\" alert occured.")
                                 }))
                                 self.present(alert, animated: true, completion: nil)
                             }
@@ -182,7 +185,7 @@ class CreateExperiencePage: UIViewController {
                     }
                 } catch {
                     DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "Experience Eklenemedi!", message: "Experience eklenirken bir hata oluştu", preferredStyle: .alert)
+                        let alert = UIAlertController(title: "Experience güncellenemedi!", message: "Experience güncellenirken bir hata oluştu", preferredStyle: .alert)
                         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
                             NSLog("The \"OK\" alert occured.")
                         }))

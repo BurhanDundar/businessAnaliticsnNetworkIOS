@@ -24,9 +24,6 @@ class MemberListViewController: UICollectionViewController {
             var memberFullname: String = ""
             var memberUsername: String = ""
     
-            
-            
-        
             // search bar
             var searchController: UISearchController!
             let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
@@ -39,6 +36,8 @@ class MemberListViewController: UICollectionViewController {
             }
     
              override func viewDidLoad() {
+                 self.showSpinner()
+                 self.listStyleSegmentedControl.isEnabled = false
                  let defaults = UserDefaults.standard
                  self.memberId = defaults.string(forKey: "memberId") ?? ""
                  self.memberFullname = defaults.string(forKey: "memberFullName") ?? ""
@@ -132,6 +131,12 @@ class MemberListViewController: UICollectionViewController {
                 let index = self.members.indexOfMember(withId: member.id)
                 self.members[index] = member
            }
+    
+        @objc func didPressProfileButton (_ sender: UIBarButtonItem){
+            performSegue(withIdentifier: "GoToProfilePage", sender: self)
+            let backBarButtonItem = UIBarButtonItem(title: "Members", style: .plain, target: nil, action: nil)
+                    navigationItem.backBarButtonItem = backBarButtonItem
+        }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        if (segue.identifier == "showMemberDetail") {
@@ -229,6 +234,9 @@ class MemberListViewController: UICollectionViewController {
                         self.filteredMembers = []
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: self.members)
+                        
+                        self.removeSpinner()
+                        self.listStyleSegmentedControl.isEnabled = true   
                     }
                 } catch {
                     print("Error Occured!")
@@ -337,6 +345,7 @@ extension MemberListViewController {
                         self.updateSnapshot(for: self.members)
                     }
                     self.listStyleSegmentedControl.isEnabled = true
+                    self.removeSpinner()
                     return members
                 } catch {
                     throw GHError.invalidData
@@ -377,6 +386,7 @@ extension MemberListViewController {
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredMembers)
                 self.listStyleSegmentedControl.isEnabled = true
+                self.removeSpinner()
                 return response
             } catch {
                 throw GHError.invalidData

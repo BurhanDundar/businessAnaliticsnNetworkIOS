@@ -9,26 +9,8 @@ import UIKit
 
 extension CompanyListViewController {
     
-    @objc func didPressFilterButton (_ sender: UIBarButtonItem){
-        let viewController = CompanyFilterViewController()
-        viewController.navigationItem.leftBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .cancel, target: self, action: #selector(didCancelAdd(_:)))
-        viewController.navigationItem.rightBarButtonItem = UIBarButtonItem(
-            barButtonSystemItem: .done, target: self, action: #selector(didDoneAdd(_:)))
-        let navigationController = UINavigationController(rootViewController: viewController)
-        present(navigationController, animated: true)
-        
-    }
-    
-    @objc func didDoneAdd(_ sender: UIBarButtonItem){
-        dismiss(animated: true)
-    }
-    
-    @objc func didCancelAdd(_ sender: UIBarButtonItem){
-        dismiss(animated: true)
-    }
-    
     @objc func didChangeListStyle(_ sender: UISegmentedControl) {
+        self.showSpinner()
         self.listStyleSegmentedControl.isEnabled = false
             // index -> 0: all, 1: bookmarked
         var res = [Company]()

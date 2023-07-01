@@ -20,6 +20,7 @@ class ForgotPasswordViewController: UIViewController {
     }
     
     @objc func forgotPassword(_ sender: Any){
+        self.showSpinner()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/auth/forgotPassword"
             let params = [
@@ -46,6 +47,7 @@ class ForgotPasswordViewController: UIViewController {
                     let decoder = JSONDecoder()
                     let forgotPassRes = try decoder.decode(UpdatePasswordandUsernameResponse.self, from: data)
                     DispatchQueue.main.async {
+                        self.removeSpinner()
                         self.forgotPassResponse = forgotPassRes
                         
                         if self.forgotPassResponse.status == "ok" {

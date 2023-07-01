@@ -25,7 +25,6 @@
 		220F0B6C2A3926DB004E214C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B6B2A3926DB004E214C /* SettingsViewController.swift */; };
 		220F0B722A39A97A004E214C /* UpdateUsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */; };
 		220F0B762A39A996004E214C /* UpdatePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */; };
-		2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */; };
 		2211F7222A41C3350047103F /* ConnectAccountResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7212A41C3350047103F /* ConnectAccountResponse.swift */; };
 		2211F7262A4244B20047103F /* CreateExperiencePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7252A4244B20047103F /* CreateExperiencePage.swift */; };
 		2211F7282A425C830047103F /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F7272A425C830047103F /* ResponseModel.swift */; };
@@ -39,11 +38,14 @@
 		22262B2B2A27943800B7DBCF /* CompanyListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2A2A27943800B7DBCF /* CompanyListViewController+Action.swift */; };
 		22262B2D2A27947000B7DBCF /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22262B2C2A27947000B7DBCF /* Company.swift */; };
 		22758A882A20EC000028DD17 /* APIRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22758A872A20EC000028DD17 /* APIRequest.swift */; };
+		227F1EF42A4DA52800426AD9 /* NotifyMeSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F1EF32A4DA52800426AD9 /* NotifyMeSheet.swift */; };
+		227F1EF62A4F91EF00426AD9 /* NotifyResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F1EF52A4F91EF00426AD9 /* NotifyResponseModel.swift */; };
+		2286619E2A4C270B00C7F506 /* UpdateExperiencePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */; };
 		22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22973E462A34B1BE00BBFB5F /* Favourite.swift */; };
-		229E0FD92A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E0FD82A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift */; };
 		22BF6E192A2A199200D766E2 /* Member.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E182A2A199200D766E2 /* Member.swift */; };
 		22BF6E1B2A2A9CAE00D766E2 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */; };
 		22BF6E1E2A2B1FE100D766E2 /* SkillListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BF6E1D2A2B1FE100D766E2 /* SkillListViewController.swift */; };
+		22DA03BE2A48F305008D83E9 /* ProgressActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DA03BD2A48F305008D83E9 /* ProgressActivityIndicator.swift */; };
 		22EF2BD92A2BE2170078CE12 /* ExperienceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF2BD82A2BE2170078CE12 /* ExperienceListViewController.swift */; };
 		22EF2BDB2A2BE2250078CE12 /* EducationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF2BDA2A2BE2250078CE12 /* EducationListViewController.swift */; };
 		22EF2BDD2A2BE23A0078CE12 /* CourseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22EF2BDC2A2BE23A0078CE12 /* CourseListViewController.swift */; };
@@ -67,7 +69,6 @@
 		E929244B2A30A42300049820 /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E929244A2A30A42300049820 /* MemberViewController.swift */; };
 		E929244D2A30A43800049820 /* MemberViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = E929244C2A30A43800049820 /* MemberViewController+Row.swift */; };
 		E92924512A30A48400049820 /* MemberListViewController+Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924502A30A48400049820 /* MemberListViewController+Action.swift */; };
-		E92924532A30D9F000049820 /* MemberFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924522A30D9F000049820 /* MemberFilterViewController.swift */; };
 		E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924542A31F2C900049820 /* ProfileViewController.swift */; };
 		E92924572A31FDF100049820 /* CompanyViewController+Row.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92924562A31FDF100049820 /* CompanyViewController+Row.swift */; };
 		E94E1FE429C8B40100C58B18 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94E1FE329C8B40100C58B18 /* Login.swift */; };
@@ -97,7 +98,6 @@
 		220F0B6B2A3926DB004E214C /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		220F0B712A39A97A004E214C /* UpdateUsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateUsernameViewController.swift; sourceTree = "<group>"; };
 		220F0B752A39A996004E214C /* UpdatePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePasswordViewController.swift; sourceTree = "<group>"; };
-		2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyFilterViewController.swift; sourceTree = "<group>"; };
 		2211F7212A41C3350047103F /* ConnectAccountResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectAccountResponse.swift; sourceTree = "<group>"; };
 		2211F7252A4244B20047103F /* CreateExperiencePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateExperiencePage.swift; sourceTree = "<group>"; };
 		2211F7272A425C830047103F /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
@@ -111,11 +111,14 @@
 		22262B2A2A27943800B7DBCF /* CompanyListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanyListViewController+Action.swift"; sourceTree = "<group>"; };
 		22262B2C2A27947000B7DBCF /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		22758A872A20EC000028DD17 /* APIRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRequest.swift; sourceTree = "<group>"; };
+		227F1EF32A4DA52800426AD9 /* NotifyMeSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyMeSheet.swift; sourceTree = "<group>"; };
+		227F1EF52A4F91EF00426AD9 /* NotifyResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotifyResponseModel.swift; sourceTree = "<group>"; };
+		2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateExperiencePage.swift; sourceTree = "<group>"; };
 		22973E462A34B1BE00BBFB5F /* Favourite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Favourite.swift; sourceTree = "<group>"; };
-		229E0FD82A4532C1005CB180 /* CompanyExperienceCountResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyExperienceCountResponseModel.swift; sourceTree = "<group>"; };
 		22BF6E182A2A199200D766E2 /* Member.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Member.swift; sourceTree = "<group>"; };
 		22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		22BF6E1D2A2B1FE100D766E2 /* SkillListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkillListViewController.swift; sourceTree = "<group>"; };
+		22DA03BD2A48F305008D83E9 /* ProgressActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressActivityIndicator.swift; sourceTree = "<group>"; };
 		22EF2BD82A2BE2170078CE12 /* ExperienceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperienceListViewController.swift; sourceTree = "<group>"; };
 		22EF2BDA2A2BE2250078CE12 /* EducationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationListViewController.swift; sourceTree = "<group>"; };
 		22EF2BDC2A2BE23A0078CE12 /* CourseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CourseListViewController.swift; sourceTree = "<group>"; };
@@ -144,7 +147,6 @@
 		E929244A2A30A42300049820 /* MemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberViewController.swift; sourceTree = "<group>"; };
 		E929244C2A30A43800049820 /* MemberViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberViewController+Row.swift"; sourceTree = "<group>"; };
 		E92924502A30A48400049820 /* MemberListViewController+Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MemberListViewController+Action.swift"; sourceTree = "<group>"; };
-		E92924522A30D9F000049820 /* MemberFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberFilterViewController.swift; sourceTree = "<group>"; };
 		E92924542A31F2C900049820 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E92924562A31FDF100049820 /* CompanyViewController+Row.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompanyViewController+Row.swift"; sourceTree = "<group>"; };
 		E94E1FE329C8B40100C58B18 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
@@ -345,7 +347,7 @@
 				2211F7212A41C3350047103F /* ConnectAccountResponse.swift */,
 				2211F7272A425C830047103F /* ResponseModel.swift */,
 				221D6EEE2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift */,
-
+				227F1EF52A4F91EF00426AD9 /* NotifyResponseModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -403,11 +405,11 @@
 				E94E1FE329C8B40100C58B18 /* Login.swift */,
 				DBE888CF29B2B68700E5B6F9 /* UserFilterViewController.swift */,
 				22BF6E1A2A2A9CAE00D766E2 /* TabBarViewController.swift */,
-				2210F4BB2A30878300492B41 /* CompanyFilterViewController.swift */,
-				E92924522A30D9F000049820 /* MemberFilterViewController.swift */,
 				E92924542A31F2C900049820 /* ProfileViewController.swift */,
 				22097A7F2A3BBB1C0007EC10 /* ForgotPasswordViewController.swift */,
 				2211F7252A4244B20047103F /* CreateExperiencePage.swift */,
+				2286619D2A4C270B00C7F506 /* UpdateExperiencePage.swift */,
+				227F1EF32A4DA52800426AD9 /* NotifyMeSheet.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -419,6 +421,7 @@
 				E94E1FE529C9F9B500C58B18 /* CustomTextField.swift */,
 				E94E1FE929CA0A1200C58B18 /* AuthHeaderView.swift */,
 				22097A8E2A3C6C9C0007EC10 /* LinkedInButton.swift */,
+				22DA03BD2A48F305008D83E9 /* ProgressActivityIndicator.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -519,15 +522,16 @@
 				22EF2BDB2A2BE2250078CE12 /* EducationListViewController.swift in Sources */,
 				E92924512A30A48400049820 /* MemberListViewController+Action.swift in Sources */,
 				220F0B662A390C21004E214C /* FollowingCompanyViewController.swift in Sources */,
-				E92924532A30D9F000049820 /* MemberFilterViewController.swift in Sources */,
 				22973E472A34B1BE00BBFB5F /* Favourite.swift in Sources */,
 				22758A882A20EC000028DD17 /* APIRequest.swift in Sources */,
 				E94E1FEA29CA0A1200C58B18 /* AuthHeaderView.swift in Sources */,
 				DB3111CD2996AC810058A3A9 /* Extension.swift in Sources */,
+				227F1EF62A4F91EF00426AD9 /* NotifyResponseModel.swift in Sources */,
 				220F0B5A2A389474004E214C /* FollowingCompaniesListViewController.swift in Sources */,
 				220F0B602A38A49C004E214C /* FollowedMembersListViewController.swift in Sources */,
 				22097A822A3BC01A0007EC10 /* UpdatePasswordandUsernameResponse.swift in Sources */,
 				220F0B642A390C0C004E214C /* FollowingMemberViewController.swift in Sources */,
+				2286619E2A4C270B00C7F506 /* UpdateExperiencePage.swift in Sources */,
 				22097A8D2A3C6C820007EC10 /* LinkedInConstants.swift in Sources */,
 				DBCECF9F29B37399009373FE /* CompanyViewController.swift in Sources */,
 				DBE888D029B2B68700E5B6F9 /* UserFilterViewController.swift in Sources */,
@@ -539,11 +543,12 @@
 				220F0B5E2A389B95004E214C /* FollowingMembersListViewController.swift in Sources */,
 				220F0B682A390C36004E214C /* FollowingUserViewController.swift in Sources */,
 				E92924552A31F2C900049820 /* ProfileViewController.swift in Sources */,
+				22DA03BE2A48F305008D83E9 /* ProgressActivityIndicator.swift in Sources */,
+				227F1EF42A4DA52800426AD9 /* NotifyMeSheet.swift in Sources */,
 				221D6EEF2A4577E200A205B2 /* CompanyExperienceCountResponseModel.swift in Sources */,
 				DBE888D329B2B7E900E5B6F9 /* UserListViewController+Action.swift in Sources */,
 				AAD0598828EC8D10004F4962 /* AppDelegate.swift in Sources */,
 				DB27A821299BCB91004219B3 /* Skill.swift in Sources */,
-				2210F4BC2A30878300492B41 /* CompanyFilterViewController.swift in Sources */,
 				22262B1F2A27481600B7DBCF /* SubExperience.swift in Sources */,
 				22262B2B2A27943800B7DBCF /* CompanyListViewController+Action.swift in Sources */,
 				22262B212A27491300B7DBCF /* Education.swift in Sources */,
@@ -708,6 +713,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WVT6A72Z48;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Today/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -720,7 +726,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.Today";
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.Today;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -736,6 +742,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = WVT6A72Z48;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Today/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -748,7 +755,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.Today";
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.Today;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

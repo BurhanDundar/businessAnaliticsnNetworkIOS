@@ -22,22 +22,25 @@ class UserListViewController: UICollectionViewController {
         var listStyleSelectedIndex: Int = 0
         var dynamicSearchText: String = ""
         var isUserInBookmarkedArray: Bool = false
+        var isUserNotifiedByMember: Bool = false
     
         var memberId: String = ""
         var memberFullName: String = ""
         var memberUsername: String = ""
         var userFavs: [String] = [String]()
+        var memberNotifyUsers: [String] = [String]()
         var searchController: UISearchController!
     
-        let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked"])
+        let listStyleSegmentedControl = UISegmentedControl(items: ["all","bookmarked","notified"])
     
          override func viewDidLoad() {
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
              self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
-             
-                          
              view.backgroundColor = .systemBackground //.white
+             
+             self.showSpinner()
+             self.listStyleSegmentedControl.isEnabled = true
              
              //self.getUsers()
              navigationItem.title = "Members"
@@ -87,7 +90,7 @@ class UserListViewController: UICollectionViewController {
              let cellRegistration = UICollectionView.CellRegistration {
                  (cell: UICollectionViewListCell, indexPath: IndexPath, itemIdentifier: User.ID) in
                  var user: User!
-                 if(self.listStyleSelectedIndex == 1) {
+                 if(self.listStyleSelectedIndex == 1 || self.listStyleSelectedIndex == 2) {
                      user = self.filteredUsers[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
                      user = self.filteredUsers.count > 0 ? self.filteredUsers[indexPath.item] : self.users[indexPath.item]
@@ -104,7 +107,14 @@ class UserListViewController: UICollectionViewController {
                    customView: UIImageView(image: UIImage(systemName: systemImageName)),
                    placement: .trailing(displayed: .always))
                  
-                 cell.accessories = [.customView(configuration: customAccessory),.disclosureIndicator(displayed: .always)]
+                 self.isUserNotifiedByMember = self.memberNotifyUsers.contains(user.id!) ? true : false
+                 let systemImageName2 = self.isUserNotifiedByMember ? "bell.and.waves.left.and.right.fill" :  "bell.and.waves.left.and.right"
+                 
+                 let customAccessory2 = UICellAccessory.CustomViewConfiguration(
+                   customView: UIImageView(image: UIImage(systemName: systemImageName2)),
+                   placement: .trailing(displayed: .always))
+                 
+                 cell.accessories = [.customView(configuration: customAccessory2),.customView(configuration: customAccessory),.disclosureIndicator(displayed: .always)]
                  cell.contentConfiguration = contentConfiguration
              }
 
@@ -145,7 +155,8 @@ class UserListViewController: UICollectionViewController {
     func pushDetailViewForUser(withId id:User.ID){
         let user = user(withId: id)
         self.isUserInBookmarkedArray = self.userFavs.contains(user.id!) ? true : false
-        let viewController = UserViewController(user: user, isUserBookmarked: self.isUserInBookmarkedArray)
+        self.isUserNotifiedByMember = self.memberNotifyUsers.contains(user.id!) ? true : false
+        let viewController = UserViewController(user: user, isUserBookmarked: self.isUserInBookmarkedArray, isNotifiedByMember: self.isUserNotifiedByMember)
         navigationController?.pushViewController(viewController, animated: true)
      }
 
@@ -185,6 +196,9 @@ class UserListViewController: UICollectionViewController {
                     self.filteredUsers = []
                     self.collectionView.reloadData()
                     self.updateSnapshot(for: self.users)
+                    
+                    self.removeSpinner()
+                    self.listStyleSegmentedControl.isEnabled = true
                 }
             } catch {
                 print("Error Occured!")
@@ -226,6 +240,9 @@ class UserListViewController: UICollectionViewController {
                         self.filteredUsers = []
                         self.collectionView.reloadData()
                         self.updateSnapshot(for: companyUsers)
+                        
+                        self.removeSpinner()
+                        self.listStyleSegmentedControl.isEnabled = true
                     }
                 } catch {
                     print("Error Occured!")
@@ -277,18 +294,62 @@ class UserListViewController: UICollectionViewController {
             session.resume()
         }
     
+    private func getMemberNotifyUsers(){
+        
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let stringURL = "\(appDelegate.APIURL)/follow/getMemberNotifyUsers"
+            let params = [
+                "memberId": memberId,
+            ]
+        
+            guard let url = URL(string: stringURL) else { return }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let session = URLSession.shared.dataTask(with: request) { data, response, error in
+            
+                guard let data = data else { return }
+                
+                if let error = error {
+                    print("there was an error: \(error.localizedDescription)")
+                }
+                
+                do {
+                    let decoder = JSONDecoder()
+                    let memberNotifyUsersArray = try decoder.decode([String].self, from: data)
+                    DispatchQueue.main.async {
+                        self.memberNotifyUsers = memberNotifyUsersArray
+                        appDelegate.memberNotifyMeUsers = self.memberNotifyUsers
+                        self.collectionView.reloadData() // bundan emin değilim
+                    }
+                } catch {
+                    print("Error Occured!")
+                }
+                
+            }
+            
+            session.resume()
+        }
+    
     func loadFilteredUsers(){
         self.users = self.specialFilterUsers
         User.sampleData = self.specialFilterUsers
         self.filteredUsers = [] //self.specialFilterUsers
         self.collectionView.reloadData()
         self.updateSnapshot(for: self.specialFilterUsers)
+        
+        self.removeSpinner()
+        self.listStyleSegmentedControl.isEnabled = true
     }
 }
 
 extension UserListViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             var res = [User]()
+            var notifiedUsers = [User]()
             self.dynamicSearchText = searchText
             if searchText.isEmpty {
                 self.isSearching = false
@@ -302,6 +363,16 @@ extension UserListViewController: UISearchBarDelegate {
                             }
                     }
                     self.filteredUsers = res
+                    self.updateSnapshot(for: self.filteredUsers) // DÖN BURAYAAA
+                } else if (self.listStyleSelectedIndex == 2){
+                    Task{
+                        do {
+                            notifiedUsers = try await getNotifiedUsers()
+                            } catch {
+                                print("Oops!")
+                            }
+                    }
+                    self.filteredUsers = notifiedUsers
                     self.updateSnapshot(for: self.filteredUsers) // DÖN BURAYAAA
                 } else {
                     self.filteredUsers = []
@@ -323,6 +394,7 @@ extension UserListViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         var res = [User]()
+        var notifiedUsers = [User]()
             self.isSearching = false
             self.dynamicSearchText = ""
             if(self.listStyleSelectedIndex == 1){
@@ -335,7 +407,17 @@ extension UserListViewController: UISearchBarDelegate {
                 }
                 self.filteredUsers = res
                 updateSnapshot(for: self.filteredUsers)
-            } else {
+            } else if (self.listStyleSelectedIndex == 2) {
+                Task{
+                    do {
+                        notifiedUsers = try await getNotifiedUsers()
+                    } catch {
+                        print("Oops!")
+                    }
+                }
+                self.filteredUsers = notifiedUsers
+                updateSnapshot(for: self.filteredUsers)
+            }else {
                 self.filteredUsers = []
                 self.updateSnapshot(for: User.sampleData)
             }
@@ -364,6 +446,7 @@ extension UserListViewController: UISearchBarDelegate {
                 navigationItem.leftBarButtonItem = clearFilter
             }
             self.getMemberFavAsUserIds()
+            self.getMemberNotifyUsers()
         }
     }
     
@@ -421,6 +504,7 @@ extension UserListViewController {
                         self.updateSnapshot(for: self.users)
                     }
                     self.listStyleSegmentedControl.isEnabled = true
+                    self.removeSpinner()
                     return users // burda ne dönmeli emin değilim bakarsın sonra
                 } catch {
                     throw GHError.invalidData
@@ -461,6 +545,48 @@ extension UserListViewController {
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredUsers)
                 self.listStyleSegmentedControl.isEnabled = true
+                self.removeSpinner()
+                return response
+            } catch {
+                throw GHError.invalidData
+            }
+        }
+        func getNotifiedUsers() async throws -> [User]{
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let endpoint = "\(appDelegate.APIURL)/follow/getNotifiedUsers"
+            let params = [
+                "memberId": memberId,
+            ]
+            
+            
+            guard let url = URL(string: endpoint) else {
+                throw GHError.invalidURL
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.setValue("Application/json", forHTTPHeaderField: "Content-Type")
+            request.httpBody = try? JSONSerialization.data(withJSONObject: params, options: [])
+            
+            let (data,response) = try await URLSession.shared.data(for: request)
+            
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw GHError.invalidResponse
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode([User].self, from: data)
+                print(response)
+                self.filteredUsers = response
+                
+                if(self.dynamicSearchText != ""){
+                    self.filteredUsers = self.filteredUsers.filter({ $0.full_name.lowercased().contains( self.dynamicSearchText.lowercased() ) })
+                }
+                self.collectionView.reloadData()
+                self.updateSnapshot(for: self.filteredUsers)
+                self.listStyleSegmentedControl.isEnabled = true
+                self.removeSpinner()
                 return response
             } catch {
                 throw GHError.invalidData

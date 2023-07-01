@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var memberUserFavs = [String]()
     var memberCompanyFavs = [String]()
     var memberMemberFavs = [String]()
+    var memberNotifyMeUsers = [String]()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let navBarAppearance = UINavigationBarAppearance()

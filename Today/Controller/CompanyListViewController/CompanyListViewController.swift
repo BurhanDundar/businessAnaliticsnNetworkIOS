@@ -47,7 +47,8 @@ class CompanyListViewController: UICollectionViewController {
         }
     }
          override func viewDidLoad() {
-             
+             self.showSpinner()
+             self.listStyleSegmentedControl.isEnabled = false
              let defaults = UserDefaults.standard
              self.memberId = defaults.string(forKey: "memberId") ?? ""
              self.memberFullName = defaults.string(forKey: "memberFullName") ?? ""
@@ -201,6 +202,9 @@ class CompanyListViewController: UICollectionViewController {
                     self.filteredCompanies = []
                     self.collectionView.reloadData()
                     self.updateSnapshot(for: self.companies)
+                    
+                    self.removeSpinner()
+                    self.listStyleSegmentedControl.isEnabled = true
                 }
             } catch {
                 print("Error Occured!")
@@ -341,6 +345,7 @@ extension CompanyListViewController {
                         self.updateSnapshot(for: self.companies)
                     }
                     self.listStyleSegmentedControl.isEnabled = true
+                    self.removeSpinner()
                     return companies
                 } catch {
                     throw GHError.invalidData
@@ -382,6 +387,7 @@ extension CompanyListViewController {
                 self.collectionView.reloadData()
                 self.updateSnapshot(for: self.filteredCompanies)
                 self.listStyleSegmentedControl.isEnabled = true
+                self.removeSpinner()
                 return response
             } catch {
                 throw GHError.invalidData

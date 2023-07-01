@@ -106,6 +106,7 @@ class Login: UIViewController {
     }
     
     @objc private func loginRequest(){
+        self.showSpinner()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/auth/login"
             let params = [
@@ -137,7 +138,7 @@ class Login: UIViewController {
                     
                     if self.signInResponse.status == "ok" {
                         print("Giriş başarılı")
-                        
+                        self.removeSpinner()
                         let defaults = UserDefaults.standard
                         defaults.set(loginRes._id, forKey: "memberId")
                         defaults.set("serifeturksever@gmail.com", forKey: "memberEmail")

@@ -15,6 +15,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
     var educations: [Education] = [Education]()
     var courses: [Course] = [Course]()
     var languages: [Language] = [Language]()
+    let memberId = UserDefaults.standard.string(forKey: "memberId")
     
     private let skillsBtn = CustomButton(title: "Skills", hasBackground: true, fontSize: .med)
     private let experiencesBtn = CustomButton(title: "Experiences", hasBackground: true, fontSize: .med)
@@ -27,11 +28,13 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
     
     var buttonCounter = 0
 
+    var isNotifiedByMember: Bool
     var isUserBookmarked: Bool
     var user: User
-    init(user: User, isUserBookmarked: Bool) {
+    init(user: User, isUserBookmarked: Bool, isNotifiedByMember: Bool) {
         self.user = user
         self.isUserBookmarked = isUserBookmarked
+        self.isNotifiedByMember = isNotifiedByMember
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,6 +48,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
     var location: UILabel!
     var button: UIButton!
     var systemImageName: String!
+    var systemImageName2: String!
     var scrollView = UIScrollView(frame: UIScreen.main.bounds)
     var stackView = UIStackView()
     
@@ -61,14 +65,20 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         return iv
     }()
     
-    override func loadView() {
-        
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // call functions at the beggining of launch
         self.getUserSkills()
         self.getUserExperiences()
         self.getUserEducations()
         self.getUserCourses()
         self.getUserLanguages()
+    }
+    
+   
+    
+    override func loadView() {
+        // self.getUserSkills gibi istekler burdaydı
         
         self.skillsBtn.addTarget(self, action: #selector(showUserSkills), for: .touchUpInside)
         self.experiencesBtn.addTarget(self, action: #selector(showUserExperiences), for: .touchUpInside)
@@ -104,9 +114,12 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         
         
         systemImageName = self.isUserBookmarked ? "bookmark.fill" :  "bookmark"
-        
         let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
-        navigationItem.rightBarButtonItem = bookmarkBarButton
+        
+        self.systemImageName2 = self.isNotifiedByMember ? "bell.and.waves.left.and.right.fill" : "bell.and.waves.left.and.right"
+        let notifyButton = UIBarButtonItem(image: UIImage(systemName: self.systemImageName2), style: .plain, target: self, action: #selector(openNotifySheet))
+        
+        navigationItem.rightBarButtonItems = [bookmarkBarButton, notifyButton]
         self.stackView.addArrangedSubview(fetchedImageView)
         
         loadFetchedImage(for: user.image ?? "")
@@ -176,6 +189,17 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
                 ])
         
 
+    }
+
+    @objc private func openNotifySheet(){
+        let viewController = NotifyMeSheet(userId: self.user.id!, memberId: self.memberId!, full_name: self.user.full_name, isNotificationsOpened: self.isNotifiedByMember, parentView: self)
+            if let presentationController = viewController.presentationController as? UISheetPresentationController {
+                presentationController.detents = [.medium()] /// change to [.medium(), .large()] for a half *and* full screen sheet
+                    presentationController.preferredCornerRadius = CGFloat(24.0)
+                    presentationController.prefersGrabberVisible = true
+                }
+        
+            self.present(viewController, animated: true)
     }
     
     override func viewDidLoad() {
@@ -518,7 +542,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         navigationController?.pushViewController(skillsVC, animated: true)
     }
     @objc private func showUserExperiences(_ Sender: Any){
-        let experiencesVC = ExperienceListViewController(experiences: self.experiences)
+        let experiencesVC = ExperienceListViewController(experiences: self.experiences, userId: self.user.id ?? "")
         navigationController?.pushViewController(experiencesVC, animated: true)
     }
     @objc private func showUserEducations(_ Sender: Any){
@@ -534,7 +558,17 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         navigationController?.pushViewController(languagesVC, animated: true)
     }
     
-    
+    func updateNotifiedIcon() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        systemImageName = self.isUserBookmarked ? "bookmark.fill" :  "bookmark"
+        let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))
+        
+        self.isNotifiedByMember.toggle()
+        self.systemImageName2 = self.isNotifiedByMember ? "bell.and.waves.left.and.right.fill" : "bell.and.waves.left.and.right"
+        let notifyButton = UIBarButtonItem(image: UIImage(systemName: self.systemImageName2), style: .plain, target: self, action: #selector(openNotifySheet))
+        
+        navigationItem.rightBarButtonItems = [bookmarkBarButton, notifyButton]
+    }
     
 }
 

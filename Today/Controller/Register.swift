@@ -188,7 +188,7 @@ class Register: UIViewController{
             self.present(alert, animated: true, completion: nil)
             return
         }
-        
+        self.showSpinner()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let stringURL = "\(appDelegate.APIURL)/auth/signup"
                     
@@ -219,6 +219,7 @@ class Register: UIViewController{
                     let decoder = JSONDecoder()
                     let registerRes = try decoder.decode(RegisterResponseModel.self, from: data)
                     DispatchQueue.main.async {
+                        self.removeSpinner()
                         self.registerResponse = registerRes
                         if self.registerResponse.status == "ok" {
                             let alert = UIAlertController(title: "Successful Registration!", message: self.registerResponse.msg, preferredStyle: .alert)
