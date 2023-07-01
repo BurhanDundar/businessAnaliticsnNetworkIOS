@@ -40,29 +40,41 @@ extension UserListViewController {
             // index -> 0: all, 1: bookmarked
         var res = [User]()
         var users = [User]()
-            if(sender.selectedSegmentIndex == 0){
-                Task{
-                    do {
-                        users = try await getAllUsers()
-                        } catch {
-                            print("Oops!")
-                        }
-                }
-                self.listStyleSelectedIndex = 0
-                self.users = users
-                updateSnapshot(for: self.users)
-                    
-            } else if(sender.selectedSegmentIndex == 1){
-                Task{
-                    do {
-                        res = try await getBookmarkedUsers()
+        var notifiedUsers = [User]()
+        if(sender.selectedSegmentIndex == 0){
+            Task{
+                do {
+                    users = try await getAllUsers()
                     } catch {
                         print("Oops!")
                     }
+            }
+            self.listStyleSelectedIndex = 0
+            self.users = users
+            updateSnapshot(for: self.users)
+                
+        } else if(sender.selectedSegmentIndex == 1){
+            Task{
+                do {
+                    res = try await getBookmarkedUsers()
+                } catch {
+                    print("Oops!")
                 }
-                self.listStyleSelectedIndex = 1
-                self.filteredUsers = res
-                updateSnapshot(for: self.filteredUsers)
             }
+            self.listStyleSelectedIndex = 1
+            self.filteredUsers = res
+            updateSnapshot(for: self.filteredUsers)
+        } else if(sender.selectedSegmentIndex == 2){
+            Task{
+                do {
+                    notifiedUsers = try await getNotifiedUsers()
+                } catch {
+                    print("Oops!")
+                }
             }
+            self.listStyleSelectedIndex = 2
+            self.filteredUsers = notifiedUsers
+            updateSnapshot(for: self.filteredUsers)
+        }
+        }
 }

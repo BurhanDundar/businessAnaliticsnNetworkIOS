@@ -558,7 +558,7 @@ class UserViewController: UIViewController,UIScrollViewDelegate,UIWebViewDelegat
         navigationController?.pushViewController(languagesVC, animated: true)
     }
     
-    func yinele() {
+    func updateNotifiedIcon() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         systemImageName = self.isUserBookmarked ? "bookmark.fill" :  "bookmark"
         let bookmarkBarButton = UIBarButtonItem(image: UIImage(systemName: systemImageName), style: .plain, target: self, action: #selector(bookmarkUser))

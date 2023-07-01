@@ -144,7 +144,7 @@ class NotifyMeSheet: UIViewController {
                     print(appDelegate.memberNotifyMeUsers)
                     DispatchQueue.main.async {
                         self.dismiss(animated: true){
-                            self.parentView?.yinele()
+                            self.parentView?.updateNotifiedIcon()
                         }
                     }
                 } catch {
