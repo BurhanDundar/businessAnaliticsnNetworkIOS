@@ -373,28 +373,22 @@ class ProfileViewController: UIViewController,UIGestureRecognizerDelegate {
         self.connectWithLinkedInTitle.text = "Connect Your Account With LinkedIn"
         self.connectWithLinkedInTitle.textAlignment = .left
         self.connectWithLinkedInTitle.font = .preferredFont(forTextStyle: .headline, compatibleWith: .none)
-        
-//        self.followingUsersView.backgroundColor = .red
-        
-//        self.followingUsersView.isUserInteractionEnabled = true
+                
         let tapGesture_0 = UITapGestureRecognizer(target: self, action: #selector(openFollowingUsers))
         tapGesture_0.numberOfTapsRequired = 1
         tapGesture_0.delegate = self
         self.followingUsersView.addGestureRecognizer(tapGesture_0)
         
-//        self.followingCompaniesView.isUserInteractionEnabled = true
         let tapGesture_1 = UITapGestureRecognizer(target: self, action: #selector(openFollowingCompanies))
         tapGesture_1.numberOfTapsRequired = 1
         tapGesture_1.delegate = self
         self.followingCompaniesView.addGestureRecognizer(tapGesture_1)
         
-//        self.followingMembersView.isUserInteractionEnabled = true
         let tapGesture_2 = UITapGestureRecognizer(target: self, action: #selector(openFollowingMembers))
         tapGesture_2.numberOfTapsRequired = 1
         tapGesture_2.delegate = self
         self.followingMembersView.addGestureRecognizer(tapGesture_2)
         
-//        self.followedMembersView.isUserInteractionEnabled = true
         let tapGesture_3 = UITapGestureRecognizer(target: self, action: #selector(openFollowedMembers))
         tapGesture_3.numberOfTapsRequired = 1
         tapGesture_3.delegate = self

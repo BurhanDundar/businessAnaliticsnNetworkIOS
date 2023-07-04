@@ -82,12 +82,10 @@ class Login: UIViewController {
             
             self.registerBtn.topAnchor.constraint(equalTo: self.signInBtn.bottomAnchor, constant: 20),
             self.registerBtn.centerXAnchor.constraint(equalTo: self.signInBtn.centerXAnchor),
-            //self.registerBtn.heightAnchor.constraint(equalToConstant: 55),
             self.registerBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
             
             self.forgotPassBtn.topAnchor.constraint(equalTo: self.registerBtn.bottomAnchor, constant: 15),
             self.forgotPassBtn.centerXAnchor.constraint(equalTo: self.registerBtn.centerXAnchor),
-            //self.forgotPassBtn.heightAnchor.constraint(equalToConstant: 55),
             self.forgotPassBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85)
             
         ])

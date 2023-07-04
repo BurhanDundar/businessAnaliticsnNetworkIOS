@@ -25,8 +25,6 @@ class CompanyViewController: UIViewController {
         iv.contentMode = .scaleAspectFill
         iv.backgroundColor = .clear
         iv.layer.borderWidth = 1
-//        iv.layer.borderColor = UIColor.blue.cgColor
-//        iv.layer.cornerRadius = iv.frame.size.height/2
         iv.clipsToBounds = true
         return iv
     }()

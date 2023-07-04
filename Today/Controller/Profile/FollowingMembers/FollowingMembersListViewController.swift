@@ -37,7 +37,6 @@ class FollowingMembersListViewController: UICollectionViewController {
 
              lazy var searchController: UISearchController = {
                  let searchController = UISearchController(searchResultsController: nil)
-                 // searchController.dimsBackgroundDuringPresentation = false
                  searchController.hidesNavigationBarDuringPresentation = false
                  searchController.searchBar.delegate = self
                  return searchController

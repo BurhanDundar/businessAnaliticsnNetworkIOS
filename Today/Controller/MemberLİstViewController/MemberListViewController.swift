@@ -272,7 +272,6 @@ class MemberListViewController: UICollectionViewController {
                 isSearching = true
                 if(listStyleSelectedIndex == 1) {
                     let bookmarkedFilteredValues = self.filteredMembers.filter({ $0.fullname.lowercased().contains(searchText.lowercased()) })
-                    // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
                     self.filteredMembers = bookmarkedFilteredValues
                     updateSnapshot(for: bookmarkedFilteredValues)
                 } else if(listStyleSelectedIndex == 0) {

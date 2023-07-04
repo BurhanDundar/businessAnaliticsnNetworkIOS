@@ -11,7 +11,7 @@ class FollowedMembersListViewController: UICollectionViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Int, Member.ID>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Int, Member.ID>
     
-        var members: [Member]! // = Member.sampleData
+        var members: [Member]!
         var filteredMembers: [Member] = []
         var dataSource: DataSource!
         var isSearching: Bool = false

@@ -79,7 +79,6 @@ class CompanyListViewController: UICollectionViewController {
                  if(self.listStyleSelectedIndex == 1) {
                      company = self.filteredCompanies[indexPath.item]
                  } else if(self.listStyleSelectedIndex == 0) {
-                     // ?
                      company = self.filteredCompanies.count > 0 ?  self.filteredCompanies[indexPath.item] : self.companies[indexPath.item]
                  }
                  
@@ -143,9 +142,6 @@ class CompanyListViewController: UICollectionViewController {
         
     }
     @objc func didPressProfileButton (_ sender: UIBarButtonItem){
-//        let viewController = ProfileViewController()
-        
-//        navigationController?.pushViewController(viewController, animated: true)
         performSegue(withIdentifier: "GoToProfilePage", sender: self)
         let backBarButtonItem = UIBarButtonItem(title: "Companies", style: .plain, target: nil, action: nil)
                 navigationItem.backBarButtonItem = backBarButtonItem
@@ -282,7 +278,6 @@ extension CompanyListViewController: UISearchBarDelegate {
             isSearching = true
             if(listStyleSelectedIndex == 1) {
                 let bookmarkedFilteredValues = self.filteredCompanies.filter({ $0.name.lowercased().contains(searchText.lowercased()) })
-                // bookmarkedFilteredValues = bookmarkedFilteredValues.filter({ $0.isBookmarked })
                 self.filteredCompanies = bookmarkedFilteredValues
                 updateSnapshot(for: bookmarkedFilteredValues)
             } else if(listStyleSelectedIndex == 0) {

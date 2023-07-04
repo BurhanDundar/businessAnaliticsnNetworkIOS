@@ -108,48 +108,39 @@ class Register: UIViewController{
 
         NSLayoutConstraint.activate([
             
-            //self.authHeader.topAnchor.constraint(equalTo: stackView.layoutMarginsGuide.topAnchor, constant: 40),
             self.authHeader.heightAnchor.constraint(equalToConstant: 222),
             self.authHeader.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             self.authHeader.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             
-            //self.name.topAnchor.constraint(equalTo: self.authHeader.bottomAnchor, constant: 20),
             self.fullname.centerXAnchor.constraint(equalTo: self.authHeader.centerXAnchor),
             self.fullname.heightAnchor.constraint(equalToConstant: 55),
             self.fullname.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.85),
             
-            //self.username.topAnchor.constraint(equalTo: self.surname.bottomAnchor, constant: 10), // 20
             self.username.centerXAnchor.constraint(equalTo: self.fullname.centerXAnchor),
             self.username.heightAnchor.constraint(equalToConstant: 55),
             self.username.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
        
-            //self.email.topAnchor.constraint(equalTo: self.username.bottomAnchor, constant: 10), // 20
             self.email.centerXAnchor.constraint(equalTo: self.username.centerXAnchor),
             self.email.heightAnchor.constraint(equalToConstant: 55),
             self.email.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
        
-            //self.password.topAnchor.constraint(equalTo: self.email.bottomAnchor, constant: 10), // 20
             self.password.centerXAnchor.constraint(equalTo: self.email.centerXAnchor),
             self.password.heightAnchor.constraint(equalToConstant: 55),
             self.password.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
             
-            //self.repassword.topAnchor.constraint(equalTo: self.password.bottomAnchor, constant: 10), // 20
             self.repassword.centerXAnchor.constraint(equalTo: self.password.centerXAnchor),
             self.repassword.heightAnchor.constraint(equalToConstant: 55),
             self.repassword.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
        
-            //self.registerBtn.topAnchor.constraint(equalTo: self.repassword.bottomAnchor, constant: 10), // 20
             self.registerBtn.centerXAnchor.constraint(equalTo: self.repassword.centerXAnchor),
             self.registerBtn.heightAnchor.constraint(equalToConstant: 55),
             self.registerBtn.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
        
-            //self.termsTextView.topAnchor.constraint(equalTo: self.registerBtn.bottomAnchor, constant: 6),
             self.termsTextView.centerXAnchor.constraint(equalTo: self.registerBtn.centerXAnchor),
             self.termsTextView.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
             
             self.signInBtn.topAnchor.constraint(equalTo: self.termsTextView.bottomAnchor, constant: 20),
             self.signInBtn.centerXAnchor.constraint(equalTo: self.termsTextView.centerXAnchor),
-            //self.registerBtn.heightAnchor.constraint(equalToConstant: 55),
             self.signInBtn.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 0.85),
        
         
